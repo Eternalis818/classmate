@@ -9,7 +9,7 @@ pages_build_output_dir = "."
 [[d1_databases]]
 binding = "DB"
 database_name = "gradbook-db"
-database_id = "REPLACE_AFTER_CREATING_D1"
+database_id = "3855d742-9fd3-4394-a466-59f4b4df49c5"
 migrations_dir = "migrations"
 
 # ─── R2 Object Storage (照片/手写图) ──────────────────
