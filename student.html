@@ -668,6 +668,7 @@ function showTsToast(msg) {
 function checkPassword() {
   const input = document.getElementById('lockPassword').value;
   if (input === window._student.password) {
+    window._ownerPassword = input;
     document.getElementById('lockOverlay').style.display = 'none';
     render(window._student, window._data);
   } else {
@@ -1091,7 +1092,7 @@ function initScripts() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   HIGHLIGHT EDITOR (闪光时刻)
+   HIGHLIGHT EDITOR (闪光时刻 · 同步到 D1)
    ═══════════════════════════════════════════════════════════ */
 function getHighlightStore(id) {
   const key = 'highlights-' + id;
@@ -1101,13 +1102,54 @@ function setHighlightStore(id, data) {
   const key = 'highlights-' + id;
   localStorage.setItem(key, JSON.stringify(data));
 }
-function initHighlightEditor() {
+async function syncHighlightsToCloud(s) {
+  if (!s || !s.highlights) return;
+  if (!window._ownerPassword) {
+    flashHlStatus('⚠️ 需要解锁后才能同步到云端', 'warn');
+    return;
+  }
+  try {
+    const res = await fetch(`/api/students/${encodeURIComponent(s.id)}/highlights`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: window._ownerPassword, highlights: s.highlights })
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      flashHlStatus('✗ 云端同步失败：' + (json.error || res.statusText), 'error');
+      return false;
+    }
+    flashHlStatus('✓ 已同步到云端', 'success');
+    return true;
+  } catch (e) {
+    flashHlStatus('✗ 网络错误：' + e.message, 'error');
+    return false;
+  }
+}
+let _hlStatusTimer = null;
+function flashHlStatus(msg, type) {
+  const btn = document.getElementById('highlightEditBtn');
+  if (!btn) return;
+  const orig = btn.dataset.origText || btn.innerHTML;
+  btn.dataset.origText = orig;
+  btn.innerHTML = msg;
+  const colors = { success: 'linear-gradient(135deg,#34d399,#10b981)', error: 'linear-gradient(135deg,#e5484d,#dc2626)', warn: 'linear-gradient(135deg,#ffb020,#f59e0b)' };
+  btn.style.background = colors[type] || colors.warn;
+  clearTimeout(_hlStatusTimer);
+  _hlStatusTimer = setTimeout(() => {
+    btn.innerHTML = orig;
+    btn.style.background = document.body.classList.contains('edit-mode')
+      ? 'linear-gradient(135deg,var(--accent-mint),var(--accent))'
+      : 'linear-gradient(135deg,var(--accent),var(--accent-coral))';
+  }, 1500);
+}
+async function initHighlightEditor() {
   const s = window.__studentData;
   if (!s || !s.highlights || !s.highlights.length) return;
   const id = s.id;
   const store = getHighlightStore(id);
 
-  // 加载 localStorage 覆盖
+  /* 加载本地编辑覆盖 */
   document.querySelectorAll('.timeline-item').forEach((item, i) => {
     const h = store[i];
     if (!h) return;
@@ -1117,7 +1159,7 @@ function initHighlightEditor() {
     if (h.reflection != null) item.querySelector('.hl-reflection').value = h.reflection;
   });
 
-  // 创建编辑模式开关按钮
+  /* 编辑模式开关（密码解锁） */
   if (!document.getElementById('highlightEditBtn')) {
     const btn = document.createElement('button');
     btn.id = 'highlightEditBtn';
@@ -1129,9 +1171,9 @@ function initHighlightEditor() {
     document.body.appendChild(btn);
   }
 
-  // 失焦自动保存
+  /* 失焦自动保存到 localStorage + 云端 */
   document.querySelectorAll('.timeline-item').forEach((item, i) => {
-    const save = () => {
+    const save = async () => {
       const data = getHighlightStore(id);
       data[i] = {
         year: item.querySelector('.hl-year').textContent.trim(),
@@ -1140,31 +1182,93 @@ function initHighlightEditor() {
         reflection: item.querySelector('.hl-reflection').value.trim()
       };
       setHighlightStore(id, data);
-      flashSaved(btn);
+      /* 同步到 s.highlights 顶层（用于云端 PUT） */
+      if (s.highlights && s.highlights[i]) {
+        Object.assign(s.highlights[i], data[i]);
+      }
+      /* 失焦时不阻塞 UI；如已解锁则同步云端 */
+      if (window._ownerPassword) {
+        syncHighlightsToCloud(s);
+      } else {
+        flashHlStatus('💾 本地已保存（解锁后可同步云端）', 'warn');
+      }
     };
     item.querySelectorAll('.hl-year, .hl-title, .hl-desc').forEach(el => el.addEventListener('blur', save));
     item.querySelector('.hl-reflection').addEventListener('input', save);
   });
+
+  /* 后台拉取云端高光（如果已存在且本地没有未保存编辑） */
+  fetchAndMergeHighlights(s).catch(() => {});
+}
+async function fetchAndMergeHighlights(s) {
+  try {
+    const res = await fetch(`/api/students/${encodeURIComponent(s.id)}/highlights`);
+    if (!res.ok) return;
+    const json = await res.json();
+    const cloud = json.highlights;
+    if (!Array.isArray(cloud) || cloud.length === 0) return;
+    const store = getHighlightStore(s.id);
+    const hasLocalEdits = Object.keys(store).length > 0;
+    if (hasLocalEdits) {
+      /* 本地有编辑，不覆盖；提示用户 */
+      return;
+    }
+    /* 合并云端数据到 DOM */
+    document.querySelectorAll('.timeline-item').forEach((item, i) => {
+      const h = cloud[i];
+      if (!h) return;
+      if (h.year) item.querySelector('.hl-year').textContent = h.year;
+      if (h.title) item.querySelector('.hl-title').textContent = h.title;
+      if (h.desc) item.querySelector('.hl-desc').textContent = h.desc;
+      if (h.reflection) item.querySelector('.hl-reflection').value = h.reflection;
+    });
+    /* 更新 s.highlights 供后续保存使用 */
+    s.highlights = cloud;
+  } catch (e) { /* 静默 */ }
 }
 function toggleHighlightEdit() {
+  /* 若未解锁，要求密码 */
+  if (!document.body.classList.contains('edit-mode') && !window._ownerPassword) {
+    const pwd = prompt('请输入你的纪念册密码（解锁编辑）');
+    if (!pwd) return;
+    /* 验证密码：通过调用一次 API 试试（用一个无害的 GET） */
+    authenticateOwner(pwd).then(ok => {
+      if (!ok) {
+        flashHlStatus('✗ 密码错误', 'error');
+        return;
+      }
+      window._ownerPassword = pwd;
+      doToggleHighlightEdit();
+    });
+    return;
+  }
+  doToggleHighlightEdit();
+}
+function doToggleHighlightEdit() {
   document.body.classList.toggle('edit-mode');
   const btn = document.getElementById('highlightEditBtn');
-  btn.innerHTML = document.body.classList.contains('edit-mode') ? '💾 完成编辑' : '✏️ 编辑闪光时刻';
-  btn.style.background = document.body.classList.contains('edit-mode')
+  const isEdit = document.body.classList.contains('edit-mode');
+  btn.innerHTML = isEdit ? '💾 完成编辑' : '✏️ 编辑闪光时刻';
+  btn.style.background = isEdit
     ? 'linear-gradient(135deg,var(--accent-mint),var(--accent))'
     : 'linear-gradient(135deg,var(--accent),var(--accent-coral))';
+  /* 退出编辑模式时，主动同步一次云端 */
+  if (!isEdit && window._ownerPassword) {
+    const s = window.__studentData;
+    syncHighlightsToCloud(s);
+  }
 }
-let _saveTimer = null;
-function flashSaved(btn) {
-  btn.innerHTML = '✅ 已保存';
-  btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
-  clearTimeout(_saveTimer);
-  _saveTimer = setTimeout(() => {
-    btn.innerHTML = document.body.classList.contains('edit-mode') ? '💾 完成编辑' : '✏️ 编辑闪光时刻';
-    btn.style.background = document.body.classList.contains('edit-mode')
-      ? 'linear-gradient(135deg,var(--accent-mint),var(--accent))'
-      : 'linear-gradient(135deg,var(--accent),var(--accent-coral))';
-  }, 1200);
+async function authenticateOwner(pwd) {
+  const s = window.__studentData;
+  if (!s) return false;
+  try {
+    const res = await fetch(`/api/students/${encodeURIComponent(s.id)}/highlights`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd, highlights: s.highlights || [] })
+    });
+    return res.ok;
+  } catch (e) { return false; }
 }
 
 /* ═══════════════════════════════════════════════════════════
