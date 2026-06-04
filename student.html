@@ -137,6 +137,43 @@
     }
     .ts-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+    /* Photo Upload UI */
+    .gallery-upload-btn{
+      margin-left:auto;display:inline-flex;align-items:center;gap:6px;
+      padding:6px 16px;border-radius:var(--radius-pill);font-size:var(--text-sm);font-weight:500;
+      background:linear-gradient(135deg,var(--accent),var(--accent-coral));
+      color:#fff;border:none;cursor:pointer;transition:transform var(--motion-base) var(--ease-bounce),box-shadow var(--motion-base);
+    }
+    .gallery-upload-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:var(--elev-raised)}
+    .upload-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:9999;padding:20px;animation:tsFade .2s ease}
+    .upload-card{background:var(--surface);border-radius:16px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;animation:tsUp .3s cubic-bezier(0.34,1.56,0.64,1)}
+    .upload-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--border)}
+    .upload-head h3{margin:0;font-size:17px}
+    .upload-body{padding:20px 22px;display:flex;flex-direction:column;gap:14px}
+    .upload-field{display:flex;flex-direction:column;gap:6px}
+    .upload-label{font-size:13px;font-weight:600;color:var(--fg-2)}
+    .upload-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+    .upload-cat{padding:10px 6px;border:2px solid var(--border);border-radius:10px;background:transparent;cursor:pointer;text-align:center;font-size:12px;font-weight:500;transition:all var(--motion-fast)}
+    .upload-cat:hover{border-color:var(--accent)}
+    .upload-cat.selected{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+    .upload-cat-emoji{font-size:20px;display:block;margin-bottom:2px}
+    .upload-file{padding:14px;border:2px dashed var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:border-color var(--motion-fast);font-size:13px;color:var(--muted)}
+    .upload-file:hover{border-color:var(--accent);color:var(--accent)}
+    .upload-file input{display:none}
+    .upload-file-preview{margin-top:8px;max-height:120px;display:none;border-radius:8px;overflow:hidden}
+    .upload-file-preview img{width:100%;height:120px;object-fit:cover;display:block}
+    .upload-input{padding:10px 14px;border:1px solid var(--border);border-radius:10px;font:inherit;font-size:14px;outline:none;transition:border-color var(--motion-fast);background:var(--bg)}
+    .upload-input:focus{border-color:var(--accent)}
+    .upload-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
+    .upload-btn{padding:9px 18px;border-radius:10px;border:1px solid var(--border);background:transparent;cursor:pointer;font-size:14px;font-weight:500;transition:all var(--motion-fast)}
+    .upload-btn:hover{background:var(--border)}
+    .upload-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+    .upload-btn.primary:hover{background:color-mix(in oklab,var(--accent),black 8%)}
+    .upload-btn.primary:disabled{opacity:.5;cursor:not-allowed}
+    .upload-status{font-size:12px;color:var(--muted);min-height:16px}
+    .upload-status.error{color:var(--danger)}
+    .upload-status.success{color:var(--success)}
+
     /* Section header */
     .section-header{text-align:center;margin-bottom:var(--space-12)}
     .section-header h2{margin-bottom:var(--space-3)}
@@ -722,6 +759,8 @@ function render(s, data) {
         ${(s.photos?.life?.length) ? '<button class="gallery-tab" onclick="filterGallery(\'life\',this)">生活照</button>' : ''}
         ${(s.photos?.school?.length) ? '<button class="gallery-tab" onclick="filterGallery(\'school\',this)">校园照</button>' : ''}
         ${(s.photos?.future?.length) ? '<button class="gallery-tab" onclick="filterGallery(\'future\',this)">AI未来</button>' : ''}
+        ${(s.photos?.pet) ? '<button class="gallery-tab" onclick="filterGallery(\'pet\',this)">宠物</button>' : ''}
+        <button class="gallery-upload-btn" onclick="openPhotoUpload()">📤 上传照片</button>
       </div>
       <div class="carousel-wrapper reveal" id="carouselWrapper">
         <div class="carousel-track" id="carouselTrack"></div>
@@ -1099,11 +1138,16 @@ function initGallery() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
   const photos = window.__studentData?.photos || {};
+  const norm = p => (typeof p === 'string' ? { src: p, url: p } : p);
   const all = [
-    ...(photos.life || []).map(p => ({ src: p, cat: 'life', label: '生活照' })),
-    ...(photos.school || []).map(p => ({ src: p, cat: 'school', label: '校园照' })),
-    ...(photos.future || []).map(p => ({ src: p, cat: 'future', label: 'AI未来' }))
+    ...(photos.life || []).map(p => { const n = norm(p); return { src: n.url || n.src, cat: 'life', label: '生活照' }; }),
+    ...(photos.school || []).map(p => { const n = norm(p); return { src: n.url || n.src, cat: 'school', label: '校园照' }; }),
+    ...(photos.future || []).map(p => { const n = norm(p); return { src: n.url || n.src, cat: 'future', label: 'AI未来' }; })
   ];
+  if (photos.pet) {
+    const p = norm(photos.pet);
+    all.push({ src: p.url || p.src, cat: 'pet', label: '宠物' });
+  }
   galleryPhotos = all;
   if (!all.length) return;
   renderSlides(all);
@@ -1175,6 +1219,154 @@ function startAutoPlay() {
 
 function stopAutoPlay() {
   if (autoPlayTimer) { clearInterval(autoPlayTimer); autoPlayTimer = null; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PHOTO UPLOAD (后端 /api/photos/upload)
+   ═══════════════════════════════════════════════════════════ */
+const UPLOAD_CATEGORIES = [
+  { id: 'avatar',     emoji: '👤', label: '头像' },
+  { id: 'life',       emoji: '🌅', label: '生活照' },
+  { id: 'school',     emoji: '🏫', label: '校园照' },
+  { id: 'future',     emoji: '🚀', label: 'AI未来' },
+  { id: 'pet',        emoji: '🐱', label: '宠物' },
+  { id: 'handwritten',emoji: '✍️', label: '手写图' }
+];
+let _uploadState = { category: 'life', file: null };
+
+function openPhotoUpload() {
+  if (!window._student) { alert('学生数据未加载'); return; }
+  _uploadState = { category: 'life', file: null };
+  const html = `
+    <div class="upload-overlay" id="uploadOverlay" onclick="if(event.target===this)closePhotoUpload()">
+      <div class="upload-card" onclick="event.stopPropagation()">
+        <div class="upload-head">
+          <h3>📤 上传照片</h3>
+          <button class="ts-close" onclick="closePhotoUpload()">×</button>
+        </div>
+        <div class="upload-body">
+          <div class="upload-field">
+            <span class="upload-label">选择分类</span>
+            <div class="upload-cats" id="uploadCats">
+              ${UPLOAD_CATEGORIES.map(c => `
+                <button type="button" class="upload-cat ${c.id === 'life' ? 'selected' : ''}" data-cat="${c.id}" onclick="selectUploadCat('${c.id}')">
+                  <span class="upload-cat-emoji">${c.emoji}</span>${c.label}
+                </button>
+              `).join('')}
+            </div>
+          </div>
+          <div class="upload-field">
+            <span class="upload-label">选择图片（手机端可直接拍照）</span>
+            <label class="upload-file" id="uploadFileLabel">
+              <input type="file" id="uploadFile" accept="image/*" capture="environment" onchange="onUploadFileChange(event)" />
+              <span id="uploadFileText">📷 点击选择 / 拍摄图片</span>
+              <div class="upload-file-preview" id="uploadFilePreview"><img id="uploadFileImg" alt="" /></div>
+            </label>
+          </div>
+          <div class="upload-field">
+            <span class="upload-label">学生密码（确认身份）</span>
+            <input type="password" id="uploadPassword" class="upload-input" placeholder="输入你的纪念册密码" autocomplete="off" />
+          </div>
+          <div class="upload-status" id="uploadStatus"></div>
+        </div>
+        <div class="upload-foot">
+          <button class="upload-btn" onclick="closePhotoUpload()">取消</button>
+          <button class="upload-btn primary" id="uploadSubmitBtn" onclick="submitPhotoUpload()">上传</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
+  setTimeout(() => document.getElementById('uploadPassword')?.focus(), 100);
+}
+function closePhotoUpload() {
+  const el = document.getElementById('uploadOverlay');
+  if (el) el.remove();
+}
+function selectUploadCat(catId) {
+  _uploadState.category = catId;
+  document.querySelectorAll('#uploadCats .upload-cat').forEach(el => {
+    el.classList.toggle('selected', el.dataset.cat === catId);
+  });
+}
+function onUploadFileChange(ev) {
+  const file = ev.target.files?.[0];
+  if (!file) { _uploadState.file = null; return; }
+  _uploadState.file = file;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('uploadFileImg').src = e.target.result;
+    document.getElementById('uploadFilePreview').style.display = 'block';
+    document.getElementById('uploadFileText').textContent = '✓ ' + file.name + '（' + (file.size/1024).toFixed(1) + ' KB）';
+  };
+  reader.readAsDataURL(file);
+}
+async function submitPhotoUpload() {
+  const s = window._student;
+  if (!s) return;
+  const password = document.getElementById('uploadPassword').value;
+  if (!_uploadState.file) { setUploadStatus('请选择图片', 'error'); return; }
+  if (!password) { setUploadStatus('请输入密码', 'error'); return; }
+
+  const btn = document.getElementById('uploadSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = '上传中…';
+  setUploadStatus('正在上传到云端…');
+
+  try {
+    const formData = new FormData();
+    formData.append('file', _uploadState.file);
+    formData.append('category', _uploadState.category);
+    formData.append('student_id', s.id);
+    formData.append('password', password);
+
+    const res = await fetch('/api/photos/upload', { method: 'POST', body: formData });
+    const json = await res.json().catch(() => ({}));
+
+    if (!res.ok) {
+      setUploadStatus('上传失败：' + (json.error || res.statusText), 'error');
+      btn.disabled = false;
+      btn.textContent = '上传';
+      return;
+    }
+
+    /* 成功：合并到本地数据 + 重新渲染 gallery */
+    const newPhoto = { id: json.id, url: json.url, category: json.category };
+    if (!s.photos) s.photos = {};
+    const cat = _uploadState.category;
+    if (['avatar', 'pet', 'handwritten'].includes(cat)) {
+      s.photos[cat] = newPhoto;
+    } else {
+      if (!Array.isArray(s.photos[cat])) s.photos[cat] = [];
+      s.photos[cat].push(newPhoto);
+    }
+    /* 持久化到 localStorage 缓存 */
+    try { localStorage.setItem('student-' + s.id, JSON.stringify(s)); } catch (e) {}
+
+    setUploadStatus('✓ 上传成功！', 'success');
+    showUploadToast('📸 照片已上传');
+    setTimeout(() => {
+      closePhotoUpload();
+      render(s, window._data);
+    }, 800);
+  } catch (e) {
+    setUploadStatus('网络错误：' + e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '上传';
+  }
+}
+function setUploadStatus(msg, type) {
+  const el = document.getElementById('uploadStatus');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'upload-status' + (type ? ' ' + type : '');
+}
+function showUploadToast(msg) {
+  const t = document.createElement('div');
+  t.className = 'ts-toast';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.classList.add('show'), 10);
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 1800);
 }
 </script>
 </body>
