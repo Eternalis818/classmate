@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>模板预览 · 时光纪念册</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+      background: #faf5ff;
+      color: #1d1836;
+      padding: 48px 24px;
+      min-height: 100vh;
+    }
+    .page-head {
+      max-width: 1200px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+    .page-head h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #C8102E, #D4AF37, #BA55D3, #32CD32);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+    .page-head p {
+      font-size: 16px;
+      color: #796f91;
+    }
+    .templates-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    @media (min-width: 900px) {
+      .templates-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .template-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(29, 24, 54, 0.08);
+      transition: all 240ms cubic-bezier(0.2, 0, 0, 1);
+      cursor: pointer;
+      border: 1px solid #e8ddf5;
+    }
+    .template-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(168, 85, 247, 0.18);
+    }
+    .template-preview {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      font-size: 56px;
+    }
+    .template-info { padding: 20px; }
+    .template-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: #f3ecfa;
+      color: #a855f7;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+      font-family: 'Fira Code', monospace;
+    }
+    .template-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .template-audience {
+      font-size: 12px;
+      color: #796f91;
+      margin-bottom: 14px;
+    }
+    .palette-row {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+    .palette-swatch {
+      width: 26px; height: 26px;
+      border-radius: 8px;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
+    }
+    .template-desc {
+      font-size: 12px;
+      color: #4c426c;
+      line-height: 1.6;
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+      padding: 8px 16px;
+      background: white;
+      border: 1px solid #e8ddf5;
+      border-radius: 9999px;
+      font-size: 14px;
+      color: #4c426c;
+      text-decoration: none;
+      transition: all 150ms;
+    }
+    .back-link:hover {
+      border-color: #a855f7;
+      color: #a855f7;
+    }
+    .page-wrap { max-width: 1200px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <a href="../index.html" class="back-link">← 返回首页</a>
+
+    <div class="page-head">
+      <h1>10套模板预览</h1>
+      <p>每位同学可以选择一个心仪的模板，未来可在录入页实时预览</p>
+    </div>
+
+    <div class="templates-grid">
+      <!-- 01 星光录取通知书 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#F5F0E1,#F8E8C8,#EDE0C0)">📜</div>
+        <div class="template-info">
+          <span class="template-tag">01 · STARLIGHT ADMISSION</span>
+          <div class="template-name">星光录取通知书</div>
+          <div class="template-audience">复古通知书风 · 男女皆宜</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#F5F0E1"></div>
+            <div class="palette-swatch" style="background:#C8102E"></div>
+            <div class="palette-swatch" style="background:#D4AF37"></div>
+            <div class="palette-swatch" style="background:#2C1810"></div>
+          </div>
+          <div class="template-desc">米色仿古纸张 + 正红印章 + 烫金装饰，信封式纹理边框，金色碎箔粒子缓缓飘落。</div>
+        </div>
+      </div>
+
+      <!-- 02 樱花马卡龙 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#FFE6EE,#E6F3FF,#FFF2CC,#E6FFE6)">🍰</div>
+        <div class="template-info">
+          <span class="template-tag">02 · SAKURA MACARON</span>
+          <div class="template-name">樱花马卡龙</div>
+          <div class="template-audience">女生 · 甜美可爱风</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#E877A8"></div>
+            <div class="palette-swatch" style="background:#98D8C8"></div>
+            <div class="palette-swatch" style="background:#B3D4FF"></div>
+            <div class="palette-swatch" style="background:#FFD180"></div>
+          </div>
+          <div class="template-desc">马卡龙五色柔和渐变（粉/蓝/黄/绿/淡紫），超大圆润圆角，糖果色粒子漂浮。</div>
+        </div>
+      </div>
+
+      <!-- 03 星际答题卡 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#1E3A8A,#2563EB,#3B82F6)">🚀</div>
+        <div class="template-info">
+          <span class="template-tag">03 · COSMIC EXAM</span>
+          <div class="template-name">星际答题卡</div>
+          <div class="template-audience">男生 · 太空学霸风</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#1E3A8A"></div>
+            <div class="palette-swatch" style="background:#2563EB"></div>
+            <div class="palette-swatch" style="background:#D4AF37"></div>
+            <div class="palette-swatch" style="background:#FCD34D"></div>
+          </div>
+          <div class="template-desc">皇家蓝 + 金色装饰，答题卡风格板块分隔，蓝金粒子交织如星际尘埃。</div>
+        </div>
+      </div>
+
+      <!-- 04 江湖风云榜 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#F0E8D4,#E8DCC0,#D4C8A8)">⚔️</div>
+        <div class="template-info">
+          <span class="template-tag">04 · MARTIAL LEGEND</span>
+          <div class="template-name">江湖风云榜</div>
+          <div class="template-audience">武侠江湖风 · 中性偏男</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#C84032"></div>
+            <div class="palette-swatch" style="background:#D4A86A"></div>
+            <div class="palette-swatch" style="background:#8B4513"></div>
+            <div class="palette-swatch" style="background:#2A1F14"></div>
+          </div>
+          <div class="template-desc">古风纸张质感 + 朱红印章 + 赭石金，衬线字体标题，水墨风云榜视觉隐喻。</div>
+        </div>
+      </div>
+
+      <!-- 05 薄荷手账 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#E0F5EC,#D0EDE4,#F0FAF6)">📓</div>
+        <div class="template-info">
+          <span class="template-tag">05 · MINT JOURNAL</span>
+          <div class="template-name">薄荷手账</div>
+          <div class="template-audience">中性 · 手账日记风</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#2EAA7F"></div>
+            <div class="palette-swatch" style="background:#45C898"></div>
+            <div class="palette-swatch" style="background:#88DCC0"></div>
+            <div class="palette-swatch" style="background:#F5C542"></div>
+          </div>
+          <div class="template-desc">薄荷绿清新主色 + 阳光黄点缀，手账网格线/虚线分隔，和纸胶带装饰条风格。</div>
+        </div>
+      </div>
+
+      <!-- 06 萌系仓鼠 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#FFE8E0,#E0F8F5,#FFF0E0)">🐹</div>
+        <div class="template-info">
+          <span class="template-tag">06 · CUTE HAMSTER</span>
+          <div class="template-name">萌系仓鼠</div>
+          <div class="template-audience">可爱系 · 男女皆宜</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#FF6B6B"></div>
+            <div class="palette-swatch" style="background:#4ECDC4"></div>
+            <div class="palette-swatch" style="background:#B3E5FC"></div>
+            <div class="palette-swatch" style="background:#FFB6C1"></div>
+          </div>
+          <div class="template-desc">珊瑚粉 + 薄荷绿双色调，超大圆润圆角泡泡感，彩色粒子如小仓鼠的彩色食物粒。</div>
+        </div>
+      </div>
+
+      <!-- 07 古风经典 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#EDE8D0,#E0DCD0,#F5F2E8)">🏯</div>
+        <div class="template-info">
+          <span class="template-tag">07 · ANCIENT CLASSIC</span>
+          <div class="template-name">古风经典</div>
+          <div class="template-audience">传统中国风 · 男女皆宜</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#5C8A5C"></div>
+            <div class="palette-swatch" style="background:#D4AF37"></div>
+            <div class="palette-swatch" style="background:#8B6914"></div>
+            <div class="palette-swatch" style="background:#1F2A1A"></div>
+          </div>
+          <div class="template-desc">鼠尾草绿 + 烫金传统文人雅韵，衬线字体古典排版，山水画意境渐变，金色落叶粒子。</div>
+        </div>
+      </div>
+
+      <!-- 08 活力波普 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#FFD700,#FF6B6B,#BA55D3,#32CD32)">💥</div>
+        <div class="template-info">
+          <span class="template-tag">08 · ENERGY POP</span>
+          <div class="template-name">活力波普</div>
+          <div class="template-audience">潮流活力风 · 男女皆宜</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#BA55D3"></div>
+            <div class="palette-swatch" style="background:#FFD700"></div>
+            <div class="palette-swatch" style="background:#32CD32"></div>
+            <div class="palette-swatch" style="background:#FF6B6B"></div>
+          </div>
+          <div class="template-desc">紫黄绿红多色撞色波普艺术风，大胆四色渐变Hero，几何粒子动画，高活力高对比度。</div>
+        </div>
+      </div>
+
+      <!-- 09 蜡笔手绘 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#FFF8E1,#FFE8F0,#E8F5FF,#E8FFF5)">🖍️</div>
+        <div class="template-info">
+          <span class="template-tag">09 · CRAYON STYLE</span>
+          <div class="template-name">蜡笔手绘</div>
+          <div class="template-audience">童趣手绘风 · 男女皆宜</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#FFE566"></div>
+            <div class="palette-swatch" style="background:#FF7EB6"></div>
+            <div class="palette-swatch" style="background:#74C0FC"></div>
+            <div class="palette-swatch" style="background:#8FD9C8"></div>
+            <div class="palette-swatch" style="background:#C9B1FF"></div>
+            <div class="palette-swatch" style="background:#FFA94D"></div>
+          </div>
+          <div class="template-desc">明亮蜡笔色系+手写体字体+纸质纹理背景+波浪线框，仿佛孩子用蜡笔在白纸上快乐涂鸦，童趣满分。</div>
+        </div>
+      </div>
+
+      <!-- 10 圣旨卷轴 -->
+      <div class="template-card">
+        <div class="template-preview" style="background:linear-gradient(135deg,#FFF8DC,#F5E6C8,#F0D8A0)">🏮</div>
+        <div class="template-info">
+          <span class="template-tag">10 · IMPERIAL SCROLL</span>
+          <div class="template-name">圣旨卷轴（御用）</div>
+          <div class="template-audience">古风宫廷 · 男女皆宜</div>
+          <div class="palette-row">
+            <div class="palette-swatch" style="background:#C41E3A"></div>
+            <div class="palette-swatch" style="background:#D4AF37"></div>
+            <div class="palette-swatch" style="background:#FFD700"></div>
+            <div class="palette-swatch" style="background:#1A1008"></div>
+          </div>
+          <div class="template-desc">圣旨卷轴展开动画 + 皇家玉牒三重边框 + 编年史朱砂印章 + 武功秘籍能力条 + 密旨锦囊信封 + 金色粒子飘落 + "朕已阅"玉玺大印。发起人张迤恩专属Demo。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

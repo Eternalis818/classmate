@@ -1,0 +1,34 @@
+/* ───────────────────────────────────────────
+   模板 03 · 星际答题卡 (cosmic-exam)
+   适用：男生 · 太空学霸风
+   参考：皇家蓝 #1E3A8A，金色 #D4AF37，明黄 #FCD34D
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #F0F4FA;
+  --surface: #FFFFFF;
+  --surface-warm: #E8EEF8;
+  --surface-cool: #D6E4F5;
+  --fg: #0F1B3D;
+  --fg-2: #2D4A7A;
+  --muted: #6882A8;
+  --border: #C0D0E8;
+  --border-soft: #DAE4F2;
+  --accent: #1E3A8A;
+  --accent-coral: #2563EB;
+  --accent-mint: #D4AF37;
+  --accent-gold: #FCD34D;
+
+  --particle-colors: #2563EB, #D4AF37, #60A5FA, #FCD34D;
+  --hero-gradient: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #3B82F6 100%);
+  --envelope-gradient: linear-gradient(135deg, #EFF6FF, #DBEAFE, #FEF3C7);
+
+  --font-display: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+/* 模板特征：
+   - 皇家蓝主色 + 金色装饰，尊贵沉稳
+   - 答题卡风格板块分隔线
+   - 蓝金粒子交织（如星际尘埃）
+   - 适合喜欢太空/科技/学霸气质的同学
+*/

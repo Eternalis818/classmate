@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "class": "松柏第二小学 · 六年级4班 · 2026届",
+  "totalStudents": 55,
+  "founderId": "50",
+  "version": "1.0.0",
+  "lastUpdated": "2026-06-02",
+  "templates": [
+    { "id": "starlight-admission", "name": "星光录取通知书", "audience": "男女皆宜", "emoji": "📜" },
+    { "id": "sakura-macaron", "name": "樱花马卡龙", "audience": "女生", "emoji": "🍰" },
+    { "id": "cosmic-exam", "name": "星际答题卡", "audience": "男生", "emoji": "🚀" },
+    { "id": "martial-legend", "name": "江湖风云榜", "audience": "中性偏男", "emoji": "⚔️" },
+    { "id": "mint-journal", "name": "薄荷手账", "audience": "中性", "emoji": "📓" },
+    { "id": "cute-hamster", "name": "萌系仓鼠", "audience": "男女皆宜", "emoji": "🐹" },
+    { "id": "ancient-classic", "name": "古风经典", "audience": "男女皆宜", "emoji": "🏯" },
+    { "id": "energy-pop", "name": "活力波普", "audience": "男女皆宜", "emoji": "💥" },
+    { "id": "crayon-style", "name": "蜡笔手绘", "audience": "男女皆宜", "emoji": "🖍️" },
+    { "id": "imperial-scroll", "name": "圣旨卷轴（御用）", "audience": "古风宫廷", "emoji": "🏮" },
+    { "id": "delta-force", "name": "三角洲行动", "audience": "男生", "emoji": "🎖️" }
+  ],
+  "stickers": {
+    "animals": ["cat", "dog", "rabbit", "panda", "fox", "hamster"],
+    "sports": ["swim", "football", "basketball", "run", "archery"],
+    "tech": ["robot", "laptop", "rocket", "gamepad"],
+    "food": ["cake", "icecream", "milktea", "pizza", "lollipop"],
+    "nature": ["sakura", "star", "rainbow", "moon", "sun"],
+    "personality": ["crown", "gem", "music", "pencil", "book"]
+  },
+  "students": [
+    {
+      "id": "01",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "01",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": { "swimming": 0, "tech": 0, "responsibility": 0 },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "_comment": "张迤恩是发起人，作为完整示例填充",
+      "id": "50",
+      "name": "张迤恩",
+      "nickname": "迤恩",
+      "studentNumber": "50",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": ["靠谱小队长", "暖心闺蜜", "科技小达人"],
+      "motto": "",
+      "photos": {
+        "avatar": "photos/50/avatar.jpg",
+        "life": ["photos/50/life-1.jpg"],
+        "school": ["photos/50/school-1.jpg"],
+        "future": ["photos/50/future-1.jpg"]
+      },
+      "highlights": [
+        { "year": "2024", "title": "校级游泳比赛获奖", "desc": "在校级游泳比赛中获得佳绩" },
+        { "year": "2026", "title": "AI编程作品展示", "desc": "独立完成AI编程作品并展示" },
+        { "year": "2026", "title": "担任班级小队长", "desc": "认真负责，是老师的好帮手" }
+      ],
+      "abilities": { "swimming": 95, "tech": 88, "responsibility": 92 },
+      "pet": {
+        "name": "年糕",
+        "type": "橘猫",
+        "photo": "photos/50/pet.jpg",
+        "desc": "一只超萌的橘猫，最爱晒太阳和吃小鱼干"
+      },
+      "futureLetter": "亲爱的初中自己：愿你依然阳光开朗，依然热爱游泳和AI，依然对世界充满好奇...",
+      "template": "starlight-admission",
+      "stickers": ["star", "cat", "swim"],
+      "isFounder": true,
+      "isPublic": true,
+      "password": "",
+      "messages": [
+        {
+          "from": "李小明",
+          "fromId": "12",
+          "avatar": "photos/12/avatar.jpg",
+          "text": "迤恩，六年同窗，谢谢你总是那么靠谱！",
+          "handwritten": "photos/messages/50-from-12.jpg",
+          "type": "personal"
+        }
+      ]
+    }
+  ],
+  "_note": "其他53位同学的schema结构与id=01相同，由录入页(editor.html)逐个填充"
+}

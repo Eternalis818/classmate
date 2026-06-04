@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>樱花马卡龙 · 张迤恩 · 松柏第二小学2026届</title>
+<style>
+:root {
+  --bg: #FFF5F9;
+  --surface: #FFFFFF;
+  --surface-warm: #FFE6EE;
+  --surface-cool: #E6F3FF;
+  --fg: #3D2045;
+  --fg-2: #6B4570;
+  --muted: #A07A9E;
+  --border: #F0C8D8;
+  --border-soft: #F8E0EA;
+  --accent: #E877A8;
+  --accent-coral: #FF8FAB;
+  --accent-mint: #98D8C8;
+  --accent-gold: #FFD180;
+  --radius: 20px;
+  --radius-sm: 14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Noto Sans SC','PingFang SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+.section{padding:64px 0;position:relative}
+h1{font-size:clamp(32px,6vw,56px);line-height:1.15;font-weight:800}
+h2{font-size:clamp(24px,4vw,36px);line-height:1.2;font-weight:700}
+h3{font-size:20px;font-weight:600}
+.eyebrow{font-size:13px;letter-spacing:.08em;color:var(--accent);margin-bottom:12px;display:inline-block;background:var(--surface-warm);padding:4px 12px;border-radius:var(--radius-sm)}
+.lead{font-size:17px;color:var(--muted);max-width:55ch}
+.ph-img{background:linear-gradient(135deg,var(--surface-warm),var(--surface-cool));border:2px dashed var(--border);border-radius:var(--radius-sm);display:grid;place-items:center;color:var(--muted);font-size:14px}
+.ph-img.portrait{aspect-ratio:3/4}.ph-img.square{aspect-ratio:1/1}.ph-img.wide{aspect-ratio:16/9}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}
+
+/* ── NAV ── */
+.sakura-nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:2px solid var(--border-soft);padding:0 16px;display:flex;align-items:center;overflow-x:auto;font-size:14px}
+.sakura-nav a{color:var(--fg-2);padding:14px 14px;white-space:nowrap;transition:color .2s;position:relative}
+.sakura-nav a:hover{color:var(--accent)}
+.sakura-nav a::after{content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;background:var(--accent);transition:width .2s,left .2s}
+.sakura-nav a:hover::after{width:100%;left:0}
+.sakura-nav .nav-home{font-weight:700;color:var(--accent)}
+@media(max-width:600px){.sakura-nav{font-size:13px}.sakura-nav a{padding:10px}}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#FFE6EE 0%,#E6F3FF 33%,#FFF2CC 66%,#E6FFE6 100%)}
+.hero-canvas{position:absolute;inset:0;pointer-events:none}
+.hero-content{text-align:center;z-index:2;padding:32px}
+.hero-crown{font-size:48px;margin-bottom:12px;display:block}
+.hero h1{margin-bottom:16px;background:linear-gradient(135deg,#E877A8,#B3D4FF,#98D8C8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(16px,2.5vw,22px);color:var(--fg-2);margin-bottom:32px}
+.hero-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.hero-pill{padding:6px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:600}
+.hero-pill.pink{background:var(--surface-warm);color:var(--accent)}
+.hero-pill.blue{background:var(--surface-cool);color:#6B9FD4}
+.hero-pill.gold{background:#FFF2CC;color:#D4A020}
+
+/* ── PROFILE ── */
+.profile-card{background:var(--surface);border-radius:var(--radius);box-shadow:0 8px 32px rgba(61,32,69,.08);overflow:hidden}
+.profile-banner{height:120px;background:linear-gradient(135deg,#FF8FAB,#B3D4FF,#98D8C8,#FFD180);position:relative}
+.profile-banner::after{content:'';position:absolute;bottom:0;left:0;right:0;height:28px;background:var(--surface);border-radius:28px 28px 0 0}
+.profile-body{display:flex;gap:24px;padding:0 24px 24px;margin-top:-48px;position:relative;z-index:2}
+.profile-avatar{width:100px;height:100px;border-radius:50%;border:4px solid var(--surface);box-shadow:0 4px 16px rgba(61,32,69,.1);flex-shrink:0;overflow:hidden;background:var(--surface)}
+.profile-info{flex:1;padding-top:52px}
+.profile-name{font-size:28px;font-weight:800;margin-bottom:2px}
+.profile-nick{color:var(--accent);font-size:16px;margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 14px;background:var(--surface-warm);border-radius:var(--radius-sm);font-size:13px;color:var(--accent);font-weight:500}
+.motto-box{margin-top:16px;padding:12px 16px;border:2px dashed var(--border);border-radius:var(--radius-sm);color:var(--muted);font-size:15px}
+@media(max-width:700px){.profile-body{flex-direction:column;align-items:center;text-align:center}.profile-info{padding-top:12px}.tags{justify-content:center}}
+
+/* ── TIMELINE ── */
+.tl-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tl-card{background:var(--surface);border-radius:var(--radius-sm);padding:20px;cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid var(--border-soft)}
+.tl-card:hover{transform:translateY(-3px) scale(1.01);box-shadow:0 6px 20px rgba(61,32,69,.1)}
+.tl-card .emoji{font-size:28px;margin-bottom:8px}
+.tl-card .year{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px}
+.tl-card .title{font-weight:600;margin-bottom:4px}
+.tl-card .desc{font-size:13px;color:var(--muted);display:none}
+.tl-card.open .desc{display:block;margin-top:8px}
+.tl-card:nth-child(1){border-left:4px solid #FF8FAB}
+.tl-card:nth-child(2){border-left:4px solid #B3D4FF}
+.tl-card:nth-child(3){border-left:4px solid #98D8C8}
+.tl-card:nth-child(4){border-left:4px solid #FFD180}
+@media(max-width:700px){.tl-grid{grid-template-columns:1fr}}
+
+/* ── ABILITIES ── */
+.ability-row{margin-bottom:20px}
+.ability-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-weight:600}
+.ability-track{height:20px;background:var(--surface-warm);border-radius:10px;overflow:hidden}
+.ability-fill{height:100%;border-radius:10px;width:0;transition:width 1s cubic-bezier(.2,0,0,1)}
+.ability-fill.pink{background:linear-gradient(90deg,#FF8FAB,#E877A8)}
+.ability-fill.blue{background:linear-gradient(90deg,#B3D4FF,#7CB8F0)}
+.ability-fill.green{background:linear-gradient(90deg,#98D8C8,#5CC0AA)}
+.ability-stars{margin-top:4px;font-size:12px}
+
+/* ── PET ── */
+.pet-card{background:var(--surface);border-radius:var(--radius);padding:24px;display:flex;gap:20px;align-items:center;border:2px solid var(--border-soft)}
+.pet-avatar{width:110px;height:110px;border-radius:var(--radius-sm);border:2px solid var(--border);overflow:hidden;flex-shrink:0}
+.pet-info h3{margin-bottom:4px}.pet-info p{font-size:14px;color:var(--muted)}
+.pet-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.pet-stat{text-align:center;padding:8px;background:var(--surface-warm);border-radius:var(--radius-sm)}
+.pet-stat .num{font-size:18px;font-weight:700;color:var(--accent)}.pet-stat .label{font-size:11px;color:var(--muted)}
+@media(max-width:600px){.pet-card{flex-direction:column;text-align:center}}
+
+/* ── MESSAGES ── */
+.msg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.msg-card{background:var(--surface);border-radius:var(--radius-sm);padding:16px;transition:transform .2s,box-shadow .2s;position:relative;border:1px solid var(--border-soft)}
+.msg-card:hover{transform:translateY(-3px) rotate(.5deg);box-shadow:0 6px 20px rgba(61,32,69,.1)}
+.msg-card:nth-child(odd){border-top:3px solid #FF8FAB}
+.msg-card:nth-child(even){border-top:3px solid #B3D4FF}
+.msg-avatar{width:36px;height:36px;border-radius:50%;background:var(--surface-warm);margin-bottom:8px}
+.msg-from{font-weight:600;font-size:14px;margin-bottom:4px}
+.msg-text{font-size:14px;color:var(--muted);line-height:1.6}
+.msg-sticker{position:absolute;top:8px;right:8px;font-size:20px;opacity:.5}
+@media(max-width:700px){.msg-grid{grid-template-columns:1fr}}
+
+/* ── TEACHER ── */
+.teacher-card{background:var(--surface);border-radius:var(--radius);padding:28px;position:relative;border:2px solid var(--border-soft)}
+.teacher-card::before{content:'🌸';position:absolute;top:-14px;left:24px;font-size:24px}
+.teacher-name{font-weight:700;margin-bottom:8px;color:var(--accent)}
+.teacher-quote{font-size:17px;line-height:1.8;color:var(--fg-2);font-style:italic}
+
+/* ── ENVELOPE ── */
+.envelope-wrap{max-width:460px;margin:0 auto;cursor:pointer}
+.envelope{position:relative;perspective:800px}
+.env-top{background:linear-gradient(180deg,#FF8FAB,#FFD4E0);height:56px;border-radius:var(--radius-sm) var(--radius-sm) 0 0;position:relative;transform-origin:top center;transition:transform .5s ease;z-index:2;border:1px solid var(--border)}
+.env-top::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);border-left:28px solid transparent;border-right:28px solid transparent;border-top:20px solid #FFD4E0}
+.envelope.open .env-top{transform:rotateX(-180deg)}
+.env-body{background:var(--surface-warm);border:1px solid var(--border);border-radius:0 0 var(--radius-sm) var(--radius-sm);padding:24px;position:relative}
+.env-letter{max-height:0;overflow:hidden;transition:max-height .5s ease;opacity:0}
+.envelope.open .env-letter{max-height:400px;padding:16px 0;opacity:1;transition:max-height .5s ease,opacity .3s ease .2s}
+.env-heart{position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:24px;z-index:3}
+.env-hint{text-align:center;font-size:13px;color:var(--muted);margin-top:12px}
+
+/* ── FINALE ── */
+.finale{text-align:center;padding:80px 0;background:linear-gradient(135deg,#FFE6EE 0%,#E6F3FF 33%,#FFF2CC 66%,#E6FFE6 100%)}
+.finale h2{font-size:clamp(36px,7vw,64px);background:linear-gradient(135deg,#E877A8,#B3D4FF,#98D8C8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px}
+
+footer{text-align:center;padding:24px;font-size:13px;color:var(--muted);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<nav class="sakura-nav">
+  <a href="index.html" class="nav-home">🌸 纪念册首页</a>
+  <a href="#profile">档案</a>
+  <a href="#timeline">闪光时刻</a>
+  <a href="#abilities">超能力</a>
+  <a href="#pet">宠物</a>
+  <a href="#messages">留言</a>
+  <a href="#letter">信箱</a>
+</nav>
+
+<section class="hero" data-od-id="hero">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <span class="hero-crown">🌸</span>
+    <h1>樱花马卡龙纪念册</h1>
+    <p class="hero-sub">松柏第二小学 · 六年级4班 · 2026届</p>
+    <div class="hero-pills">
+      <span class="hero-pill pink">⭐ 发起人</span>
+      <span class="hero-pill blue">🏊 游泳健将</span>
+      <span class="hero-pill gold">🤖 AI小达人</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="profile" id="profile">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">🎀 个人档案</span><h2 style="margin-bottom:24px">甜蜜档案卡</h2></div>
+    <div class="profile-card reveal reveal-d1">
+      <div class="profile-banner"></div>
+      <div class="profile-body">
+        <div class="profile-avatar ph-img portrait">我的照片</div>
+        <div class="profile-info">
+          <div class="profile-name">张迤恩</div>
+          <div class="profile-nick">雅号：小恩 🌸</div>
+          <div class="tags">
+            <span class="tag">靠谱小队长</span>
+            <span class="tag">暖心闺蜜</span>
+            <span class="tag">科技小达人</span>
+          </div>
+          <div class="motto-box">✍️ 座右铭：_______________________（待填写）</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="timeline" id="timeline">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">✨ 闪光时刻</span><h2 style="margin-bottom:24px">甜蜜回忆</h2></div>
+    <div class="tl-grid reveal reveal-d1">
+      <div class="tl-card" onclick="this.classList.toggle('open')"><div class="emoji">🏊</div><div class="year">2024 · 秋</div><div class="title">校级游泳比赛获奖</div><div class="desc">自由泳50米第二名！水里的小飞鱼就是我 💪</div></div>
+      <div class="tl-card" onclick="this.classList.toggle('open')"><div class="emoji">🤖</div><div class="year">2026 · 春</div><div class="title">AI编程作品展示</div><div class="desc">独立完成智能聊天机器人项目！</div></div>
+      <div class="tl-card" onclick="this.classList.toggle('open')"><div class="emoji">🎯</div><div class="year">2024 · 冬</div><div class="title">主持校运会开幕式</div><div class="desc">第一次站在全校面前主持，超有成就感！</div></div>
+      <div class="tl-card" onclick="this.classList.toggle('open')"><div class="emoji">🔬</div><div class="year">2026 · 春</div><div class="title">科学实验报告一等奖</div><div class="desc">水的表面张力实验，全年级最高分！</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="abilities" id="abilities">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">💪 超能力</span><h2 style="margin-bottom:32px">甜蜜超能力</h2></div>
+    <div class="reveal reveal-d1" style="max-width:520px;margin:0 auto">
+      <div class="ability-row"><div class="ability-label"><span>🏊 游泳</span><span>95</span></div><div class="ability-track"><div class="ability-fill pink" data-value="95"></div></div><div class="ability-stars">⭐⭐⭐⭐⭐ 水中小飞鱼</div></div>
+      <div class="ability-row"><div class="ability-label"><span>🤖 AI编程</span><span>88</span></div><div class="ability-track"><div class="ability-fill blue" data-value="88"></div></div><div class="ability-stars">⭐⭐⭐⭐☆ 未来极客</div></div>
+      <div class="ability-row"><div class="ability-label"><span>💪 责任心</span><span>92</span></div><div class="ability-track"><div class="ability-fill green" data-value="92"></div></div><div class="ability-stars">⭐⭐⭐⭐⭐ 靠谱担当</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="pet" id="pet">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">🐱 宠物伙伴</span><h2 style="margin-bottom:24px">萌宠图鉴</h2></div>
+    <div class="pet-card reveal reveal-d1">
+      <div class="pet-avatar ph-img square">年糕的照片</div>
+      <div class="pet-info">
+        <h3>🐱 年糕</h3>
+        <p>橘猫 · 3岁 · 最可爱的毛球伙伴</p>
+        <p style="margin-top:4px">最爱晒太阳和追逗猫棒 💛</p>
+        <div class="pet-stats">
+          <div class="pet-stat"><div class="num">3</div><div class="label">年龄</div></div>
+          <div class="pet-stat"><div class="num">5.2</div><div class="label">体重(斤)</div></div>
+          <div class="pet-stat"><div class="num">⭐⭐⭐⭐⭐</div><div class="label">可爱值</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="messages" id="messages">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">💌 同学留言</span><h2 style="margin-bottom:24px">甜蜜寄语</h2></div>
+    <div class="msg-grid reveal reveal-d1">
+      <div class="msg-card"><span class="msg-sticker">🌸</span><div class="msg-avatar ph-img square"></div><div class="msg-from">李小雨</div><div class="msg-text">最好的闺蜜！游泳课你总帮我，毕业了也要一起玩～</div></div>
+      <div class="msg-card"><span class="msg-sticker">💫</span><div class="msg-avatar ph-img square"></div><div class="msg-from">王浩然</div><div class="msg-text">科技小达人！你的AI项目太厉害了！</div></div>
+      <div class="msg-card"><span class="msg-sticker">🎀</span><div class="msg-avatar ph-img square"></div><div class="msg-from">陈思琪</div><div class="msg-text">靠谱小队长！没有你我们小组可怎么办呀 🥺</div></div>
+      <div class="msg-card"><span class="msg-sticker">⭐</span><div class="msg-avatar ph-img square"></div><div class="msg-from">张明轩</div><div class="msg-text">游泳比赛你真的是全场最快！向你学习！</div></div>
+      <div class="msg-card"><span class="msg-sticker">🐱</span><div class="msg-avatar ph-img square"></div><div class="msg-from">刘小甜</div><div class="msg-text">年糕真的好可爱啊！下次去你家撸猫～</div></div>
+      <div class="msg-card"><span class="msg-sticker">🌈</span><div class="msg-avatar ph-img square"></div><div class="msg-from">赵天乐</div><div class="msg-text">运动会你主持得超棒！将来当大主持人！</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="teacher">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">🎓 师恩铭刻</span><h2 style="margin-bottom:24px">恩师寄语</h2></div>
+    <div class="teacher-card reveal reveal-d1">
+      <div class="teacher-name">周黎老师 · 班主任</div>
+      <div class="teacher-quote">六年的时光，看着你们从稚童长成少年。愿你们带着善良与勇气，走向更广阔的星辰大海。</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="letter" id="letter">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">📮 未来信箱</span><h2 style="margin-bottom:24px">寄往未来</h2></div>
+    <div class="envelope-wrap reveal reveal-d1" onclick="this.querySelector('.envelope').classList.toggle('open')">
+      <div class="envelope">
+        <div class="env-top"></div>
+        <div class="env-body">
+          <div class="env-heart">💌</div>
+          <div style="text-align:center;font-weight:700;color:var(--accent)">致未来的自己</div>
+          <div class="env-letter">
+            <p>亲爱的初中自己：</p>
+            <p>你好呀！写这封信的时候，我刚刚结束了小学最后一次游泳训练。</p>
+            <p>希望初中的你依然爱笑、爱游泳、爱捣鼓AI。别忘了年糕还在等你回家撸它呢！</p>
+            <p>不管遇到什么困难，记得你可是靠谱小队长！加油！💪</p>
+            <p style="text-align:right;margin-top:16px;color:var(--accent)">—— 2026年6月的张迤恩 🌸</p>
+          </div>
+        </div>
+      </div>
+      <div class="env-hint">👆 点击信封打开 / 合上</div>
+    </div>
+  </div>
+</section>
+
+<section class="finale" data-od-id="finale">
+  <div class="container reveal">
+    <h2>未来可期 🌸</h2>
+    <p class="lead" style="margin:0 auto 32px;text-align:center">六年的时光，最美的遇见。愿我们带着星辰大海的梦想，勇敢前行。</p>
+    <div class="ph-img wide" style="max-width:600px;margin:0 auto;height:200px">毕业大合影</div>
+    <p style="margin-top:24px;font-size:14px;color:var(--muted)">松柏第二小学 · 六年级4班 · 2026届</p>
+  </div>
+</section>
+
+<footer>时光纪念册 © 2026 · 樱花马卡龙主题 🌸</footer>
+
+<script>
+(function(){
+  const c=document.getElementById('heroCanvas'),ctx=c.getContext('2d');
+  let W,H,ps=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}
+  window.addEventListener('resize',resize);resize();
+  const colors=['#FF8FAB','#B3D4FF','#98D8C8','#FFD180','#D4A5FF','#FFB3C6'];
+  for(let i=0;i<50;i++) ps.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*4+2,vx:(Math.random()-.5)*.4,vy:Math.random()*.5+.1,c:colors[i%colors.length],a:Math.random()*.4+.2,shape:Math.random()>.5?'circle':'petal'});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of ps){
+      ctx.globalAlpha=p.a;ctx.fillStyle=p.c;
+      if(p.shape==='petal'){
+        ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.y*.01);
+        ctx.beginPath();ctx.ellipse(0,0,p.r,p.r*1.6,0,0,Math.PI*2);ctx.fill();ctx.restore();
+      }else{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill()}
+      p.x+=p.vx;p.y+=p.vy;
+      if(p.y>H){p.y=-10;p.x=Math.random()*W}
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+    }
+    ctx.globalAlpha=1;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const aObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.value+'%';aObs.unobserve(e.target)}})},{threshold:.5});
+document.querySelectorAll('.ability-fill').forEach(el=>aObs.observe(el));
+</script>
+</body>
+</html>

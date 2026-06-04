@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "全班留言墙 — 所有同学的手写留言照片（公开）",
+  "messages": [
+    {
+      "id": "M001",
+      "fromStudentId": "12",
+      "fromName": "李小明",
+      "photo": "photos/messages/wall-001.jpg",
+      "caption": "致我们最美好的六年",
+      "timestamp": "2026-06-01T10:00:00Z"
+    }
+  ],
+  "_note": "留言分两类：personal(给特定同学，存在该同学 messages 数组中) / wall(全班公开留言，存在此文件)"
+}

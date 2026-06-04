@@ -1,0 +1,13 @@
+# Open Design runtime (auto-created, never commit)
+.od-skills/
+.od/
+*.artifact.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

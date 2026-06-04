@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>星际答题卡 · 张迤恩 · 松柏第二小学2026届</title>
+<style>
+:root {
+  --bg: #F0F4FA;
+  --surface: #FFFFFF;
+  --surface-warm: #E8EEF8;
+  --surface-cool: #D6E4F5;
+  --fg: #0F1B3D;
+  --fg-2: #2D4A7A;
+  --muted: #6882A8;
+  --border: #C0D0E8;
+  --border-soft: #DAE4F2;
+  --accent: #1E3A8A;
+  --accent-coral: #2563EB;
+  --accent-mint: #D4AF37;
+  --accent-gold: #FCD34D;
+  --radius: 10px;
+  --font-mono: 'JetBrains Mono','Fira Code',ui-monospace,Menlo,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Noto Sans SC','PingFang SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+.section{padding:64px 0}
+h1{font-family:var(--font-mono);font-size:clamp(28px,5vw,48px);line-height:1.1;font-weight:800;letter-spacing:-0.02em}
+h2{font-size:clamp(22px,3.5vw,32px);line-height:1.2;font-weight:700;font-family:var(--font-mono)}
+h3{font-size:18px;font-weight:600;font-family:var(--font-mono)}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-coral);margin-bottom:12px;display:inline-block}
+.lead{font-size:16px;color:var(--muted);font-family:var(--font-mono)}
+.ph-img{background:linear-gradient(135deg,var(--surface-warm),var(--surface-cool));border:2px dashed var(--border);border-radius:var(--radius);display:grid;place-items:center;color:var(--muted);font-size:14px;font-family:var(--font-mono)}
+.ph-img.portrait{aspect-ratio:3/4}.ph-img.square{aspect-ratio:1/1}.ph-img.wide{aspect-ratio:16/9}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}
+
+/* NAV */
+.cosmic-nav{position:sticky;top:0;z-index:100;background:rgba(15,27,61,.95);border-bottom:1px solid rgba(37,99,235,.3);padding:0 16px;display:flex;align-items:center;overflow-x:auto;font-size:13px;font-family:var(--font-mono)}
+.cosmic-nav a{color:rgba(192,208,232,.7);padding:12px 12px;white-space:nowrap;transition:color .2s}
+.cosmic-nav a:hover{color:var(--accent-gold)}
+.cosmic-nav .nav-home{color:var(--accent-gold);font-weight:700}
+@media(max-width:600px){.cosmic-nav{font-size:12px}.cosmic-nav a{padding:10px 8px}}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#0F1B3D 0%,#1E3A8A 50%,#2563EB 100%)}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FCD34D' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-canvas{position:absolute;inset:0;pointer-events:none}
+.hero-content{text-align:center;z-index:2;padding:32px}
+.hero-code{font-family:var(--font-mono);font-size:11px;color:var(--accent-gold);letter-spacing:.1em;margin-bottom:16px;opacity:.7}
+.hero h1{color:#fff;margin-bottom:12px;text-shadow:0 0 40px rgba(37,99,235,.5)}
+.hero h1 span{color:var(--accent-gold)}
+.hero-sub{font-family:var(--font-mono);font-size:clamp(14px,2vw,18px);color:rgba(192,208,232,.8);margin-bottom:32px}
+.hero-tags{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-tag{padding:6px 14px;background:rgba(37,99,235,.2);border:1px solid rgba(212,175,55,.4);border-radius:var(--radius);font-size:12px;font-family:var(--font-mono);color:rgba(192,208,232,.9)}
+
+/* PROFILE */
+.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative}
+.profile-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#1E3A8A,#2563EB,#D4AF37)}
+.profile-banner{height:80px;background:linear-gradient(135deg,#0F1B3D,#1E3A8A);position:relative}
+.profile-body{display:flex;gap:24px;padding:0 24px 24px;margin-top:-40px;position:relative;z-index:2}
+.profile-avatar{width:90px;height:90px;border-radius:var(--radius);border:3px solid var(--surface);flex-shrink:0;overflow:hidden;background:var(--surface-warm)}
+.profile-info{flex:1;padding-top:44px}
+.profile-name{font-family:var(--font-mono);font-size:24px;font-weight:800;margin-bottom:2px;color:var(--fg)}
+.profile-nick{font-family:var(--font-mono);font-size:14px;color:var(--accent-coral);margin-bottom:12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:4px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:var(--font-mono);color:var(--fg-2)}
+.motto-box{margin-top:16px;padding:10px 14px;border:2px dashed var(--border);border-radius:var(--radius);font-size:14px;font-family:var(--font-mono);color:var(--muted)}
+@media(max-width:700px){.profile-body{flex-direction:column;align-items:center;text-align:center}.profile-info{padding-top:12px}.tags{justify-content:center}}
+
+/* TIMELINE */
+.tl-wrap{position:relative;padding-left:32px}
+.tl-wrap::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,#1E3A8A,#2563EB,#D4AF37)}
+.tl-item{position:relative;margin-bottom:28px;cursor:pointer}
+.tl-dot{position:absolute;left:-30px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--surface);border:3px solid var(--accent-coral);box-shadow:0 0 8px rgba(37,99,235,.3);display:grid;place-items:center;font-size:9px}
+.tl-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;transition:transform .2s}
+.tl-card:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(15,27,61,.1)}
+.tl-year{font-family:var(--font-mono);font-size:12px;color:var(--accent-coral);margin-bottom:4px}
+.tl-title{font-weight:600;font-family:var(--font-mono);margin-bottom:4px}
+.tl-desc{font-size:13px;color:var(--muted);display:none}
+.tl-item.open .tl-desc{display:block;margin-top:8px}
+
+/* ABILITIES */
+.ability-row{margin-bottom:20px}
+.ability-label{display:flex;justify-content:space-between;margin-bottom:8px;font-size:14px;font-family:var(--font-mono);font-weight:600}
+.ability-track{height:14px;background:var(--surface-cool);border-radius:7px;overflow:hidden;border:1px solid var(--border)}
+.ability-fill{height:100%;border-radius:7px;width:0;transition:width 1s cubic-bezier(.2,0,0,1)}
+.ability-fill.blue{background:linear-gradient(90deg,#1E3A8A,#2563EB)}
+.ability-fill.gold{background:linear-gradient(90deg,#D4AF37,#FCD34D)}
+.ability-fill.sky{background:linear-gradient(90deg,#60A5FA,#93C5FD)}
+.ability-level{font-family:var(--font-mono);font-size:11px;color:var(--accent);margin-top:4px}
+
+/* PET */
+.pet-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;display:flex;gap:20px;align-items:center}
+.pet-avatar{width:100px;height:100px;border-radius:var(--radius);border:2px solid var(--border);overflow:hidden;flex-shrink:0}
+.pet-info h3{font-family:var(--font-mono);margin-bottom:4px}.pet-info p{font-size:14px;color:var(--muted);font-family:var(--font-mono)}
+.pet-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.pet-stat{text-align:center;padding:8px;background:var(--surface-warm);border-radius:var(--radius)}
+.pet-stat .num{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--accent-coral)}.pet-stat .label{font-size:11px;color:var(--muted);font-family:var(--font-mono)}
+@media(max-width:600px){.pet-card{flex-direction:column;text-align:center}}
+
+/* MESSAGES */
+.msg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.msg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;font-family:var(--font-mono);transition:transform .2s}
+.msg-card:hover{transform:translateY(-2px) rotate(-.3deg)}
+.msg-card::before{content:attr(data-index);display:block;font-size:11px;color:var(--accent-coral);margin-bottom:6px;opacity:.6}
+.msg-avatar{width:32px;height:32px;border-radius:50%;background:var(--surface-warm);margin-bottom:8px}
+.msg-from{font-weight:600;font-size:13px;margin-bottom:4px}
+.msg-text{font-size:13px;color:var(--muted);line-height:1.6}
+@media(max-width:700px){.msg-grid{grid-template-columns:1fr}}
+
+/* TEACHER */
+.teacher-card{background:var(--surface);border-left:4px solid var(--accent-coral);border-radius:0 var(--radius) var(--radius) 0;padding:20px}
+.teacher-name{font-family:var(--font-mono);font-weight:700;margin-bottom:8px;color:var(--accent-coral)}
+.teacher-quote{font-family:var(--font-mono);font-size:16px;line-height:1.8;color:var(--fg-2)}
+
+/* ENVELOPE */
+.envelope-wrap{max-width:460px;margin:0 auto;cursor:pointer}
+.envelope{position:relative;perspective:800px}
+.env-top{background:linear-gradient(180deg,#1E3A8A,#2563EB);height:52px;border-radius:var(--radius) var(--radius) 0 0;position:relative;transform-origin:top center;transition:transform .5s ease;z-index:2;border:1px solid rgba(37,99,235,.4)}
+.env-top::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);border-left:26px solid transparent;border-right:26px solid transparent;border-top:20px solid #2563EB}
+.envelope.open .env-top{transform:rotateX(-180deg)}
+.env-body{background:var(--surface-warm);border:1px solid var(--border);border-radius:0 0 var(--radius) var(--radius);padding:20px;position:relative}
+.env-seal{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:36px;height:36px;background:var(--accent-coral);border-radius:50%;display:grid;place-items:center;font-size:10px;color:#fff;font-family:var(--font-mono);z-index:3}
+.env-letter{max-height:0;overflow:hidden;transition:max-height .5s ease;opacity:0;font-family:var(--font-mono);font-size:14px;line-height:1.8;color:var(--fg-2)}
+.envelope.open .env-letter{max-height:400px;padding:12px 0;opacity:1;transition:max-height .5s ease,opacity .3s ease .2s}
+.env-hint{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;font-family:var(--font-mono)}
+
+/* FINALE */
+.finale{text-align:center;padding:80px 0;background:linear-gradient(135deg,#0F1B3D 0%,#1E3A8A 50%,#2563EB 100%)}
+.finale h2{font-family:var(--font-mono);font-size:clamp(32px,6vw,56px);color:#fff;text-shadow:0 0 40px rgba(37,99,235,.5);margin-bottom:24px}
+.finale h2 span{color:var(--accent-gold)}
+footer{text-align:center;padding:24px;font-size:12px;color:var(--muted);font-family:var(--font-mono);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<nav class="cosmic-nav">
+  <a href="index.html" class="nav-home">⬡ 纪念册首页</a>
+  <a href="#profile">档案</a>
+  <a href="#timeline">闪光时刻</a>
+  <a href="#abilities">超能力</a>
+  <a href="#pet">宠物</a>
+  <a href="#messages">留言</a>
+  <a href="#letter">信箱</a>
+</nav>
+
+<section class="hero" data-od-id="hero">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-code">// STUDENT_RECORD // ID:050 // CLASS:6-4 //</div>
+    <h1>星际答题卡 <span>✦</span></h1>
+    <p class="hero-sub">松柏第二小学 · 六年级4班 · 2026届</p>
+    <div class="hero-tags">
+      <span class="hero-tag">⭐ 发起人</span>
+      <span class="hero-tag">🏊 游泳</span>
+      <span class="hero-tag">🤖 AI编程</span>
+      <span class="hero-tag">✦ 学号50</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="profile" id="profile">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">// PROFILE_DATA</span><h2 style="margin-bottom:24px">学生档案</h2></div>
+    <div class="profile-card reveal reveal-d1">
+      <div class="profile-banner"></div>
+      <div class="profile-body">
+        <div class="profile-avatar ph-img portrait">Photo</div>
+        <div class="profile-info">
+          <div class="profile-name">张迤恩</div>
+          <div class="profile-nick">ID:050 · 小恩</div>
+          <div class="tags">
+            <span class="tag">靠谱小队长</span>
+            <span class="tag">暖心闺蜜</span>
+            <span class="tag">科技小达人</span>
+          </div>
+          <div class="motto-box">座右铭: __________________________</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="timeline" id="timeline">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">// ACHIEVEMENT_LOG</span><h2 style="margin-bottom:24px">荣誉记录</h2></div>
+    <div class="tl-wrap reveal reveal-d1">
+      <div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot">🏊</div><div class="tl-card"><div class="tl-year">2024.AUT</div><div class="tl-title">校级游泳比赛获奖</div><div class="tl-desc">自由泳50米第二名，水里的小飞鱼！</div></div></div>
+      <div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot" style="border-color:var(--accent-gold)">🤖</div><div class="tl-card"><div class="tl-year">2026.SPR</div><div class="tl-title">AI编程作品展示</div><div class="tl-desc">独立完成智能聊天机器人！</div></div></div>
+      <div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot">🎯</div><div class="tl-card"><div class="tl-year">2024.WIN</div><div class="tl-title">主持校运会开幕式</div><div class="tl-desc">第一次全校主持，紧张但有成就感！</div></div></div>
+      <div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot" style="border-color:var(--accent-gold)">🔬</div><div class="tl-card"><div class="tl-year">2026.SPR</div><div class="tl-title">科学实验报告一等奖</div><div class="tl-desc">水的表面张力实验，全年级最高分！</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="abilities" id="abilities">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">// ABILITY_MATRIX</span><h2 style="margin-bottom:32px">能力矩阵</h2></div>
+    <div class="reveal reveal-d1" style="max-width:520px;margin:0 auto">
+      <div class="ability-row"><div class="ability-label"><span>🏊 游泳</span><span>95</span></div><div class="ability-track"><div class="ability-fill blue" data-value="95"></div></div><div class="ability-level">LEVEL: ★★★★★ 水中小飞鱼</div></div>
+      <div class="ability-row"><div class="ability-label"><span>🤖 AI编程</span><span>88</span></div><div class="ability-track"><div class="ability-fill gold" data-value="88"></div></div><div class="ability-level">LEVEL: ★★★★☆ 未来极客</div></div>
+      <div class="ability-row"><div class="ability-label"><span>💪 责任心</span><span>92</span></div><div class="ability-track"><div class="ability-fill sky" data-value="92"></div></div><div class="ability-level">LEVEL: ★★★★★ 靠谱担当</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="pet" id="pet">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">// COMPANION_DATA</span><h2 style="margin-bottom:24px">灵兽数据</h2></div>
+    <div class="pet-card reveal reveal-d1">
+      <div class="pet-avatar ph-img square">年糕</div>
+      <div class="pet-info">
+        <h3>🐱 年糕 · PET_001</h3>
+        <p>橘猫 · 3岁 · 最可爱的毛球</p>
+        <p style="margin-top:4px">最爱晒太阳和追逗猫棒</p>
+        <div class="pet-stats">
+          <div class="pet-stat"><div class="num">3</div><div class="label">AGE</div></div>
+          <div class="pet-stat"><div class="num">5.2</div><div class="label">KG</div></div>
+          <div class="pet-stat"><div class="num">★★★★★</div><div class="label">CUTE</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="messages" id="messages">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">// MESSAGE_QUEUE</span><h2 style="margin-bottom:24px">同窗寄语</h2></div>
+    <div class="msg-grid reveal reveal-d1">
+      <div class="msg-card" data-index="MSG_001"><div class="msg-avatar ph-img square"></div><div class="msg-from">李小雨</div><div class="msg-text">最好的闺蜜！游泳课你总帮我，毕业了也要一起玩～</div></div>
+      <div class="msg-card" data-index="MSG_002"><div class="msg-avatar ph-img square"></div><div class="msg-from">王浩然</div><div class="msg-text">科技小达人！你的AI项目太厉害了！</div></div>
+      <div class="msg-card" data-index="MSG_003"><div class="msg-avatar ph-img square"></div><div class="msg-from">陈思琪</div><div class="msg-text">靠谱小队长！没有你我们小组可怎么办呀 🥺</div></div>
+      <div class="msg-card" data-index="MSG_004"><div class="msg-avatar ph-img square"></div><div class="msg-from">张明轩</div><div class="msg-text">游泳比赛你真的是全场最快！向你学习！</div></div>
+      <div class="msg-card" data-index="MSG_005"><div class="msg-avatar ph-img square"></div><div class="msg-from">刘小甜</div><div class="msg-text">年糕真的好可爱啊！下次去你家撸猫～</div></div>
+      <div class="msg-card" data-index="MSG_006"><div class="msg-avatar ph-img square"></div><div class="msg-from">赵天乐</div><div class="msg-text">运动会你主持得超棒！将来当大主持人！</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="teacher">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">// MENTOR_NOTE</span><h2 style="margin-bottom:24px">恩师寄语</h2></div>
+    <div class="teacher-card reveal reveal-d1">
+      <div class="teacher-name">周黎 · CLASS_TEACHER</div>
+      <div class="teacher-quote">六年的时光，看着你们从稚童长成少年。愿你们带着善良与勇气，走向更广阔的星辰大海。</div>
+    </div>
+  </div>
+</section>
+
+<section class="section" data-od-id="letter" id="letter">
+  <div class="container">
+    <div class="reveal"><span class="eyebrow">// TIME_CAPSULE</span><h2 style="margin-bottom:24px">未来信箱</h2></div>
+    <div class="envelope-wrap reveal reveal-d1" onclick="this.querySelector('.envelope').classList.toggle('open')">
+      <div class="envelope">
+        <div class="env-top"></div>
+        <div class="env-body">
+          <div class="env-seal">✦</div>
+          <div style="text-align:center;font-weight:700;color:var(--accent-coral);font-family:var(--font-mono)">TO: FUTURE_SELF</div>
+          <div class="env-letter">
+            <p>亲爱的初中自己：</p>
+            <p>你好呀！我是六年级的张迤恩。</p>
+            <p>希望初中的你依然爱笑、爱游泳、爱捣鼓AI。别忘了年糕还在等你回家撸它呢！</p>
+            <p>不管遇到什么困难，记得你可是靠谱小队长！加油！💪</p>
+            <p style="text-align:right;margin-top:16px;color:var(--accent-coral)">—— 2026.06 · 张迤恩 ✦</p>
+          </div>
+        </div>
+      </div>
+      <div class="env-hint">↑ CLICK TO OPEN / CLOSE</div>
+    </div>
+  </div>
+</section>
+
+<section class="finale" data-od-id="finale">
+  <div class="container reveal">
+    <h2>未来可期 <span>✦</span></h2>
+    <p class="lead" style="margin:0 auto 32px;text-align:center;color:rgba(192,208,232,.7)">六年的时光，最美的遇见。愿我们带着星辰大海的梦想，勇敢前行。</p>
+    <div class="ph-img wide" style="max-width:600px;margin:0 auto;height:180px;font-family:var(--font-mono)">CLASS_PHOTO</div>
+    <p style="margin-top:24px;font-size:12px;color:rgba(192,208,232,.5);font-family:var(--font-mono)">松柏第二小学 · 六年级4班 · 2026届 · // END_RECORD //</p>
+  </div>
+</section>
+
+<footer>时光纪念册 © 2026 · 星际答题卡主题 ⬡</footer>
+
+<script>
+(function(){
+  const c=document.getElementById('heroCanvas'),ctx=c.getContext('2d');
+  let W,H,ps=[];
+  function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}
+  window.addEventListener('resize',resize);resize();
+  const colors=['#2563EB','#D4AF37','#60A5FA','#FCD34D','#93C5FD'];
+  for(let i=0;i<80;i++) ps.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+0.5,vx:(Math.random()-.5)*.2,vy:Math.random()*.5+.2,c:colors[i%colors.length],a:Math.random()*.5+.2,speed:Math.random()*.3+.1});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of ps){
+      ctx.globalAlpha=p.a;ctx.fillStyle=p.c;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+      p.x+=p.vx;p.y+=p.vy;p.a+=Math.sin(p.y*.01)*.01;
+      if(p.y>H){p.y=-10;p.x=Math.random()*W}
+      if(p.x<0)p.x=W;if(p.x>W)p.x=0;
+    }
+    ctx.globalAlpha=1;requestAnimationFrame(draw);
+  }
+  draw();
+})();
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const aObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.value+'%';aObs.unobserve(e.target)}})},{threshold:.5});
+document.querySelectorAll('.ability-fill').forEach(el=>aObs.observe(el));
+</script>
+</body>
+</html>

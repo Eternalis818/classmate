@@ -1,0 +1,34 @@
+/* ───────────────────────────────────────────
+   模板 02 · 樱花马卡龙 (sakura-macaron)
+   适用：女生 · 甜美可爱风
+   参考：浅蓝 #E6F3FF，浅粉 #FFE6E6，浅黄 #FFF2CC，浅绿 #E6FFE6
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #FFF5F9;
+  --surface: #FFFFFF;
+  --surface-warm: #FFE6EE;
+  --surface-cool: #E6F3FF;
+  --fg: #3D2045;
+  --fg-2: #6B4570;
+  --muted: #A07A9E;
+  --border: #F0C8D8;
+  --border-soft: #F8E0EA;
+  --accent: #E877A8;
+  --accent-coral: #FF8FAB;
+  --accent-mint: #98D8C8;
+  --accent-gold: #FFD180;
+
+  --particle-colors: #FF8FAB, #98D8C8, #B3D4FF, #FFD180, #D4A5FF;
+  --hero-gradient: linear-gradient(135deg, #FFE6EE 0%, #E6F3FF 33%, #FFF2CC 66%, #E6FFE6 100%);
+  --envelope-gradient: linear-gradient(135deg, #FFF0F5, #E6F0FF, #FFF5E6);
+
+  --font-display: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+/* 模板特征：
+   - 马卡龙五色柔和渐变（粉/蓝/黄/绿/淡紫）
+   - 圆润大圆角（20-28px），波浪形装饰边框
+   - 糖果色粒子漂浮（如彩色糖粒）
+   - 可爱系风格，适合喜欢甜美风的女生
+*/

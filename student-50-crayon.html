@@ -1,0 +1,1499 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>时光纪念册 · 张迤恩 · 蜡笔手绘版</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <style>
+    /* ═══ CRAYON DESIGN TOKENS ═══ */
+    :root {
+      --paper: #FFFEF8;
+      --paper-grain: #F5F0E0;
+      --yellow: #FFE566;
+      --yellow-dark: #FFD200;
+      --pink: #FF7EB6;
+      --pink-dark: #FF4DA6;
+      --blue: #74C0FC;
+      --blue-dark: #4D9DE0;
+      --mint: #8FD9C8;
+      --mint-dark: #5EC9B0;
+      --lavender: #C9B1FF;
+      --lavender-dark: #A78BFA;
+      --orange: #FFA94D;
+      --orange-dark: #FF8C00;
+      --green: #8CEF7A;
+      --green-dark: #5CD65C;
+      --red: #FF6B6B;
+      --red-dark: #EE4444;
+      --ink: #2D2A3E;
+      --ink-light: #5A5478;
+      --cream: #FFF8E1;
+      --font-display: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+      --font-body: 'Noto Sans SC', system-ui, sans-serif;
+    }
+
+    /* Wobbly border filter */
+    svg#wobbly-filter { position: absolute; width: 0; height: 0; }
+    .wobbly { filter: url(#wobbly); }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Paper grain texture */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ═══ CRAYON NAV ═══ */
+    .crayon-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: linear-gradient(180deg, var(--pink) 0%, var(--lavender) 100%);
+      border-bottom: 4px solid var(--pink-dark);
+      box-shadow: 0 4px 0 var(--pink-dark), 0 6px 20px rgba(0,0,0,0.12);
+      padding: 0 16px;
+    }
+    .crayon-nav-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; height: 50px; gap: 0;
+    }
+    .crayon-nav-brand {
+      font-family: var(--font-display);
+      font-size: 18px; color: white;
+      text-shadow: 2px 2px 0 var(--pink-dark);
+      white-space: nowrap; padding-right: 12px;
+      border-right: 3px dashed white;
+      margin-right: 8px; text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .crayon-nav-brand:hover { opacity: 0.85; }
+    .crayon-nav-links {
+      display: flex; align-items: center; flex: 1; overflow-x: auto;
+    }
+    .crayon-nav-links::-webkit-scrollbar { display: none; }
+    .crayon-nav a {
+      font-family: var(--font-body); font-size: 13px;
+      font-weight: 500; color: rgba(255,255,255,0.9);
+      text-shadow: 1px 1px 0 var(--pink-dark);
+      padding: 0 12px; height: 50px;
+      display: flex; align-items: center; white-space: nowrap;
+      text-decoration: none;
+      transition: all 0.15s;
+      border-bottom: 3px solid transparent;
+    }
+    .crayon-nav a:hover {
+      color: white; text-shadow: 2px 2px 0 var(--pink-dark);
+      border-bottom-color: white;
+    }
+    @media (max-width: 600px) {
+      .crayon-nav-brand { font-size: 15px; }
+      .crayon-nav a { font-size: 12px; padding: 0 8px; }
+    }
+
+    /* ═══ SCROLLBAR ═══ */
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--pink); border-radius: 5px; border: 2px solid var(--cream); }
+
+    /* ═══ CRAYON SECTION BASE ═══ */
+    .section {
+      padding: clamp(40px, 8vw, 80px) clamp(16px, 5vw, 48px);
+      position: relative;
+    }
+
+    .section-title {
+      text-align: center; margin-bottom: 40px;
+    }
+    .section-title h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 6vw, 48px);
+      letter-spacing: 0.05em;
+      position: relative; display: inline-block;
+      padding: 8px 24px;
+    }
+    .section-title .subtitle {
+      font-family: var(--font-display);
+      font-size: 16px; color: var(--ink-light);
+      margin-top: 6px; letter-spacing: 0.1em;
+    }
+    .section-divider {
+      height: 6px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--yellow) 0px, var(--yellow) 20px,
+        var(--pink) 20px, var(--pink) 40px,
+        var(--blue) 40px, var(--blue) 60px,
+        var(--mint) 60px, var(--mint) 80px,
+        var(--lavender) 80px, var(--lavender) 100px
+      );
+      border-top: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      margin: 0;
+    }
+
+    /* Wobbly card */
+    .wobbly-card {
+      background: white;
+      border: 3px solid var(--ink);
+      border-radius: 16px;
+      position: relative;
+      box-shadow: 5px 5px 0 var(--ink);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wobbly-card:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--ink);
+    }
+
+    /* Reveal */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.2,0,0,1), transform 0.7s cubic-bezier(0.2,0,0,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.12s; }
+    .reveal-delay-2 { transition-delay: 0.24s; }
+    .reveal-delay-3 { transition-delay: 0.36s; }
+
+    /* Crayon heading underline */
+    .crayon-underline {
+      position: relative;
+      display: inline-block;
+    }
+    .crayon-underline::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 100%; height: 6px;
+      background: var(--yellow);
+      border-radius: 3px;
+      border: 2px solid var(--ink);
+      transform: rotate(-1deg);
+    }
+
+    /* ═══════════════════════════════════════════
+       DECORATIONS — scattered doodles
+       ═══════════════════════════════════════════ */
+    .deco {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      font-size: 32px;
+      filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
+    }
+    .deco-star { color: var(--yellow); }
+    .deco-heart { color: var(--pink); }
+    .deco-cloud { color: var(--blue); font-size: 40px; opacity: 0.6; }
+    .deco-rainbow {
+      position: absolute; top: 0; right: 0;
+      width: 200px; height: 100px;
+      background: conic-gradient(
+        from 180deg,
+        #FF6B6B, #FFA94D, #FFE566, #8CEF7A, #74C0FC, #C9B1FF, #FF7EB6,
+        #FF6B6B
+      );
+      border-radius: 0 0 0 100%;
+      opacity: 0.2;
+    }
+    .deco-sun {
+      position: absolute; top: 80px; right: 40px;
+      width: 80px; height: 80px;
+      background: var(--yellow);
+      border-radius: 50%;
+      border: 4px solid var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+    .deco-sun::before {
+      content: '';
+      position: absolute; inset: -8px;
+      background: var(--yellow);
+      border-radius: 50%;
+      z-index: -1;
+      opacity: 0.4;
+    }
+    .deco-lollipop {
+      position: absolute; bottom: 20px; left: 20px;
+      width: 30px; height: 60px;
+    }
+    .deco-lollipop::before {
+      content: '';
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 4px; height: 30px;
+      background: var(--ink);
+      border-radius: 2px;
+    }
+    .deco-lollipop::after {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 30px; height: 30px;
+      background: var(--pink);
+      border-radius: 50%;
+      border: 3px solid var(--ink);
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO — 蜡笔开屏
+       ═══════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(255,126,182,0.15) 0%, transparent 50%),
+        radial-gradient(ellipse at 20% 80%, rgba(116,192,252,0.15) 0%, transparent 50%),
+        linear-gradient(180deg, var(--paper) 0%, var(--cream) 100%);
+    }
+
+    /* Crayon title */
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 10vw, 96px);
+      line-height: 1.1;
+      text-align: center;
+      position: relative; z-index: 2;
+      margin-bottom: 12px;
+    }
+    .hero-title .line1 {
+      display: block;
+      color: var(--ink);
+      text-shadow: 4px 4px 0 var(--pink);
+      transform: rotate(-2deg);
+    }
+    .hero-title .line2 {
+      display: block;
+      color: var(--ink);
+      text-shadow: 4px 4px 0 var(--yellow);
+      transform: rotate(1deg);
+    }
+    .hero-title .line3 {
+      display: block;
+      color: var(--ink);
+      text-shadow: 4px 4px 0 var(--blue);
+      transform: rotate(-1deg);
+    }
+    .hero-badges {
+      display: flex; justify-content: center; gap: 12px;
+      flex-wrap: wrap; margin-top: 16px; position: relative; z-index: 2;
+    }
+    .hero-badge {
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      padding: 6px 16px; border-radius: 20px;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+    }
+    .hero-badge-pink { background: var(--pink); color: white; }
+    .hero-badge-yellow { background: var(--yellow); color: var(--ink); }
+    .hero-badge-blue { background: var(--blue); color: white; }
+    .hero-badge-mint { background: var(--mint); color: var(--ink); }
+
+    /* Scattered elements */
+    .hero-star {
+      position: absolute; font-size: 36px;
+      color: var(--yellow);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+      animation: starSpin 4s ease-in-out infinite;
+    }
+    @keyframes starSpin {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(20deg) scale(1.15); }
+    }
+    .hero-heart {
+      position: absolute; font-size: 28px; color: var(--pink);
+      text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+      animation: heartBounce 2s ease-in-out infinite;
+    }
+    @keyframes heartBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .scroll-hint {
+      text-align: center; margin-top: 32px;
+      font-family: var(--font-display); font-size: 16px;
+      color: var(--ink-light); position: relative; z-index: 2;
+      animation: bounceDown 1.5s ease-in-out infinite;
+    }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+
+    /* ═══════════════════════════════════════════
+       PROFILE — 超萌档案卡
+       ═══════════════════════════════════════════ */
+    .profile-card {
+      max-width: 600px; margin: 0 auto;
+      border-radius: 24px;
+      box-shadow: 6px 6px 0 var(--ink);
+      border: 4px solid var(--ink);
+      overflow: hidden;
+      background: white;
+    }
+    .profile-banner {
+      height: 120px;
+      background: linear-gradient(135deg, var(--pink) 0%, var(--lavender) 50%, var(--blue) 100%);
+      position: relative; overflow: hidden;
+      z-index: 1;
+    }
+    .profile-banner::after {
+      content: '✨';
+      position: absolute; top: 20px; right: 30px;
+      font-size: 32px;
+      animation: starSpin 3s ease-in-out infinite;
+      z-index: 2;
+    }
+    .profile-avatar {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 4px solid white;
+      box-shadow: 0 0 0 3px var(--ink);
+      margin: -50px auto 12px;
+      background: linear-gradient(135deg, var(--yellow), var(--pink));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 40px; overflow: hidden;
+      position: relative; z-index: 5;
+    }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+    .profile-body { padding: 0 24px 24px; text-align: center; }
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: 28px; margin-bottom: 4px;
+    }
+    .profile-nickname {
+      font-size: 15px; color: var(--pink-dark); margin-bottom: 12px;
+      font-weight: 500;
+    }
+    .profile-tags {
+      display: flex; justify-content: center; gap: 6px; flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .profile-tag {
+      font-size: 13px; padding: 4px 12px;
+      border-radius: 16px; border: 2px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+    .profile-tag:nth-child(1) { background: var(--yellow); }
+    .profile-tag:nth-child(2) { background: var(--mint); }
+    .profile-tag:nth-child(3) { background: var(--lavender); color: white; }
+    .profile-info-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 12px; margin-top: 16px; text-align: left;
+    }
+    .profile-info-item {
+      padding: 12px; border-radius: 12px;
+      border: 2px solid var(--ink);
+      background: var(--cream);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+    .profile-info-label {
+      font-size: 11px; color: var(--ink-light); margin-bottom: 4px;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .profile-info-value {
+      font-family: var(--font-display); font-size: 15px;
+    }
+    .profile-motto {
+      margin-top: 16px; padding: 16px; border-radius: 12px;
+      background: var(--cream); border: 2px dashed var(--ink);
+      font-size: 14px; color: var(--ink-light);
+      font-style: italic;
+    }
+
+    /* ═══════════════════════════════════════════
+       TIMELINE — 闪光时刻
+       ═══════════════════════════════════════════ */
+    .timeline { max-width: 600px; margin: 0 auto; }
+    .timeline-item {
+      display: flex; gap: 20px; margin-bottom: 28px;
+      align-items: flex-start;
+    }
+    .timeline-dot {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      font-family: var(--font-display);
+    }
+    .timeline-item:nth-child(1) .timeline-dot { background: var(--blue); }
+    .timeline-item:nth-child(2) .timeline-dot { background: var(--lavender); color: white; }
+    .timeline-item:nth-child(3) .timeline-dot { background: var(--yellow); }
+    .timeline-item:nth-child(4) .timeline-dot { background: var(--green); }
+    .timeline-content {
+      flex: 1; padding: 16px 20px;
+      border-radius: 16px; border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      position: relative;
+    }
+    .timeline-item:nth-child(1) .timeline-content { background: white; }
+    .timeline-item:nth-child(2) .timeline-content { background: var(--lavender); color: white; }
+    .timeline-item:nth-child(3) .timeline-content { background: var(--yellow); }
+    .timeline-item:nth-child(4) .timeline-content { background: var(--mint); }
+    .timeline-year {
+      font-size: 12px; font-weight: 600;
+      margin-bottom: 4px; opacity: 0.7;
+    }
+    .timeline-title {
+      font-family: var(--font-display); font-size: 20px; margin-bottom: 6px;
+    }
+    .timeline-desc { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+
+    /* ═══════════════════════════════════════════
+       ABILITIES — 超能力雷达
+       ═══════════════════════════════════════════ */
+    .abilities-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; max-width: 700px; margin: 0 auto;
+    }
+    .ability-item {
+      text-align: center; padding: 20px 16px;
+      border-radius: 20px; border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      transition: transform 0.2s;
+    }
+    .ability-item:hover { transform: translate(-2px, -2px); }
+    .ability-item:nth-child(1) { background: var(--blue); color: white; }
+    .ability-item:nth-child(2) { background: var(--lavender); color: white; }
+    .ability-item:nth-child(3) { background: var(--yellow); }
+    .ability-icon {
+      font-size: 36px; margin-bottom: 8px;
+      display: block;
+    }
+    .ability-name {
+      font-family: var(--font-display); font-size: 17px;
+      margin-bottom: 12px;
+    }
+    .ability-bar-track {
+      height: 16px; border-radius: 8px;
+      border: 2px solid var(--ink);
+      background: rgba(255,255,255,0.3);
+      overflow: hidden; margin-bottom: 6px;
+    }
+    .ability-bar-fill {
+      height: 100%; border-radius: 6px;
+      background: white; border-right: 2px solid var(--ink);
+      transition: width 1.2s cubic-bezier(0.2,0,0,1);
+    }
+    .ability-score {
+      font-family: var(--font-display); font-size: 24px;
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      .abilities-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════
+       PET — 宠物伙伴
+       ═══════════════════════════════════════════ */
+    .pet-card {
+      max-width: 560px; margin: 0 auto;
+      border-radius: 24px; overflow: hidden;
+      border: 4px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      background: white;
+    }
+    .pet-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px; background: var(--yellow);
+      border-bottom: 3px solid var(--ink);
+    }
+    .pet-avatar {
+      width: 100px; height: 100px;
+      border-radius: 20px;
+      border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      background: linear-gradient(135deg, #FFE0A0, #FFA94D);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; flex-shrink: 0; overflow: hidden;
+    }
+    .pet-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; }
+    .pet-identity { flex: 1; }
+    .pet-name {
+      font-family: var(--font-display); font-size: 28px;
+      margin-bottom: 4px;
+    }
+    .pet-title-badge {
+      display: inline-block; padding: 3px 12px;
+      border-radius: 12px; border: 2px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+      font-size: 12px; font-weight: 600;
+      background: var(--red); color: white; margin-bottom: 6px;
+    }
+    .pet-type { font-size: 14px; color: var(--ink-light); }
+    .pet-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .pet-stat {
+      text-align: center; padding: 14px 8px;
+      border-right: 2px solid var(--ink);
+      border-bottom: 2px solid var(--ink);
+    }
+    .pet-stat:nth-child(1) { background: var(--yellow); }
+    .pet-stat:nth-child(2) { background: var(--pink); color: white; }
+    .pet-stat:nth-child(3) { background: var(--mint); }
+    .pet-stat:nth-child(4), .pet-stat:nth-child(5), .pet-stat:nth-child(6) {
+      border-bottom: none;
+    }
+    .pet-stat:nth-child(4) { background: var(--lavender); color: white; }
+    .pet-stat:nth-child(5) { background: var(--orange); color: white; }
+    .pet-stat:nth-child(6) { background: var(--green); color: white; }
+    .pet-stat:last-child { border-right: none; }
+    .pet-stat-label {
+      font-size: 11px; margin-bottom: 4px; opacity: 0.7;
+    }
+    .pet-stat-value { font-family: var(--font-display); font-size: 18px; }
+    .pet-body {
+      padding: 20px; text-align: center;
+      font-size: 15px; line-height: 1.8;
+      border-bottom: 3px solid var(--ink);
+    }
+    .pet-traits {
+      display: flex; justify-content: center; gap: 8px;
+      padding: 16px; flex-wrap: wrap;
+    }
+    .pet-trait {
+      font-size: 13px; padding: 4px 12px;
+      border-radius: 12px; border: 2px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+      background: var(--cream);
+    }
+
+    /* ═══════════════════════════════════════════
+       MESSAGES — 同学留言板
+       ═══════════════════════════════════════════ */
+    .messages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px; max-width: 800px; margin: 0 auto;
+    }
+    .message-card {
+      border-radius: 20px; border: 3px solid var(--ink);
+      box-shadow: 4px 4px 0 var(--ink);
+      padding: 20px; position: relative;
+      transition: transform 0.2s;
+    }
+    .message-card:hover { transform: translate(-2px, -2px); }
+    .message-card:nth-child(1) { background: var(--yellow); }
+    .message-card:nth-child(2) { background: var(--pink); color: white; }
+    .message-card:nth-child(3) { background: var(--blue); color: white; }
+    .message-card:nth-child(4) { background: var(--mint); }
+    .message-card:nth-child(5) { background: var(--lavender); color: white; }
+    .message-card:nth-child(6) { background: var(--orange); color: white; }
+    .message-from {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    }
+    .message-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%; border: 2px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; background: rgba(255,255,255,0.5);
+    }
+    .message-name { font-family: var(--font-display); font-size: 18px; }
+    .message-text {
+      font-size: 14px; line-height: 1.8; margin-bottom: 12px;
+    }
+    .message-photo {
+      width: 100%; border-radius: 12px;
+      border: 2px solid var(--ink);
+      box-shadow: 2px 2px 0 var(--ink);
+    }
+    .message-sticker {
+      position: absolute; top: -12px; right: -8px;
+      font-size: 28px;
+      transform: rotate(15deg);
+      filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.2));
+    }
+
+    /* ═══════════════════════════════════════════
+       TEACHER — 老师寄语
+       ═══════════════════════════════════════════ */
+    .teacher-card {
+      max-width: 560px; margin: 0 auto;
+      background: white; border-radius: 24px;
+      border: 4px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 32px; text-align: center;
+      position: relative;
+    }
+    .teacher-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%; border: 4px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      background: var(--yellow);
+    }
+    .teacher-title {
+      font-family: var(--font-display); font-size: 22px; margin-bottom: 4px;
+    }
+    .teacher-name { font-size: 14px; color: var(--ink-light); margin-bottom: 20px; }
+    .teacher-message {
+      font-size: 16px; line-height: 2;
+      padding: 20px; border-radius: 16px;
+      background: var(--cream);
+      border: 2px dashed var(--ink);
+    }
+
+    /* ═══════════════════════════════════════════
+       LETTER — 未来信箱（信封展开）
+       ═══════════════════════════════════════════ */
+    .envelope-wrapper {
+      max-width: 480px; margin: 0 auto;
+      perspective: 1000px;
+    }
+    .envelope {
+      position: relative; cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.4s;
+    }
+    .envelope:hover { transform: scale(1.03); }
+    .envelope.open { transform: rotateX(20deg); }
+    .envelope-body {
+      background: linear-gradient(135deg, var(--lavender) 0%, var(--pink) 100%);
+      border-radius: 16px; border: 4px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 32px 24px; text-align: center;
+      position: relative;
+    }
+    .envelope-seal {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--red); border: 4px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+      font-size: 28px;
+      transition: all 0.3s;
+    }
+    .envelope.open .envelope-seal {
+      background: var(--yellow);
+    }
+    .envelope-title {
+      font-family: var(--font-display); font-size: 24px; margin-bottom: 4px;
+    }
+    .envelope-hint {
+      font-size: 14px; opacity: 0.7;
+    }
+    .envelope-letter {
+      display: none;
+      background: white; border-radius: 16px;
+      border: 4px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      padding: 28px; text-align: left;
+      margin-top: 16px;
+    }
+    .envelope.open .envelope-body { display: none; }
+    .envelope.open .envelope-letter { display: block; }
+    .letter-title {
+      font-family: var(--font-display); font-size: 22px;
+      color: var(--lavender-dark); margin-bottom: 16px;
+    }
+    .letter-text {
+      font-size: 15px; line-height: 2;
+      color: var(--ink); white-space: pre-wrap;
+    }
+    .letter-close {
+      margin-top: 16px; padding: 8px 24px;
+      border-radius: 20px; border: 3px solid var(--ink);
+      box-shadow: 3px 3px 0 var(--ink);
+      background: var(--lavender); color: white;
+      font-family: var(--font-display); font-size: 16px;
+      cursor: pointer;
+    }
+    .envelope-back {
+      margin-top: 12px; font-size: 13px; color: var(--ink-light);
+      display: block;
+    }
+
+    /* ═══════════════════════════════════════════
+       FINALE — 尾页
+       ═══════════════════════════════════════════ */
+    .finale {
+      text-align: center; padding: clamp(60px, 12vw, 120px) 20px;
+      position: relative; overflow: hidden;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--paper) 100%);
+    }
+    .finale-title {
+      font-family: var(--font-display);
+      font-size: clamp(40px, 10vw, 80px);
+      background: linear-gradient(135deg, var(--pink), var(--lavender), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 16px;
+      animation: finaleShine 3s ease-in-out infinite;
+    }
+    @keyframes finaleShine {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2) hue-rotate(10deg); }
+    }
+    .finale-subtitle {
+      font-family: var(--font-display);
+      font-size: clamp(16px, 3vw, 22px);
+      color: var(--ink-light);
+      line-height: 2; letter-spacing: 0.05em;
+    }
+    .finale-photo {
+      margin: 32px auto;
+      max-width: 600px; border-radius: 24px;
+      border: 4px solid var(--ink);
+      box-shadow: 6px 6px 0 var(--ink);
+      background: var(--cream);
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--ink-light);
+      border-style: dashed;
+    }
+    .finale-stickers {
+      display: flex; justify-content: center; gap: 16px;
+      flex-wrap: wrap; margin-top: 24px;
+    }
+    .finale-sticker {
+      font-size: 40px;
+      animation: starSpin 3s ease-in-out infinite;
+      filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.15));
+    }
+    .finale-sticker:nth-child(2) { animation-delay: 0.5s; }
+    .finale-sticker:nth-child(3) { animation-delay: 1s; }
+    .finale-sticker:nth-child(4) { animation-delay: 1.5s; }
+    .finale-sticker:nth-child(5) { animation-delay: 2s; }
+
+    /* ═══ FOOTER ═══ */
+    .pagefoot {
+      text-align: center; padding: 24px;
+      font-family: var(--font-display); font-size: 14px;
+      color: var(--ink-light); letter-spacing: 0.08em;
+      border-top: 4px solid var(--ink);
+      background: var(--cream);
+    }
+
+    /* ═══ EDIT MODE ═══ */
+    .edit-toggle {
+      position: fixed; top: 60px; right: 16px; z-index: 9999;
+      background: var(--pink); color: white;
+      border: 3px solid var(--ink);
+      border-radius: 20px; padding: 8px 16px;
+      font-size: 14px; font-family: var(--font-body); font-weight: 600;
+      cursor: pointer;
+      box-shadow: 3px 3px 0 var(--ink);
+      transition: all 0.15s;
+    }
+    .edit-toggle:hover { background: var(--lavender); }
+    .edit-toggle.active { background: var(--green); }
+
+    body.edit-mode .editable {
+      outline: 3px dashed var(--pink);
+      outline-offset: 2px;
+      cursor: text;
+    }
+    body.edit-mode .upload-zone {
+      cursor: pointer; position: relative;
+    }
+    body.edit-mode .upload-zone::after {
+      content: '📷 点击上传';
+      position: absolute; inset: 0;
+      background: rgba(255,126,182,0.2);
+      border: 3px dashed var(--pink-dark);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: var(--pink-dark); font-weight: 600;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    body.edit-mode .upload-zone:hover::after { opacity: 1; }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-zone .uploaded-img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .edit-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--pink); color: white;
+      text-align: center; padding: 10px;
+      font-size: 14px; z-index: 9998; display: none;
+      border-top: 3px solid var(--ink);
+    }
+    body.edit-mode .edit-banner { display: block; }
+
+    /* ═══ CRAYON GALLERY (蜡笔风相册轮播) ═══ */
+    .gallery-tabs{
+      display:flex;justify-content:center;gap:12px;margin-bottom:32px;flex-wrap:wrap
+    }
+    .gallery-tab{
+      padding:8px 22px;border-radius:999px;
+      font-size:15px;font-weight:500;
+      font-family:var(--font-display);
+      color:var(--ink);background:var(--paper);
+      border:2.5px solid var(--ink);
+      cursor:pointer;transition:all 0.2s ease;
+      box-shadow:3px 3px 0 var(--ink);
+    }
+    .gallery-tab:hover{
+      transform:translate(-1px,-1px);
+      box-shadow:4px 4px 0 var(--ink);
+      background:var(--yellow);
+    }
+    .gallery-tab.active{
+      background:var(--pink);
+      color:#fff;
+      transform:translate(1px,1px);
+      box-shadow:2px 2px 0 var(--ink);
+    }
+    .carousel-wrapper{
+      position:relative;max-width:820px;margin:0 auto;
+      border:3px solid var(--ink);
+      border-radius:24px;overflow:hidden;
+      background:var(--cream);
+      box-shadow:6px 6px 0 var(--ink);
+    }
+    .carousel-track{display:flex;transition:transform .5s cubic-bezier(0.34,1.56,0.64,1)}
+    .carousel-slide{min-width:100%;position:relative;overflow:hidden}
+    .carousel-slide img{
+      width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+    }
+    .carousel-slide .slide-label{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:18px 20px 14px;
+      background:linear-gradient(transparent,rgba(45,42,62,.75));
+      color:#fff;font-size:14px;font-weight:500;
+      font-family:var(--font-body);
+    }
+    .carousel-slide .slide-category{
+      display:inline-block;padding:3px 12px;border-radius:999px;
+      background:var(--yellow);color:var(--ink);font-size:13px;
+      margin-bottom:4px;font-weight:700;
+      border:2px solid var(--ink);
+    }
+    .carousel-nav{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:46px;height:46px;border-radius:50%;
+      background:var(--paper);
+      border:2.5px solid var(--ink);
+      font-size:22px;line-height:1;
+      cursor:pointer;transition:all 0.2s ease;
+      display:grid;place-items:center;color:var(--ink);
+      z-index:4;
+      box-shadow:3px 3px 0 var(--ink);
+      font-weight:700;
+    }
+    .carousel-nav:hover{
+      background:var(--yellow);
+      transform:translateY(-50%) translate(-1px,-1px);
+      box-shadow:4px 4px 0 var(--ink);
+    }
+    .carousel-nav:active{
+      transform:translateY(-50%) translate(1px,1px);
+      box-shadow:2px 2px 0 var(--ink);
+    }
+    .carousel-nav.prev{left:14px}.carousel-nav.next{right:14px}
+    .carousel-dots{display:flex;justify-content:center;gap:10px;padding:16px 0 20px}
+    .carousel-dot{
+      width:14px;height:14px;border-radius:50%;
+      background:var(--paper);
+      border:2.5px solid var(--ink);
+      cursor:pointer;transition:all 0.2s ease;
+    }
+    .carousel-dot.active{
+      background:var(--pink);
+      transform:scale(1.2);
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 600px) {
+      .profile-info-grid { grid-template-columns: 1fr; }
+      .pet-header { flex-direction: column; text-align: center; }
+      .timeline-item { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+<!-- Crayon wavy filter -->
+<svg id="wobbly-filter" xmlns="http://www.w3.org/2000/svg">
+  <filter id="wobbly">
+    <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="2" seed="1" result="turb"/>
+    <feDisplacementMap in="SourceGraphic" in2="turb" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- Navigation -->
+<nav class="crayon-nav">
+  <div class="crayon-nav-inner">
+    <a href="index.html" class="crayon-nav-brand">🌈 时光纪念册</a>
+    <div class="crayon-nav-links">
+      <a href="index.html#teachers">👩‍🏫 师恩铭刻</a>
+      <a href="index.html#students">👫 同窗录</a>
+      <a href="#gallery">📷 我的相册</a>
+      <a href="index.html#group-photo">📸 毕业合影</a>
+      <a href="index.html#messages-wall">💌 留言墙</a>
+    </div>
+  </div>
+</nav>
+
+<button class="edit-toggle" id="editToggle" onclick="toggleEditMode()">✏️ 编辑模式</button>
+<div class="edit-banner">✨ 编辑模式已开启 · 点击文字可直接修改 · 点击照片区可上传图片 · 修改后自动保存</div>
+
+<main>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" data-od-id="hero">
+    <!-- Scattered doodles -->
+    <div class="deco-sun"><span>☀️</span></div>
+    <div class="deco-rainbow"></div>
+    <div class="deco deco-star" style="top:15%;left:8%;animation-delay:0s">⭐</div>
+    <div class="deco deco-heart" style="top:25%;right:12%;animation-delay:0.3s">💖</div>
+    <div class="deco deco-star" style="bottom:30%;left:15%;animation-delay:1s">⭐</div>
+    <div class="deco deco-heart" style="bottom:20%;right:18%;animation-delay:0.7s">💕</div>
+    <div class="deco deco-cloud" style="top:10%;left:30%;">☁️</div>
+    <div class="deco deco-star" style="top:40%;left:5%;animation-delay:1.5s">✨</div>
+    <div class="deco deco-heart" style="top:60%;right:8%;animation-delay:1.2s">💗</div>
+
+    <div class="hero-title">
+      <span class="line1">🎨 时光纪念册</span>
+      <span class="line2">✨ 2026届 ✨</span>
+      <span class="line3">🌟 张迤恩的超级无敌毕业册 🌟</span>
+    </div>
+    <div class="hero-badges">
+      <span class="hero-badge hero-badge-pink">🏊 游泳健将</span>
+      <span class="hero-badge hero-badge-yellow">🤖 AI小达人</span>
+      <span class="hero-badge hero-badge-blue">🐱 橘猫麻麻</span>
+      <span class="hero-badge hero-badge-mint">👑 发起人 · No.50</span>
+    </div>
+    <div class="scroll-hint">↓ 向下翻阅 ↓</div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ PROFILE ═══ -->
+  <section class="section" data-od-id="profile">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">📋 我的档案卡</h2>
+      <div class="subtitle">Class 2026 · 松柏第二小学 · 六年级4班</div>
+    </div>
+    <div class="profile-card wobbly-card reveal reveal-delay-1">
+      <div class="profile-banner"></div>
+      <div class="profile-avatar upload-zone" data-field="avatar" onclick="handleUpload(this)">
+        <input type="file" accept="image/*" onchange="previewImage(this, this.parentElement)">
+        <span>👤</span>
+      </div>
+      <div class="profile-body">
+        <div class="profile-name editable" contenteditable="false" data-key="name">张迤恩</div>
+        <div class="profile-nickname">✨ 雅号：迤恩 ✨</div>
+        <div class="profile-tags">
+          <span class="profile-tag">👑 靠谱小队长</span>
+          <span class="profile-tag">💖 暖心闺蜜</span>
+          <span class="profile-tag">🤖 科技小达人</span>
+        </div>
+        <div class="profile-info-grid">
+          <div class="profile-info-item">
+            <div class="profile-info-label">学号</div>
+            <div class="profile-info-value">No. 50</div>
+          </div>
+          <div class="profile-info-item">
+            <div class="profile-info-label">班级</div>
+            <div class="profile-info-value">六年级4班</div>
+          </div>
+          <div class="profile-info-item">
+            <div class="profile-info-label">学校</div>
+            <div class="profile-info-value">松柏第二小学</div>
+          </div>
+          <div class="profile-info-item">
+            <div class="profile-info-label">特长</div>
+            <div class="profile-info-value editable" contenteditable="false" data-key="specialty">游泳 · AI编程</div>
+          </div>
+        </div>
+        <div class="profile-motto editable" contenteditable="false" data-key="motto">
+          💬 座右铭：在这里写你的座右铭哦～
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ GALLERY — 我的相册 ═══ -->
+  <section class="section" id="gallery" data-od-id="gallery">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">📷 我的相册</h2>
+      <div class="subtitle">Gallery · 定格每一帧快乐</div>
+    </div>
+    <div class="gallery-tabs reveal">
+      <button class="gallery-tab active" onclick="crayonFilterGallery('all',this)">🌈 全部</button>
+      <button class="gallery-tab" onclick="crayonFilterGallery('life',this)">🏠 生活照</button>
+      <button class="gallery-tab" onclick="crayonFilterGallery('school',this)">🏫 校园照</button>
+      <button class="gallery-tab" onclick="crayonFilterGallery('future',this)">🚀 AI未来</button>
+    </div>
+    <div class="carousel-wrapper reveal" id="crayonCarouselWrapper">
+      <div class="carousel-track" id="crayonCarouselTrack"></div>
+      <button class="carousel-nav prev" onclick="crayonMoveSlide(-1)">‹</button>
+      <button class="carousel-nav next" onclick="crayonMoveSlide(1)">›</button>
+      <div class="carousel-dots" id="crayonCarouselDots"></div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ TIMELINE ═══ -->
+  <section class="section" data-od-id="timeline">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">⭐ 我的闪光时刻</h2>
+      <div class="subtitle">2024-2026 · 最棒的回忆</div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot">🏊</div>
+        <div class="timeline-content">
+          <div class="timeline-year">2024年</div>
+          <div class="timeline-title">校级游泳比赛获佳绩</div>
+          <div class="timeline-desc">龙腾水域！在校级游泳比赛中大展身手，夺得奖牌🏅</div>
+        </div>
+      </div>
+      <div class="timeline-item reveal reveal-delay-1">
+        <div class="timeline-dot">🤖</div>
+        <div class="timeline-content">
+          <div class="timeline-year">2026年春</div>
+          <div class="timeline-title">AI编程作品展示</div>
+          <div class="timeline-desc">独立完成AI编程作品并公开展示，超厉害！✨</div>
+        </div>
+      </div>
+      <div class="timeline-item reveal reveal-delay-2">
+        <div class="timeline-dot">👑</div>
+        <div class="timeline-content">
+          <div class="timeline-year">2026年</div>
+          <div class="timeline-title">担任班级小队长</div>
+          <div class="timeline-desc">认真负责，是老师的好帮手，深得大家信任～</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ ABILITIES ═══ -->
+  <section class="section" id="abilities" data-od-id="abilities">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">💪 我的超能力</h2>
+      <div class="subtitle">游泳 · 科技 · 责任心 · 领导力 · 人缘</div>
+    </div>
+    <div class="abilities-grid">
+      <div class="ability-item reveal">
+        <span class="ability-icon">🏊</span>
+        <div class="ability-name">游泳实力</div>
+        <div class="ability-bar-track"><div class="ability-bar-fill" data-width="95"></div></div>
+        <div class="ability-score">95</div>
+      </div>
+      <div class="ability-item reveal reveal-delay-1">
+        <span class="ability-icon">🤖</span>
+        <div class="ability-name">科技能力</div>
+        <div class="ability-bar-track"><div class="ability-bar-fill" data-width="88"></div></div>
+        <div class="ability-score">88</div>
+      </div>
+      <div class="ability-item reveal reveal-delay-2">
+        <span class="ability-icon">💖</span>
+        <div class="ability-name">责任心</div>
+        <div class="ability-bar-track"><div class="ability-bar-fill" data-width="92"></div></div>
+        <div class="ability-score">92</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ PET ═══ -->
+  <section class="section" data-od-id="pet">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">🐱 我的宠物伙伴</h2>
+      <div class="subtitle">橘猫「年糕」· 灵猫科 · 超可爱</div>
+    </div>
+    <div class="pet-card wobbly-card reveal reveal-delay-1">
+      <div class="pet-header">
+        <div class="pet-avatar upload-zone" data-field="petPhoto" onclick="handleUpload(this)">
+          <input type="file" accept="image/*" onchange="previewImage(this, this.parentElement)">
+          <span>🐱</span>
+        </div>
+        <div class="pet-identity">
+          <div class="pet-name editable" contenteditable="false" data-key="petName">年糕</div>
+          <div>
+            <span class="pet-title-badge">🏆 御赐灵兽</span>
+            <div class="pet-type editable" contenteditable="false" data-key="petType">橘猫 · 灵猫科</div>
+          </div>
+        </div>
+      </div>
+      <div class="pet-stats">
+        <div class="pet-stat">
+          <div class="pet-stat-label">年龄</div>
+          <div class="pet-stat-value editable" contenteditable="false" data-key="petAge">3岁</div>
+        </div>
+        <div class="pet-stat">
+          <div class="pet-stat-label">体重</div>
+          <div class="pet-stat-value editable" contenteditable="false" data-key="petWeight">5.2斤</div>
+        </div>
+        <div class="pet-stat">
+          <div class="pet-stat-label">可爱值</div>
+          <div class="pet-stat-value">⭐⭐⭐⭐⭐</div>
+        </div>
+        <div class="pet-stat"><div class="pet-stat-label">爱吃</div><div class="pet-stat-value">小鱼干</div></div>
+        <div class="pet-stat"><div class="pet-stat-label">性格</div><div class="pet-stat-value">爱打盹</div></div>
+        <div class="pet-stat"><div class="pet-stat-label">绝技</div><div class="pet-stat-value">踏奶高手</div></div>
+      </div>
+      <div class="pet-body editable" contenteditable="false" data-key="petDesc">
+        一只超萌的橘色灵兽，最爱在阳光下打盹和享用小鱼干 🐟
+        深得我的宠爱，日常陪伴左右，是家里的小太阳 ☀️
+      </div>
+      <div class="pet-traits">
+        <span class="pet-trait">🐱 爱打盹</span>
+        <span class="pet-trait">🐟 小鱼干控</span>
+        <span class="pet-trait">☀️ 阳光爱好者</span>
+        <span class="pet-trait">🐾 踏奶高手</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ MESSAGES ═══ -->
+  <section class="section" data-od-id="messages">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">💌 同学留言板</h2>
+      <div class="subtitle">收到的暖心留言 💖</div>
+    </div>
+    <div class="messages-grid">
+      <div class="message-card reveal">
+        <div class="message-sticker">💖</div>
+        <div class="message-from">
+          <div class="message-avatar">🌟</div>
+          <div class="message-name">李小明</div>
+        </div>
+        <div class="message-text">
+          迤恩，你是最靠谱的小队长！六年同窗，感谢你一直以来的陪伴和帮助，到了初中也要继续做好朋友哦！
+        </div>
+      </div>
+      <div class="message-card reveal reveal-delay-1">
+        <div class="message-sticker">🌸</div>
+        <div class="message-from">
+          <div class="message-avatar">🌸</div>
+          <div class="message-name">王小花</div>
+        </div>
+        <div class="message-text">
+          最暖心的闺蜜迤恩，谢谢你一直以来的陪伴！你是我的好闺蜜，未来也要一起加油呀～
+        </div>
+      </div>
+      <div class="message-card reveal reveal-delay-2">
+        <div class="message-sticker">⭐</div>
+        <div class="message-from">
+          <div class="message-avatar">⚽</div>
+          <div class="message-name">张天天</div>
+        </div>
+        <div class="message-text">
+          迤恩姐，游泳比赛你太厉害了！下次一起游泳呀 🏊
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ TEACHER ═══ -->
+  <section class="section" data-od-id="teacher">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">👩‍🏫 老师寄语</h2>
+      <div class="subtitle">最温暖的祝福 ❤️</div>
+    </div>
+    <div class="teacher-card wobbly-card reveal reveal-delay-1">
+      <div class="teacher-icon">📜</div>
+      <div class="teacher-title">周黎老师</div>
+      <div class="teacher-name">班主任 · 语文</div>
+      <div class="teacher-message">
+        迤恩同学，你是一个靠谱又暖心的好孩子。<br>
+        老师相信，未来的你一定会更加出色！<br>
+        愿你前程似锦，一路繁花！🌸
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ LETTER ═══ -->
+  <section class="section" data-od-id="letter">
+    <div class="section-title reveal">
+      <h2 class="crayon-underline">💌 写给未来的信</h2>
+      <div class="subtitle">致初中时代的自己 · 点击信封打开 ✉️</div>
+    </div>
+    <div class="envelope-wrapper reveal reveal-delay-1">
+      <div class="envelope" id="envelope" onclick="toggleEnvelope()">
+        <div class="envelope-body">
+          <div class="envelope-seal">💌</div>
+          <div class="envelope-title">✉️ 给未来的信</div>
+          <div class="envelope-hint">点击打开 ✨</div>
+        </div>
+        <div class="envelope-letter">
+          <div class="letter-title">💌 致初中时代的迤恩：</div>
+          <div class="letter-text editable" contenteditable="false" data-key="futureLetter">
+亲爱的迤恩：
+
+时光飞逝，转眼你已经是一名初中生了！
+
+愿你依然阳光开朗 ☀️
+愿你依然热爱游泳和AI 🤖
+愿你依然对世界充满好奇 ✨
+愿你和年糕依然幸福地生活在一起 🐱
+
+记住，无论走到哪里，都要保持善良和勇敢！
+
+
+—— 2026年的迤恩
+          </div>
+          <button class="letter-close" onclick="event.stopPropagation();toggleEnvelope()">✉️ 合上信封</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══ FINALE ═══ -->
+  <section class="finale" data-od-id="finale">
+    <div class="finale-stickers">
+      <span class="finale-sticker">⭐</span>
+      <span class="finale-sticker">🌸</span>
+      <span class="finale-sticker">💖</span>
+      <span class="finale-sticker">🌈</span>
+      <span class="finale-sticker">🎉</span>
+    </div>
+    <div class="finale-title reveal">未来可期 ✨</div>
+    <p class="finale-subtitle reveal reveal-delay-1">
+      2026届 · 松柏第二小学 · 六年级4班<br>
+      愿我们一起走过的六年，是最美的时光 💖
+    </p>
+    <div class="finale-photo reveal reveal-delay-2">
+      📸 在这里放毕业大合影
+    </div>
+  </section>
+</main>
+
+<footer class="pagefoot">
+  🌈 时光纪念册 · 张迤恩 · 蜡笔手绘版 · 2026届
+</footer>
+
+<script>
+/* ─── Scroll Reveal ─── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ─── Ability Bars ─── */
+const abIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.ability-bar-fill').forEach(f => {
+        setTimeout(() => { f.style.width = f.getAttribute('data-width') + '%'; }, 200);
+      });
+      abIO.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const ab = document.getElementById('abilities');
+if (ab) abIO.observe(ab);
+
+/* ─── Envelope Toggle ─── */
+function toggleEnvelope() {
+  document.getElementById('envelope').classList.toggle('open');
+}
+
+/* ─── Edit Mode ─── */
+var CRAYON_KEY = 'crayon-edit-data';
+function getEditData() {
+  try { return JSON.parse(localStorage.getItem(CRAYON_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveEditData(data) {
+  localStorage.setItem(CRAYON_KEY, JSON.stringify(data));
+}
+function saveField(key, value) {
+  var d = getEditData(); d[key] = value; saveEditData(d);
+}
+
+function toggleEditMode() {
+  var body = document.body;
+  var btn = document.getElementById('editToggle');
+  var isEdit = !body.classList.contains('edit-mode');
+  body.classList.toggle('edit-mode', isEdit);
+  btn.classList.toggle('active', isEdit);
+  btn.textContent = isEdit ? '✅ 退出编辑' : '✏️ 编辑模式';
+  document.querySelectorAll('.editable').forEach(function(el) {
+    el.contentEditable = isEdit ? 'true' : 'false';
+    if (isEdit) {
+      el.addEventListener('blur', function() {
+        saveField(el.getAttribute('data-key'), el.textContent);
+      });
+    }
+  });
+}
+
+function handleUpload(zone) {
+  var input = zone.querySelector('input[type="file"]');
+  if (input) input.click();
+}
+function previewImage(input, container) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = container.querySelector('.uploaded-img');
+    if (!img) { img = document.createElement('img'); img.className = 'uploaded-img'; container.appendChild(img); }
+    img.src = e.target.result;
+    var field = container.getAttribute('data-field');
+    if (field) saveField(field, e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ═══ CRAYON GALLERY CAROUSEL ═══ */
+var crayonPhotos = [];
+var crayonCurrentIdx = 0;
+var crayonAutoTimer = null;
+
+function crayonInitGallery() {
+  var photos = { life: [], school: [], future: [] };
+
+  // Source 1: onboarding data
+  var sData = {};
+  try { sData = JSON.parse(localStorage.getItem('student-50') || '{}'); } catch(e) {}
+  if (sData && sData.photos) {
+    if (sData.photos.life) photos.life = sData.photos.life;
+    if (sData.photos.school) photos.school = sData.photos.school;
+    if (sData.photos.future) photos.future = sData.photos.future;
+  }
+
+  // Source 2: crayon-edit-data
+  var cData = getEditData();
+  if (cData.galleryPhotos) {
+    cData.galleryPhotos.forEach(function(p) {
+      if (photos[p.type]) photos[p.type].push(p.src);
+    });
+  }
+
+  var all = [];
+  photos.life.forEach(function(src, i) { all.push({ src: src, type: 'life', label: '生活照 ' + (i+1) }); });
+  photos.school.forEach(function(src, i) { all.push({ src: src, type: 'school', label: '校园照 ' + (i+1) }); });
+  photos.future.forEach(function(src, i) { all.push({ src: src, type: 'future', label: 'AI未来 ' + (i+1) }); });
+
+  if (all.length === 0) {
+    var sec = document.getElementById('gallery');
+    if (sec) sec.style.display = 'none';
+    return;
+  }
+
+  crayonPhotos = all;
+  crayonRenderSlides(all);
+  crayonStartAutoPlay();
+
+  var gallery = document.getElementById('gallery');
+  if (gallery) {
+    var gio = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+          gio.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    gio.observe(gallery);
+  }
+}
+
+function crayonRenderSlides(items) {
+  var track = document.getElementById('crayonCarouselTrack');
+  var dots = document.getElementById('crayonCarouselDots');
+  if (!track) return;
+  track.innerHTML = items.map(function(p) {
+    var catLabel = p.type === 'life' ? '🏠 生活照' : p.type === 'school' ? '🏫 校园照' : '🚀 AI未来';
+    return '<div class="carousel-slide">' +
+      '<img src="' + p.src + '" alt="' + p.label + '" loading="lazy">' +
+      '<div class="slide-label"><span class="slide-category">' + catLabel + '</span><br>' + p.label + '</div>' +
+      '</div>';
+  }).join('');
+  if (dots) {
+    dots.innerHTML = items.map(function(_, i) {
+      return '<button class="carousel-dot' + (i === 0 ? ' active' : '') + '" onclick="crayonGoToSlide(' + i + ')"></button>';
+    }).join('');
+  }
+  crayonCurrentIdx = 0;
+  track.style.transform = 'translateX(0)';
+}
+
+function crayonFilterGallery(type, btn) {
+  document.querySelectorAll('.gallery-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  var items = type === 'all' ? crayonPhotos : crayonPhotos.filter(function(p) { return p.type === type; });
+  crayonRenderSlides(items);
+  crayonStopAutoPlay();
+  crayonStartAutoPlay();
+}
+
+function crayonMoveSlide(dir) {
+  var track = document.getElementById('crayonCarouselTrack');
+  if (!track) return;
+  var slides = track.querySelectorAll('.carousel-slide');
+  if (slides.length === 0) return;
+  crayonCurrentIdx = (crayonCurrentIdx + dir + slides.length) % slides.length;
+  track.style.transform = 'translateX(-' + (crayonCurrentIdx * 100) + '%)';
+  crayonUpdateDots();
+  crayonStopAutoPlay();
+  crayonStartAutoPlay();
+}
+
+function crayonGoToSlide(idx) {
+  var track = document.getElementById('crayonCarouselTrack');
+  if (!track) return;
+  crayonCurrentIdx = idx;
+  track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  crayonUpdateDots();
+}
+
+function crayonUpdateDots() {
+  var dots = document.querySelectorAll('#crayonCarouselDots .carousel-dot');
+  dots.forEach(function(d, i) {
+    d.classList.toggle('active', i === crayonCurrentIdx);
+  });
+}
+
+function crayonStartAutoPlay() {
+  crayonStopAutoPlay();
+  crayonAutoTimer = setInterval(function() { crayonMoveSlide(1); }, 4000);
+}
+
+function crayonStopAutoPlay() {
+  if (crayonAutoTimer) { clearInterval(crayonAutoTimer); crayonAutoTimer = null; }
+}
+
+// Pause on hover
+(function() {
+  var wrapper = document.getElementById('crayonCarouselWrapper');
+  if (wrapper) {
+    wrapper.addEventListener('mouseenter', crayonStopAutoPlay);
+    wrapper.addEventListener('mouseleave', crayonStartAutoPlay);
+  }
+})();
+
+crayonInitGallery();
+</script>
+</body>
+</html>

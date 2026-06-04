@@ -1,0 +1,34 @@
+/* ───────────────────────────────────────────
+   模板 05 · 薄荷手账 (mint-journal)
+   适用：中性 · 手账日记风
+   参考：薄荷绿清新系，手账网格线质感
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #F0FAF6;
+  --surface: #FFFFFF;
+  --surface-warm: #E0F5EC;
+  --surface-cool: #D0EDE4;
+  --fg: #1A2E28;
+  --fg-2: #3D5C52;
+  --muted: #6B9488;
+  --border: #B8DDD0;
+  --border-soft: #D0EDE4;
+  --accent: #2EAA7F;
+  --accent-coral: #45C898;
+  --accent-mint: #88DCC0;
+  --accent-gold: #F5C542;
+
+  --particle-colors: #2EAA7F, #45C898, #88DCC0, #F5C542;
+  --hero-gradient: linear-gradient(135deg, #E0F5EC 0%, #D0EDE4 40%, #F0FAF6 100%);
+  --envelope-gradient: linear-gradient(135deg, #F0FAF6, #E0F5EC, #FFF8E8);
+
+  --font-display: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+/* 模板特征：
+   - 薄荷绿清新主色 + 阳光黄点缀
+   - 手账网格线/虚线分隔风格
+   - 和纸胶带装饰条视觉隐喻
+   - 中性清新，适合喜欢手账/记录感的同学
+*/

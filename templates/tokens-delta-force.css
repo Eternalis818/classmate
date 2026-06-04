@@ -1,0 +1,71 @@
+/* design-systems/delta-force/tokens.css
+ * 三角洲行动 · 战术任务版
+ * dark military HUD aesthetic with neon green tactical accents
+ */
+:root {
+  --bg: #0E1116;
+  --surface: #181C22;
+  --surface-warm: #232A1A;
+  --surface-cool: #1A2326;
+  --fg: #E8E6DD;
+  --fg-2: #B8B5A8;
+  --muted: #6E6B5C;
+  --border: #2A3140;
+  --border-soft: #1F2530;
+  --accent: #8BFF3D;
+  --accent-coral: #FF6B35;
+  --accent-mint: #00C2FF;
+  --accent-on: #0E1116;
+  --accent-soft: color-mix(in oklch, var(--accent) 16%, transparent);
+  --fg-soft: color-mix(in oklch, var(--fg) 8%, transparent);
+  --success: #8BFF3D;
+  --warn: #FFB020;
+  --danger: #FF4D4D;
+
+  --hero-bg: url('../../assets/templates/delta-force/hero.png');
+  --hero-gradient: linear-gradient(135deg, rgba(14,17,22,0.55) 0%, rgba(24,28,34,0.35) 50%, rgba(14,17,22,0.7) 100%);
+  --envelope-gradient: linear-gradient(135deg, #1F2530, #2A3140, #181C22);
+  --particle-colors: #8BFF3D, #00C2FF, #FF6B35, #B8B5A8;
+
+  --font-display: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 24px;
+  --text-2xl: 36px;
+  --text-3xl: 54px;
+  --text-4xl: 76px;
+  --leading-body: 1.55;
+  --leading-tight: 1.08;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 2px;
+
+  --elev-raised: 0 0 0 1px rgba(139, 255, 61, 0.3), 0 4px 20px rgba(0, 0, 0, 0.4);
+  --elev-float: 0 0 0 1px rgba(139, 255, 61, 0.5), 0 8px 40px rgba(0, 0, 0, 0.6);
+  --motion-fast: 120ms;
+  --motion-base: 200ms;
+  --motion-slow: 360ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --container-max: 1100px;
+  --gutter: 32px;
+}

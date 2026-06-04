@@ -1,0 +1,35 @@
+/* ───────────────────────────────────────────
+   模板 09 · 蜡笔手绘 (crayon-style)
+   适用：童趣手绘风 · 男女皆宜
+   参考：柠檬黄 #FFE566，珊瑚粉 #FF7EB6，天蓝 #74C0FC，薄荷绿 #8FD9C8
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #FFFEF8;
+  --surface: #FFFFFF;
+  --surface-warm: #FFF8E1;
+  --surface-cool: #E8F5FF;
+  --fg: #2D2A3E;
+  --fg-2: #5A5478;
+  --muted: #8B85A0;
+  --border: #E8E0D8;
+  --border-soft: #F0EAE0;
+  --accent: #FF7EB6;
+  --accent-coral: #FFA94D;
+  --accent-mint: #8FD9C8;
+  --accent-gold: #FFE566;
+
+  --particle-colors: #FFE566, #FF7EB6, #74C0FC, #8FD9C8, #C9B1FF, #FFA94D;
+  --hero-gradient: linear-gradient(135deg, #FFF8E1 0%, #FFE8F0 33%, #E8F5FF 66%, #E8FFF5 100%);
+  --envelope-gradient: linear-gradient(135deg, #FFF8E1, #FFE8F0, #E8FFF5);
+
+  --font-display: 'ZCOOL KuaiLe', 'Ma Shan Zheng', cursive;
+  --font-body: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+/* 模板特征：
+   - 明亮蜡笔色系：黄/粉/蓝/薄荷/薰衣草/橙
+   - 手写体显示字体（ZCOOL快乐体）
+   - 纸质纹理背景，波浪线框
+   - 粗偏移阴影（手绘感）
+   - 适合喜欢童趣/手绘/活泼风格的同学
+*/

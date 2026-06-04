@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>江湖风云榜 · 张迤恩 · 松柏第二小学2026届</title>
+<style>
+:root{--bg:#F5E8D0;--surface:#FFF8E8;--surface-warm:#F0DDB8;--surface-cool:#E8D0A0;--fg:#2A1A0A;--fg-2:#5C3D20;--muted:#8B6840;--border:#C8A878;--border-soft:#D8C0A0;--accent:#B22222;--accent-coral:#D44030;--accent-mint:#D4AF37;--accent-gold:#C8960A;--radius:6px;--font-display:'Noto Serif SC','STSong','SimSun',serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:'Noto Sans SC','PingFang SC',system-ui,sans-serif;line-height:1.7;overflow-x:hidden}
+a{color:inherit;text-decoration:none}img,svg{display:block;max-width:100%}
+.container{max-width:960px;margin:0 auto;padding:0 24px}.section{padding:64px 0}
+h1{font-family:var(--font-display);font-size:clamp(32px,6vw,52px);line-height:1.15;font-weight:700}
+h2{font-family:var(--font-display);font-size:clamp(24px,4vw,36px);line-height:1.2;font-weight:700}
+h3{font-family:var(--font-display);font-size:20px;font-weight:600}
+.eyebrow{font-size:13px;letter-spacing:.1em;color:var(--accent);margin-bottom:12px;display:inline-block;border:1px solid var(--accent);padding:4px 12px}
+.ph-img{background:linear-gradient(135deg,var(--surface-warm),var(--surface-cool));border:2px solid var(--border);border-radius:var(--radius);display:grid;place-items:center;color:var(--muted);font-size:14px;font-family:var(--font-display)}
+.ph-img.portrait{aspect-ratio:3/4}.ph-img.square{aspect-ratio:1/1}.ph-img.wide{aspect-ratio:16/9}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .5s ease,transform .5s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}
+.martial-nav{position:sticky;top:0;z-index:100;background:var(--fg);border-bottom:2px solid var(--accent-mint);padding:0 16px;display:flex;align-items:center;overflow-x:auto;font-size:13px}
+.martial-nav a{color:var(--surface-warm);padding:12px 12px;white-space:nowrap;transition:color .2s}.martial-nav a:hover{color:var(--accent-mint)}
+.martial-nav .nav-home{font-weight:700;color:var(--accent-mint);font-family:var(--font-display)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;background:linear-gradient(135deg,#3A2010 0%,#5C3020 40%,#8B6040 100%)}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23D4AF37' fill-opacity='0.04'%3E%3Cpath d='M40 0l40 40-40 40L0 40z'/%3E%3C/g%3E%3C/svg%3E");pointer-events:none}
+.hero-canvas{position:absolute;inset:0;pointer-events:none}
+.hero-content{text-align:center;z-index:2;padding:32px}
+.hero-seal{width:80px;height:80px;border:3px solid var(--accent);border-radius:4px;display:grid;place-items:center;margin:0 auto 20px;color:var(--accent);font-family:var(--font-display);font-size:18px;font-weight:700;transform:rotate(-6deg);background:rgba(178,34,34,.1)}
+.hero h1{color:#F5E8D0;margin-bottom:12px}.hero h1 span{color:var(--accent-mint)}
+.hero-sub{font-family:var(--font-display);font-size:clamp(15px,2vw,20px);color:#C8A878;margin-bottom:24px}
+.hero-tag{display:inline-block;padding:6px 16px;border:1px solid var(--accent-mint);color:var(--accent-mint);font-family:var(--font-display);font-size:13px}
+.profile-card{background:var(--surface);border:2px solid var(--accent-mint);border-radius:var(--radius);position:relative;overflow:hidden}
+.profile-card::before{content:'';position:absolute;inset:6px;border:1px solid var(--accent);opacity:.3;pointer-events:none}
+.profile-banner{height:80px;background:linear-gradient(135deg,var(--accent),var(--accent-mint))}
+.profile-body{display:flex;gap:20px;padding:0 24px 24px;margin-top:-40px;position:relative;z-index:2}
+.profile-avatar{width:88px;height:88px;border-radius:var(--radius);border:2px solid var(--accent-mint);flex-shrink:0;overflow:hidden;background:var(--surface)}
+.profile-info{flex:1;padding-top:48px}.profile-name{font-family:var(--font-display);font-size:24px;font-weight:700;margin-bottom:2px}
+.profile-nick{color:var(--accent);font-family:var(--font-display);font-size:15px;margin-bottom:10px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:4px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;color:var(--fg-2);font-family:var(--font-display)}
+.motto-box{margin-top:12px;padding:10px 14px;border:1px dashed var(--border);border-radius:var(--radius);font-size:14px;color:var(--muted);font-family:var(--font-display)}
+@media(max-width:600px){.profile-body{flex-direction:column;align-items:center;text-align:center}.profile-info{padding-top:12px}.tags{justify-content:center}}
+.tl-wrap{position:relative;padding-left:32px}
+.tl-wrap::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--accent-mint)}
+.tl-item{position:relative;margin-bottom:24px;cursor:pointer}
+.tl-dot{position:absolute;left:-28px;top:4px;width:16px;height:16px;border:2px solid var(--accent);border-radius:2px;display:grid;place-items:center;font-size:8px;background:var(--surface);transform:rotate(45deg)}
+.tl-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;font-family:var(--font-display);transition:transform .2s}
+.tl-card:hover{transform:translateY(-2px)}
+.tl-year{font-size:12px;color:var(--accent);margin-bottom:4px}.tl-title{font-weight:600;margin-bottom:4px}
+.tl-desc{font-size:13px;color:var(--muted);display:none}.tl-item.open .tl-desc{display:block;margin-top:8px}
+.ability-row{margin-bottom:20px}.ability-label{display:flex;justify-content:space-between;margin-bottom:6px;font-size:14px;font-family:var(--font-display);font-weight:600}
+.ability-track{height:14px;background:var(--surface-cool);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border)}
+.ability-fill{height:100%;border-radius:var(--radius);background:linear-gradient(90deg,var(--accent-mint),var(--accent));width:0;transition:width 1s cubic-bezier(.2,0,0,1)}
+.ability-level{font-family:var(--font-display);font-size:11px;color:var(--accent);margin-top:4px}
+.pet-card{background:var(--surface);border:2px solid var(--accent-mint);border-radius:var(--radius);padding:20px;display:flex;gap:16px;align-items:center;position:relative}
+.pet-card::before{content:'';position:absolute;inset:4px;border:1px solid var(--accent);opacity:.2;pointer-events:none}
+.pet-avatar{width:90px;height:90px;border-radius:var(--radius);border:2px solid var(--border);overflow:hidden;flex-shrink:0}
+.pet-info h3{font-family:var(--font-display);margin-bottom:4px}.pet-info p{font-size:14px;color:var(--muted);font-family:var(--font-display)}
+.pet-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.pet-stat{text-align:center;padding:6px;background:var(--surface-warm);border-radius:var(--radius)}
+.pet-stat .num{font-family:var(--font-display);font-size:16px;color:var(--accent)}.pet-stat .label{font-size:11px;color:var(--muted)}
+@media(max-width:600px){.pet-card{flex-direction:column;text-align:center}}
+.msg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.msg-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;font-family:var(--font-display);transition:transform .2s;position:relative}
+.msg-card:hover{transform:translateY(-2px)}
+.msg-seal{position:absolute;top:8px;right:8px;width:24px;height:24px;border:1px solid var(--accent);border-radius:2px;display:grid;place-items:center;font-size:8px;color:var(--accent);transform:rotate(-10deg);opacity:.4}
+.msg-avatar{width:30px;height:30px;border-radius:var(--radius);background:var(--surface-warm);margin-bottom:6px}
+.msg-from{font-weight:600;font-size:13px;margin-bottom:4px}.msg-text{font-size:13px;color:var(--muted);line-height:1.6}
+@media(max-width:700px){.msg-grid{grid-template-columns:1fr}}
+.teacher-card{background:var(--surface);border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;padding:20px;font-family:var(--font-display)}
+.teacher-name{font-weight:700;margin-bottom:8px;color:var(--accent)}.teacher-quote{font-size:16px;line-height:1.8;color:var(--fg-2)}
+.envelope-wrap{max-width:440px;margin:0 auto;cursor:pointer}.envelope{position:relative;perspective:800px}
+.env-top{background:linear-gradient(180deg,var(--accent),#8B1A1A);height:48px;border-radius:var(--radius) var(--radius) 0 0;position:relative;transform-origin:top center;transition:transform .5s ease;z-index:2;border:1px solid var(--accent-mint)}
+.env-top::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);border-left:22px solid transparent;border-right:22px solid transparent;border-top:16px solid #8B1A1A}
+.envelope.open .env-top{transform:rotateX(-180deg)}
+.env-body{background:var(--surface-warm);border:1px solid var(--border);border-radius:0 0 var(--radius) var(--radius);padding:20px;position:relative}
+.env-wax{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:32px;height:32px;background:var(--accent);border-radius:50%;display:grid;place-items:center;color:#fff;font-size:10px;z-index:3}
+.env-letter{max-height:0;overflow:hidden;transition:max-height .5s ease;opacity:0;font-family:var(--font-display);font-size:14px;line-height:1.8;color:var(--fg-2)}
+.envelope.open .env-letter{max-height:400px;padding:12px 0;opacity:1;transition:max-height .5s ease,opacity .3s ease .2s}
+.env-hint{text-align:center;font-size:12px;color:var(--muted);margin-top:12px;font-family:var(--font-display)}
+.finale{text-align:center;padding:80px 0;background:linear-gradient(135deg,#3A2010,#5C3020,#8B6040);position:relative}
+.finale h2{font-family:var(--font-display);font-size:clamp(32px,6vw,56px);color:var(--accent-mint);margin-bottom:24px}
+.finale-seal{width:90px;height:90px;border:3px solid var(--accent);border-radius:4px;display:grid;place-items:center;margin:0 auto 20px;font-family:var(--font-display);font-size:16px;color:var(--accent);font-weight:700;transform:rotate(-6deg);background:rgba(178,34,34,.08)}
+footer{text-align:center;padding:20px;font-size:12px;color:var(--muted);font-family:var(--font-display);border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<nav class="martial-nav"><a href="index.html" class="nav-home">⚔️ 纪念册首页</a><a href="#profile">玉牒</a><a href="#timeline">编年史</a><a href="#abilities">武功</a><a href="#pet">灵兽</a><a href="#messages">奏折</a><a href="#letter">密旨</a></nav>
+
+<section class="hero" data-od-id="hero"><canvas class="hero-canvas" id="heroCanvas"></canvas><div class="hero-content"><div class="hero-seal">风云<br>榜</div><h1>江湖<span>风云榜</span></h1><p class="hero-sub">松柏第二小学 · 六年级4班 · 2026届</p><div class="hero-tag">⚔️ 发起人 · 学号五十</div></div></section>
+
+<section class="section" data-od-id="profile" id="profile"><div class="container"><div class="reveal"><span class="eyebrow">◆ 皇家玉牒</span><h2 style="margin-bottom:24px">英雄帖</h2></div><div class="profile-card reveal reveal-d1"><div class="profile-banner"></div><div class="profile-body"><div class="profile-avatar ph-img portrait">英雄像</div><div class="profile-info"><div class="profile-name">张迤恩</div><div class="profile-nick">江湖雅号：小恩</div><div class="tags"><span class="tag">靠谱小队长</span><span class="tag">暖心闺蜜</span><span class="tag">科技小达人</span></div><div class="motto-box">座右铭：_______________________</div></div></div></div></div></section>
+
+<section class="section" data-od-id="timeline" id="timeline"><div class="container"><div class="reveal"><span class="eyebrow">◆ 编年史</span><h2 style="margin-bottom:24px">英雄事迹</h2></div><div class="tl-wrap reveal reveal-d1"><div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot">◆</div><div class="tl-card"><div class="tl-year">甲辰年 · 秋</div><div class="tl-title">校级游泳夺魁</div><div class="tl-desc">自由泳五十米，力压群雄，勇夺榜眼！</div></div></div><div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot">◆</div><div class="tl-card"><div class="tl-year">乙巳年 · 春</div><div class="tl-title">AI秘籍大成</div><div class="tl-desc">独立铸造智能对话法器，名动江湖！</div></div></div><div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot">◆</div><div class="tl-card"><div class="tl-year">甲辰年 · 冬</div><div class="tl-title">主持校运盛典</div><div class="tl-desc">立于万人之前，从容不迫，大将之风！</div></div></div><div class="tl-item" onclick="this.classList.toggle('open')"><div class="tl-dot">◆</div><div class="tl-card"><div class="tl-year">乙巳年 · 春</div><div class="tl-title">科学试炼夺魁</div><div class="tl-desc">水面张力之术，独步全年级！</div></div></div></div></div></section>
+
+<section class="section" data-od-id="abilities" id="abilities"><div class="container"><div class="reveal"><span class="eyebrow">◆ 武功秘籍</span><h2 style="margin-bottom:32px">修为境界</h2></div><div class="reveal reveal-d1" style="max-width:500px;margin:0 auto"><div class="ability-row"><div class="ability-label"><span>🏊 水上轻功</span><span>九十五</span></div><div class="ability-track"><div class="ability-fill" data-value="95"></div></div><div class="ability-level">出神入化 · 水中小飞鱼</div></div><div class="ability-row"><div class="ability-label"><span>🤖 机甲锻造</span><span>八十八</span></div><div class="ability-track"><div class="ability-fill" data-value="88"></div></div><div class="ability-level">登堂入室 · 未来极客</div></div><div class="ability-row"><div class="ability-label"><span>💪 义薄云天</span><span>九十二</span></div><div class="ability-track"><div class="ability-fill" data-value="92"></div></div><div class="ability-level">出神入化 · 靠谱担当</div></div></div></div></section>
+
+<section class="section" data-od-id="pet" id="pet"><div class="container"><div class="reveal"><span class="eyebrow">◆ 灵兽录</span><h2 style="margin-bottom:24px">御赐灵兽</h2></div><div class="pet-card reveal reveal-d1"><div class="pet-avatar ph-img square">灵兽图</div><div class="pet-info"><h3>🐱 年糕</h3><p>橘色灵兽 · 三岁 · 最萌之兽</p><div class="pet-stats"><div class="pet-stat"><div class="num">三</div><div class="label">年龄</div></div><div class="pet-stat"><div class="num">五斤二两</div><div class="label">体重</div></div><div class="pet-stat"><div class="num">★★★★★</div><div class="label">可爱</div></div></div></div></div></div></section>
+
+<section class="section" data-od-id="messages" id="messages"><div class="container"><div class="reveal"><span class="eyebrow">◆ 群臣奏折</span><h2 style="margin-bottom:24px">江湖留言</h2></div><div class="msg-grid reveal reveal-d1"><div class="msg-card"><div class="msg-seal">阅</div><div class="msg-avatar ph-img square"></div><div class="msg-from">李小雨</div><div class="msg-text">最好的闺蜜！江湖再远也要一起闯～</div></div><div class="msg-card"><div class="msg-seal">阅</div><div class="msg-avatar ph-img square"></div><div class="msg-from">王浩然</div><div class="msg-text">科技小达人！你的AI秘籍令人佩服！</div></div><div class="msg-card"><div class="msg-seal">阅</div><div class="msg-avatar ph-img square"></div><div class="msg-from">陈思琪</div><div class="msg-text">靠谱小队长！江湖没有你可不行 🥺</div></div><div class="msg-card"><div class="msg-seal">阅</div><div class="msg-avatar ph-img square"></div><div class="msg-from">赵天乐</div><div class="msg-text">水上轻功无人能及！甘拜下风！</div></div></div></div></section>
+
+<section class="section" data-od-id="teacher"><div class="container"><div class="reveal"><span class="eyebrow">◆ 太傅赠言</span><h2 style="margin-bottom:24px">恩师寄语</h2></div><div class="teacher-card reveal reveal-d1"><div class="teacher-name">周黎太傅 · 班主任</div><div class="teacher-quote">六年的时光，看着你们从稚童长成少年。愿你们带着善良与勇气，走向更广阔的星辰大海。</div></div></div></section>
+
+<section class="section" data-od-id="letter" id="letter"><div class="container"><div class="reveal"><span class="eyebrow">◆ 密旨锦囊</span><h2 style="margin-bottom:24px">密信</h2></div><div class="envelope-wrap reveal reveal-d1" onclick="this.querySelector('.envelope').classList.toggle('open')"><div class="envelope"><div class="env-top"></div><div class="env-body"><div class="env-wax">密</div><div style="text-align:center;font-weight:700;color:var(--accent);font-family:var(--font-display)">致未来之自己</div><div class="env-letter"><p>亲爱的初中自己：</p><p>写此密信时，刚刚结束小学最后一次水上修炼。</p><p>望初中之你，依然爱笑、爱游、爱铸AI。灵兽年糕尚在家中候你归巢！</p><p>无论险阻，切记：你乃靠谱小队长，何惧之有！</p><p style="text-align:right;margin-top:16px;color:var(--accent-mint)">—— 乙巳年夏 · 张迤恩 ⚔️</p></div></div></div><div class="env-hint">👆 点击打开锦囊</div></div></div></section>
+
+<section class="finale" data-od-id="finale"><div class="container reveal"><div class="finale-seal">朕已<br>阅</div><h2>未来可期</h2><p style="margin:0 auto 32px;max-width:50ch;text-align:center;color:#C8A878;font-family:var(--font-display)">六载春秋，江湖情深。愿各位少侠，扬帆星辰大海。</p><div class="ph-img wide" style="max-width:560px;margin:0 auto;height:180px">江湖合影</div><p style="margin-top:20px;font-size:13px;color:#8B6840;font-family:var(--font-display)">松柏第二小学 · 六年级4班 · 2026届 · 江湖再见</p></div></section>
+<footer>时光纪念册 © 2026 · 江湖风云榜主题 ⚔️</footer>
+
+<script>
+(function(){const c=document.getElementById('heroCanvas'),ctx=c.getContext('2d');let W,H,ps=[];function resize(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}window.addEventListener('resize',resize);resize();const cs=['#D4AF37','#C8960A','#F5D060','#8B6914'];for(let i=0;i<50;i++)ps.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*2+.5,vx:(Math.random()-.5)*.2,vy:Math.random()*.6+.2,c:cs[i%cs.length],a:Math.random()*.4+.2});function draw(){ctx.clearRect(0,0,W,H);for(const p of ps){ctx.globalAlpha=p.a;ctx.fillStyle=p.c;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();p.x+=p.vx;p.y+=p.vy;if(p.y>H){p.y=-10;p.x=Math.random()*W}}ctx.globalAlpha=1;requestAnimationFrame(draw)}draw()})();
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.15});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+const aObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.value+'%';aObs.unobserve(e.target)}})},{threshold:.5});document.querySelectorAll('.ability-fill').forEach(el=>aObs.observe(el));
+</script>
+</body>
+</html>

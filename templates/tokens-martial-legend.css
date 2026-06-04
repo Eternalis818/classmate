@@ -1,0 +1,35 @@
+/* ───────────────────────────────────────────
+   模板 04 · 江湖风云榜 (martial-legend)
+   适用：武侠江湖风，中性偏男
+   参考：暖中性色 #F5F0E6/#D4B896，珊瑚红 #FF6B6B
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #F5F0E6;
+  --surface: #FDFAF2;
+  --surface-warm: #F0E8D4;
+  --surface-cool: #E8DFC8;
+  --fg: #2A1F14;
+  --fg-2: #5C4A36;
+  --muted: #8B7A62;
+  --border: #D4C0A0;
+  --border-soft: #E0D4BC;
+  --accent: #C84032;
+  --accent-coral: #E85D4E;
+  --accent-mint: #D4A86A;
+  --accent-gold: #B8860B;
+
+  --particle-colors: #C84032, #D4A86A, #8B4513, #DAA520;
+  --hero-gradient: linear-gradient(135deg, #F0E8D4 0%, #E8DCC0 40%, #D4C8A8 100%);
+  --envelope-gradient: linear-gradient(135deg, #FDFAF2, #F0E8D4, #E8DCC0);
+
+  --font-display: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+/* 模板特征：
+   - 古风纸张质感，暖黄/褐色中性底色
+   - 朱红印章色 + 赭石金装饰
+   - 衬线字体标题，水墨风格
+   - 武侠风云榜/功力排行视觉隐喻
+   - 适合喜欢古风、武侠、江湖风的同学
+*/

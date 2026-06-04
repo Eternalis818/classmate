@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>素材裁剪工具 · 江湖风云榜</title>
+<style>
+  :root {
+    --bg: #1a1520; --surface: #252030; --surface2: #302a3e;
+    --fg: #f0e8ff; --muted: #9b8ec4; --accent: #fbbf24;
+    --border: #3d3555; --danger: #ef4444; --success: #34d399;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--fg); font-family: system-ui, sans-serif; line-height: 1.6; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+  /* drop zone */
+  .drop-zone {
+    border: 2px dashed var(--border);
+    border-radius: var(--radius);
+    padding: 48px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+    background: var(--surface);
+    margin-bottom: 24px;
+  }
+  .drop-zone:hover, .drop-zone.dragover {
+    border-color: var(--accent);
+    background: var(--surface2);
+  }
+  .drop-zone p { color: var(--muted); margin-top: 8px; font-size: 14px; }
+
+  /* batch list */
+  .batch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .btn {
+    padding: 8px 20px; border-radius: 8px; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 600; transition: all .15s;
+  }
+  .btn-accent { background: var(--accent); color: #1a1520; }
+  .btn-accent:hover { filter: brightness(1.1); }
+  .btn-accent:disabled { opacity: .4; cursor: not-allowed; }
+  .btn-outline { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-danger { background: var(--danger); color: #fff; }
+
+  /* task cards */
+  .task-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .task-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 16px; transition: all .2s;
+  }
+  .task-card:hover { border-color: var(--muted); }
+  .task-card.done { border-color: var(--success); }
+  .task-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .task-size { color: var(--muted); font-size: 12px; font-family: monospace; }
+  .task-status {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; margin-top: 8px;
+  }
+  .task-status.pending { background: rgba(251,191,36,.15); color: var(--accent); }
+  .task-status.ready { background: rgba(52,211,153,.15); color: var(--success); }
+  .task-status.done { background: rgba(52,211,153,.25); color: var(--success); }
+
+  .task-preview {
+    width: 100%; aspect-ratio: 1; background: var(--surface2);
+    border-radius: 8px; margin: 8px 0; display: grid; place-items: center;
+    overflow: hidden; position: relative;
+  }
+  .task-preview img {
+    max-width: 100%; max-height: 100%; object-fit: contain;
+  }
+  .task-preview .placeholder { color: var(--muted); font-size: 12px; }
+
+  /* progress */
+  .progress-bar {
+    height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 24px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--accent); border-radius: 2px; transition: width .3s;
+  }
+
+  /* toast */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px; padding: 12px 24px;
+    background: var(--success); color: #fff; border-radius: 8px;
+    font-weight: 600; font-size: 14px; opacity: 0; transition: opacity .3s;
+    pointer-events: none; z-index: 100;
+  }
+  .toast.show { opacity: 1; }
+
+  /* manual crop modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 50;
+    display: none; place-items: center;
+  }
+  .modal-overlay.active { display: grid; }
+  .modal {
+    background: var(--surface); border-radius: var(--radius); padding: 24px;
+    max-width: 90vw; max-height: 90vh; overflow: auto;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .modal h2 { font-size: 18px; }
+  .crop-area {
+    position: relative; background: var(--bg); border-radius: 8px; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    max-height: 60vh;
+  }
+  .crop-area canvas { max-width: 100%; max-height: 60vh; }
+  .crop-controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .crop-controls label { font-size: 13px; color: var(--muted); }
+  .crop-controls input[type=number] {
+    width: 70px; padding: 4px 8px; background: var(--surface2); color: var(--fg);
+    border: 1px solid var(--border); border-radius: 6px; font-size: 13px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>素材裁剪工具 · 江湖风云榜</h1>
+  <p class="sub">拖入 Image 2.0 生成的素材图片，自动匹配素材清单并裁剪到目标尺寸</p>
+
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+  <div class="batch-header">
+    <span id="taskCount">0 / 31 已完成</span>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" onclick="resetAll()">清空重来</button>
+      <button class="btn btn-accent" id="exportBtn" onclick="exportAll()" disabled>导出全部</button>
+    </div>
+  </div>
+
+  <div class="drop-zone" id="dropZone">
+    <div style="font-size:32px;margin-bottom:8px">📁</div>
+    <strong>拖入素材图片到此处</strong>
+    <p>支持 PNG / JPG / WebP，可一次拖入多张</p>
+    <p>文件名会自动匹配到下方素材清单</p>
+  </div>
+
+  <div class="task-grid" id="taskGrid"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay" id="cropModal">
+  <div class="modal">
+    <h2 id="cropTitle">手动裁剪</h2>
+    <div class="crop-area"><canvas id="cropCanvas"></canvas></div>
+    <div class="crop-controls">
+      <label>宽 <input type="number" id="cropW" min="1"></label>
+      <label>高 <input type="number" id="cropH" min="1"></label>
+      <button class="btn btn-accent" onclick="applyCrop()">裁剪并保存</button>
+      <button class="btn btn-outline" onclick="closeCropModal()">取消</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── 素材清单 ───
+const TASKS = [
+  // Hero 卷轴
+  { id:'scroll-left-cap',    name:'卷轴左端木轴',       w:80,   h:400,  folder:'martial-legend' },
+  { id:'scroll-right-cap',   name:'卷轴右端木轴',       w:80,   h:400,  folder:'martial-legend' },
+  { id:'scroll-bg',          name:'卷轴黄绸背景',       w:1920, h:1080, folder:'martial-legend', fmt:'jpg' },
+  { id:'scroll-top-deco',    name:'卷轴顶部龙纹装饰',   w:1200, h:120,  folder:'martial-legend' },
+  { id:'scroll-seal',        name:'奉天承运红印章',     w:200,  h:200,  folder:'martial-legend' },
+  // 档案卡
+  { id:'jade-card-frame',    name:'三重边框框架',       w:800,  h:1000, folder:'martial-legend' },
+  { id:'jade-card-corner-tl',name:'左上角龙纹角花',     w:120,  h:120,  folder:'martial-legend' },
+  { id:'jade-card-corner-br',name:'右下角龙纹角花',     w:120,  h:120,  folder:'martial-legend' },
+  { id:'jade-card-bg',       name:'宣纸底纹',           w:800,  h:1000, folder:'martial-legend', fmt:'jpg' },
+  // 时间线
+  { id:'seal-swim',          name:'印章"泳"',           w:80,   h:80,   folder:'martial-legend' },
+  { id:'seal-tech',          name:'印章"技"',           w:80,   h:80,   folder:'martial-legend' },
+  { id:'seal-star',          name:'印章"星"',           w:80,   h:80,   folder:'martial-legend' },
+  { id:'timeline-line',      name:'金色竹节竖线',       w:40,   h:600,  folder:'martial-legend' },
+  // 能力条
+  { id:'ability-bar-bg',     name:'能力条底框',         w:600,  h:60,   folder:'martial-legend' },
+  { id:'ability-bar-fill',   name:'能力条填充',         w:580,  h:40,   folder:'martial-legend' },
+  { id:'rank-badge-1',       name:'等级：初窥门径',     w:80,   h:80,   folder:'martial-legend' },
+  { id:'rank-badge-2',       name:'等级：略有小成',     w:80,   h:80,   folder:'martial-legend' },
+  { id:'rank-badge-3',       name:'等级：登堂入室',     w:80,   h:80,   folder:'martial-legend' },
+  { id:'rank-badge-4',       name:'等级：出神入化',     w:80,   h:80,   folder:'martial-legend' },
+  // 宠物卡
+  { id:'beast-card-frame',   name:'灵兽录边框',         w:600,  h:400,  folder:'martial-legend' },
+  { id:'beast-card-bg',      name:'灵兽录底纹',         w:600,  h:400,  folder:'martial-legend', fmt:'jpg' },
+  // 留言板
+  { id:'memorial-bg',        name:'奏折信笺背景',       w:400,  h:300,  folder:'martial-legend' },
+  { id:'memorial-fold-top',  name:'奏折折叠装饰',       w:400,  h:60,   folder:'martial-legend' },
+  { id:'memorial-seal',      name:'奏折封口印章',       w:60,   h:60,   folder:'martial-legend' },
+  // 信封
+  { id:'pouch-closed',       name:'锦囊关闭状态',       w:500,  h:350,  folder:'martial-legend' },
+  { id:'pouch-open',         name:'锦囊打开状态',       w:500,  h:500,  folder:'martial-legend' },
+  { id:'pouch-wax-seal',     name:'封蜡红印',           w:100,  h:100,  folder:'martial-legend' },
+  { id:'pouch-tassel',       name:'流苏装饰',           w:40,   h:120,  folder:'martial-legend' },
+  // 粒子
+  { id:'particle-gold',      name:'金色闪光粒子',       w:32,   h:32,   folder:'martial-legend' },
+  { id:'particle-petal',     name:'金色花瓣',           w:40,   h:40,   folder:'martial-legend' },
+  // 玉玺
+  { id:'seal-emperor',       name:'"朕已阅"玉玺大印',  w:300,  h:300,  folder:'martial-legend' },
+];
+
+// ─── State ───
+const state = {};
+TASKS.forEach(t => { state[t.id] = { task: t, blob: null, srcName: null }; });
+
+function render() {
+  const grid = document.getElementById('taskGrid');
+  const done = TASKS.filter(t => state[t.id].blob).length;
+  document.getElementById('taskCount').textContent = `${done} / ${TASKS.length} 已完成`;
+  document.getElementById('progressFill').style.width = `${(done / TASKS.length * 100).toFixed(1)}%`;
+  document.getElementById('exportBtn').disabled = done === 0;
+
+  grid.innerHTML = TASKS.map(t => {
+    const s = state[t.id];
+    const hasIt = !!s.blob;
+    const statusCls = hasIt ? 'done' : 'pending';
+    const statusTxt = hasIt ? '✓ 已就绪' : '等待素材';
+    const preview = hasIt
+      ? `<img src="${URL.createObjectURL(s.blob)}" alt="${t.name}">`
+      : `<span class="placeholder">拖入文件<br>${t.id}</span>`;
+    return `<div class="task-card ${hasIt ? 'done' : ''}">
+      <div class="task-preview">${preview}</div>
+      <div class="task-name">${t.name}</div>
+      <div class="task-size">${t.w} × ${t.h} ${t.fmt === 'jpg' ? 'JPG' : 'PNG'}</div>
+      <div style="display:flex;gap:6px;align-items:center;margin-top:6px">
+        <span class="task-status ${statusCls}">${statusTxt}</span>
+        ${hasIt ? `<button class="btn btn-outline" style="padding:2px 8px;font-size:11px" onclick="openCropModal('${t.id}')">裁剪</button>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ─── file matching ───
+function matchFile(name) {
+  const lower = name.toLowerCase().replace(/[\s_\-]+/g, '-').replace(/\.[^.]+$/, '');
+  // direct ID match
+  for (const t of TASKS) {
+    if (lower.includes(t.id)) return t;
+  }
+  // keyword fuzzy
+  const keywords = {
+    'scroll-left':'scroll-left-cap', 'left-cap':'scroll-left-cap', 'zuozhou':'scroll-left-cap',
+    'scroll-right':'scroll-right-cap', 'right-cap':'scroll-right-cap', 'youzhou':'scroll-right-cap',
+    'scroll-bg':'scroll-bg', 'juan-bg':'scroll-bg', 'shengzhi-bg':'scroll-bg',
+    'scroll-top':'scroll-top-deco', 'top-deco':'scroll-top-deco',
+    'scroll-seal':'scroll-seal', 'fengtian':'scroll-seal',
+    'jade-frame':'jade-card-frame', 'card-frame':'jade-card-frame', 'san-chong':'jade-card-frame',
+    'corner-tl':'jade-card-corner-tl', 'jiaohua-tl':'jade-card-corner-tl',
+    'corner-br':'jade-card-corner-br', 'jiaohua-br':'jade-card-corner-br',
+    'card-bg':'jade-card-bg', 'xuanzhi':'jade-card-bg',
+    'seal-swim':'seal-swim', 'yinzhang-yong':'seal-swim',
+    'seal-tech':'seal-tech', 'yinzhang-ji':'seal-tech',
+    'seal-star':'seal-star', 'yinzhang-xing':'seal-star',
+    'timeline':'timeline-line', 'zhujie':'timeline-line', 'bamboo':'timeline-line',
+    'bar-bg':'ability-bar-bg', 'ability-bg':'ability-bar-bg',
+    'bar-fill':'ability-bar-fill', 'ability-fill':'ability-bar-fill',
+    'rank-1':'rank-badge-1', 'chukui':'rank-badge-1',
+    'rank-2':'rank-badge-2', 'xiaocheng':'rank-badge-2',
+    'rank-3':'rank-badge-3', 'tangshi':'rank-badge-3',
+    'rank-4':'rank-badge-4', 'chushenhua':'rank-badge-4',
+    'beast-frame':'beast-card-frame', 'lingshou':'beast-card-frame',
+    'beast-bg':'beast-card-bg',
+    'memorial-bg':'memorial-bg', 'zouzhe':'memorial-bg',
+    'memorial-fold':'memorial-fold-top', 'zouzhe-top':'memorial-fold-top',
+    'memorial-seal':'memorial-seal',
+    'pouch-closed':'pouch-closed', 'jinnang-close':'pouch-closed',
+    'pouch-open':'pouch-open', 'jinnang-open':'pouch-open',
+    'wax':'pouch-wax-seal', 'fengla':'pouch-wax-seal',
+    'tassel':'pouch-tassel', 'liusu':'pouch-tassel',
+    'particle-gold':'particle-gold', 'gold-particle':'particle-gold',
+    'particle-petal':'particle-petal', 'petal':'particle-petal',
+    'seal-emperor':'seal-emperor', 'yuxi':'seal-emperor', 'zhenyiyue':'seal-emperor',
+  };
+  for (const [kw, tid] of Object.entries(keywords)) {
+    if (lower.includes(kw)) return TASKS.find(t => t.id === tid);
+  }
+  return null;
+}
+
+// ─── auto crop & resize ───
+function processImage(file, task) {
+  return new Promise(resolve => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = task.w;
+      canvas.height = task.h;
+      const ctx = canvas.getContext('2d');
+
+      // smart crop: cover fit
+      const srcRatio = img.width / img.height;
+      const dstRatio = task.w / task.h;
+      let sx = 0, sy = 0, sw = img.width, sh = img.height;
+      if (srcRatio > dstRatio) {
+        sw = img.height * dstRatio;
+        sx = (img.width - sw) / 2;
+      } else {
+        sh = img.width / dstRatio;
+        sy = (img.height - sh) / 2;
+      }
+
+      // if source has alpha, try to auto-trim whitespace first
+      ctx.drawImage(img, sx, sy, sw, sh, 0, 0, task.w, task.h);
+
+      const fmt = task.fmt === 'jpg' ? 'image/jpeg' : 'image/png';
+      const quality = task.fmt === 'jpg' ? 0.92 : undefined;
+      canvas.toBlob(blob => {
+        state[task.id].blob = blob;
+        state[task.id].srcName = file.name;
+        resolve();
+      }, fmt, quality);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
+// ─── drop handler ───
+const dropZone = document.getElementById('dropZone');
+
+dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', async e => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  const files = [...e.dataTransfer.files].filter(f => /\.(png|jpe?g|webp)$/i.test(f.name));
+  if (!files.length) return;
+
+  let matched = 0;
+  for (const file of files) {
+    const task = matchFile(file.name);
+    if (task) {
+      await processImage(file, task);
+      matched++;
+    }
+  }
+
+  render();
+  showToast(matched > 0 ? `✓ 匹配并处理了 ${matched} 张素材` : '未匹配到素材，请检查文件名');
+});
+
+// click to upload
+dropZone.addEventListener('click', () => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.multiple = true;
+  input.accept = '.png,.jpg,.jpeg,.webp';
+  input.onchange = async e => {
+    const files = [...e.target.files];
+    let matched = 0;
+    for (const file of files) {
+      const task = matchFile(file.name);
+      if (task) {
+        await processImage(file, task);
+        matched++;
+      }
+    }
+    render();
+    showToast(matched > 0 ? `✓ 匹配并处理了 ${matched} 张素材` : '未匹配到素材，请检查文件名');
+  };
+  input.click();
+});
+
+// ─── export ───
+async function exportAll() {
+  const done = TASKS.filter(t => state[t.id].blob);
+  if (!done.length) return;
+
+  // download each file
+  for (const t of done) {
+    const s = state[t.id];
+    const ext = t.fmt === 'jpg' ? 'jpg' : 'png';
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(s.blob);
+    a.download = `${t.id}.${ext}`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+  showToast(`✓ 已导出 ${done.length} 个文件到下载文件夹`);
+}
+
+// ─── crop modal ───
+let cropTaskId = null;
+let cropImg = null;
+
+function openCropModal(id) {
+  cropTaskId = id;
+  const s = state[id];
+  const t = s.task;
+  const img = new Image();
+  img.onload = () => {
+    cropImg = img;
+    document.getElementById('cropTitle').textContent = `裁剪：${t.name}`;
+    document.getElementById('cropW').value = t.w;
+    document.getElementById('cropH').value = t.h;
+    const canvas = document.getElementById('cropCanvas');
+    const maxW = Math.min(img.width, window.innerWidth * 0.8);
+    const scale = maxW / img.width;
+    canvas.width = img.width;
+    canvas.height = img.height;
+    canvas.style.maxWidth = maxW + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    document.getElementById('cropModal').classList.add('active');
+  };
+  img.src = URL.createObjectURL(s.blob);
+}
+
+function closeCropModal() {
+  document.getElementById('cropModal').classList.remove('active');
+  cropTaskId = null;
+  cropImg = null;
+}
+
+function applyCrop() {
+  if (!cropImg || !cropTaskId) return;
+  const t = state[cropTaskId].task;
+  const cw = parseInt(document.getElementById('cropW').value) || t.w;
+  const ch = parseInt(document.getElementById('cropH').value) || t.h;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = cw;
+  canvas.height = ch;
+  const ctx = canvas.getContext('2d');
+
+  const srcRatio = cropImg.width / cropImg.height;
+  const dstRatio = cw / ch;
+  let sx = 0, sy = 0, sw = cropImg.width, sh = cropImg.height;
+  if (srcRatio > dstRatio) {
+    sw = cropImg.height * dstRatio;
+    sx = (cropImg.width - sw) / 2;
+  } else {
+    sh = cropImg.width / dstRatio;
+    sy = (cropImg.height - sh) / 2;
+  }
+
+  ctx.drawImage(cropImg, sx, sy, sw, sh, 0, 0, cw, ch);
+
+  const fmt = t.fmt === 'jpg' ? 'image/jpeg' : 'image/png';
+  canvas.toBlob(blob => {
+    state[cropTaskId].blob = blob;
+    closeCropModal();
+    render();
+    showToast('✓ 已重新裁剪');
+  }, fmt, t.fmt === 'jpg' ? 0.92 : undefined);
+}
+
+function resetAll() {
+  TASKS.forEach(t => { state[t.id].blob = null; state[t.id].srcName = null; });
+  render();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// init
+render();
+</script>
+</body>
+</html>

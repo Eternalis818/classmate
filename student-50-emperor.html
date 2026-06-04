@@ -1,0 +1,2157 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>朕的同学录 · 张迤恩 · 皇家御制版</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&display=swap');
+
+    :root {
+      --gold: #D4A843;
+      --gold-bright: #FFD700;
+      --gold-dark: #B8860B;
+      --red: #C41E3A;
+      --red-dark: #8B0000;
+      --ink: #1A1008;
+      --ink-light: #3D2B1F;
+      --parchment: #FFF8DC;
+      --parchment-dark: #F5E6C8;
+      --parchment-light: #FFFDF5;
+      --seal-red: #CC2936;
+      --jade-green: #2E6B4F;
+      --blue-imperial: #1A237E;
+      --font-title: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', serif;
+      --font-body: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--parchment-dark);
+      color: var(--ink);
+      font-family: var(--font-body);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══ Imperial Nav ═══ */
+    .imperial-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: linear-gradient(180deg, var(--red-dark) 0%, #5a0a14 100%);
+      border-bottom: 2px solid var(--gold);
+      box-shadow: 0 4px 20px rgba(139,0,0,0.4);
+      padding: 0 20px;
+    }
+    .imperial-nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      gap: 0;
+    }
+    .imperial-nav-brand {
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: var(--gold-bright);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      padding-right: 16px;
+      border-right: 1px solid rgba(212,168,67,0.3);
+      margin-right: 8px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .imperial-nav-brand:hover { color: #fff; }
+    .imperial-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex: 1;
+      overflow-x: auto;
+    }
+    .imperial-nav-links::-webkit-scrollbar { display: none; }
+    .imperial-nav a {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(255,248,220,0.75);
+      letter-spacing: 0.06em;
+      padding: 0 14px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: color 0.2s, background 0.2s;
+      border-bottom: 2px solid transparent;
+    }
+    .imperial-nav a:hover {
+      color: var(--gold-bright);
+      background: rgba(212,168,67,0.1);
+      border-bottom-color: var(--gold);
+    }
+    .imperial-nav a.active {
+      color: var(--gold-bright);
+      border-bottom-color: var(--gold-bright);
+    }
+    @media (max-width: 700px) {
+      .imperial-nav-brand { font-size: 15px; padding-right: 10px; }
+      .imperial-nav a { font-size: 12px; padding: 0 10px; }
+    }
+    @media (max-width: 480px) {
+      .imperial-nav-inner { height: 42px; }
+      .imperial-nav a { padding: 0 8px; font-size: 11px; height: 42px; }
+    }
+
+    /* ═══ Scrollbar ═══ */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--parchment-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+    /* ═══ Imperial Frame ═══ */
+    .imperial-frame {
+      position: relative;
+      border: 3px solid var(--red);
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
+      margin: 20px;
+      background: var(--parchment-light);
+      overflow: hidden;
+    }
+    .imperial-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid var(--gold-dark);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Corner decorations */
+    .corner-deco {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      z-index: 2;
+      opacity: 0.6;
+    }
+    .corner-deco svg { width: 100%; height: 100%; }
+    .corner-tl { top: 12px; left: 12px; }
+    .corner-tr { top: 12px; right: 12px; transform: scaleX(-1); }
+    .corner-bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+    .corner-br { bottom: 12px; right: 12px; transform: scale(-1,-1); }
+
+    /* ═══ Paper Texture ═══ */
+    .paper-texture {
+      position: relative;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(180,160,120,0.08) 39px,
+          rgba(180,160,120,0.08) 40px
+        ),
+        linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment) 100%);
+    }
+
+    /* ═══ Section Base ═══ */
+    .section {
+      padding: clamp(40px, 8vw, 80px) clamp(20px, 5vw, 60px);
+      position: relative;
+    }
+    .section-divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--red), var(--gold), transparent);
+      margin: 0 40px;
+      position: relative;
+    }
+    .section-divider::after {
+      content: '◆';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--parchment-light);
+      color: var(--red);
+      padding: 0 12px;
+      font-size: 14px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-title h2 {
+      font-family: var(--font-title);
+      font-size: clamp(28px, 5vw, 42px);
+      color: var(--red);
+      letter-spacing: 0.1em;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title h2::before,
+    .section-title h2::after {
+      content: '—';
+      color: var(--gold);
+      margin: 0 16px;
+      font-weight: 400;
+    }
+    .section-subtitle {
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: var(--gold-dark);
+      margin-top: 8px;
+      letter-spacing: 0.15em;
+    }
+
+    /* ═══ Reveal Animation ═══ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0, 0, 1), transform 0.8s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+
+    /* ═══════════════════════════════════════════
+       HERO - 圣旨开屏
+       ═══════════════════════════════════════════ */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 45%, rgba(255,215,0,0.18) 0%, transparent 70%),
+        url('assets/templates/martial-legend/scroll-bg.png') center/cover no-repeat;
+    }
+    /* Hero golden glow background image */
+    .hero-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .hero-glow img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.35;
+      mix-blend-mode: screen;
+      filter: brightness(1.2) saturate(1.3);
+      animation: heroGlowPulse 6s ease-in-out infinite;
+    }
+    @keyframes heroGlowPulse {
+      0%, 100% { opacity: 0.3; filter: brightness(1.2) saturate(1.3); }
+      50% { opacity: 0.45; filter: brightness(1.4) saturate(1.5); }
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,248,220,0.2) 0%, rgba(245,230,200,0.4) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Dragon pattern overlay */
+    .hero-dragon-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Cpath d='M100 20c-20 0-40 15-40 35s15 30 25 40c10 10 15 25 15 40s-5 30-15 40c-10 10-25 15-25 30s15 25 40 25' fill='none' stroke='%23D4A843' stroke-width='2'/%3E%3Cpath d='M60 55c-5 0-10 5-10 10s5 10 10 10' fill='none' stroke='%23D4A843' stroke-width='1.5'/%3E%3Ccircle cx='75' cy='65' r='3' fill='%23D4A843'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* Cloud animation */
+    .cloud {
+      position: absolute;
+      font-size: 60px;
+      opacity: 0;
+      animation: cloudFloat 12s ease-in-out infinite;
+      filter: grayscale(30%);
+    }
+    .cloud:nth-child(1) { top: 10%; left: 5%; animation-delay: 0s; }
+    .cloud:nth-child(2) { top: 20%; right: 8%; animation-delay: 3s; }
+    .cloud:nth-child(3) { bottom: 15%; left: 15%; animation-delay: 6s; }
+    @keyframes cloudFloat {
+      0%, 100% { opacity: 0; transform: translateX(0) scale(0.8); }
+      20%, 80% { opacity: 0.15; }
+      50% { opacity: 0.2; transform: translateX(30px) scale(1); }
+    }
+
+    /* Decree scroll */
+    .decree {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 600px;
+      padding: 0 20px;
+    }
+
+    .decree-scroll-top, .decree-scroll-bottom {
+      width: 100%;
+      max-width: 520px;
+      height: 40px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+    }
+    .decree-scroll-top .cap-img, .decree-scroll-bottom .cap-img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 60px;
+      width: 30px;
+    }
+    .decree-scroll-top .cap-img:first-child, .decree-scroll-bottom .cap-img:first-child { left: -8px; }
+    .decree-scroll-top .cap-img:last-child, .decree-scroll-bottom .cap-img:last-child { right: -8px; }
+    .cap-img img { width: 100%; height: 100%; object-fit: contain; }
+    .decree-scroll-bar {
+      flex: 1;
+      height: 24px;
+      background: linear-gradient(180deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .decree-body {
+      background:
+        repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(180,160,120,0.12) 38px, rgba(180,160,120,0.12) 39px),
+        linear-gradient(180deg, var(--parchment-light), var(--parchment));
+      border-left: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      padding: 40px 30px;
+      position: relative;
+      animation: decreeUnfold 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+      overflow: hidden;
+    }
+    @keyframes decreeUnfold {
+      from { max-height: 0; opacity: 0; padding: 0 30px; }
+      to { max-height: 600px; opacity: 1; padding: 40px 30px; }
+    }
+
+    .decree-stamp {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      height: 80px;
+      z-index: 5;
+      animation: stampIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 2s both;
+    }
+    .decree-stamp img { width: 100%; height: 100%; object-fit: contain; }
+    @keyframes stampIn {
+      from { transform: rotate(-12deg) scale(2); opacity: 0; }
+      to { transform: rotate(-12deg) scale(1); opacity: 1; }
+    }
+
+    .decree-opening {
+      font-family: var(--font-title);
+      font-size: clamp(20px, 4vw, 28px);
+      color: var(--ink);
+      letter-spacing: 0.15em;
+      line-height: 2;
+      animation: fadeInUp 0.8s 1s both;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .decree-name {
+      font-family: var(--font-title);
+      font-size: clamp(48px, 10vw, 80px);
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      margin: 16px 0;
+      text-shadow: 2px 2px 0 rgba(212,168,67,0.3);
+      animation: fadeInUp 0.8s 1.3s both;
+    }
+
+    .decree-title {
+      font-family: var(--font-title);
+      font-size: clamp(16px, 3vw, 22px);
+      color: var(--gold-dark);
+      letter-spacing: 0.2em;
+      margin-top: 12px;
+      animation: fadeInUp 0.8s 1.6s both;
+    }
+
+    .decree-badge {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 6px 24px;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 4px;
+      letter-spacing: 0.1em;
+      box-shadow: 0 2px 8px rgba(184,134,11,0.3);
+      animation: fadeInUp 0.8s 1.8s both;
+    }
+
+    .scroll-hint {
+      text-align: center;
+      margin-top: 40px;
+      animation: bounce 2s ease-in-out infinite;
+      color: var(--gold-dark);
+      font-size: 14px;
+      letter-spacing: 0.1em;
+    }
+    .scroll-hint span { display: block; font-size: 24px; margin-bottom: 4px; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ═══════════════════════════════════════════
+       PROFILE - 皇家玉牒
+       ═══════════════════════════════════════════ */
+    .jade-table {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .jade-table-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/templates/martial-legend/jade-card-bg.png') center/cover;
+      border-radius: 2px;
+      z-index: 0;
+    }
+    .jade-table-frame {
+      position: absolute;
+      inset: 0;
+      background: url('assets/templates/martial-legend/jade-card-frame.png') center/cover no-repeat;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .jade-table > *:not(.jade-table-bg):not(.jade-table-frame) {
+      position: relative;
+      z-index: 1;
+    }
+    .jade-corner-tl, .jade-corner-br {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .jade-corner-tl { top: -10px; left: -10px; }
+    .jade-corner-br { bottom: -10px; right: -10px; }
+    .jade-corner-tl img, .jade-corner-br img { width: 100%; height: 100%; object-fit: contain; }
+    .jade-table::before {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .jade-table-header {
+      text-align: center;
+      padding: 24px 20px;
+      background: linear-gradient(135deg, var(--red-dark), var(--red));
+      color: var(--gold-bright);
+      position: relative;
+    }
+    .jade-table-header h3 {
+      font-family: var(--font-title);
+      font-size: clamp(24px, 4vw, 32px);
+      letter-spacing: 0.2em;
+    }
+    .jade-table-header p {
+      font-size: 14px;
+      margin-top: 4px;
+      opacity: 0.9;
+      letter-spacing: 0.1em;
+    }
+    /* Decorative dragon on header */
+    .jade-table-header .dragon-deco {
+      position: absolute;
+      font-size: 40px;
+      opacity: 0.3;
+    }
+    .jade-table-header .dragon-deco.left { left: 12px; top: 50%; transform: translateY(-50%); }
+    .jade-table-header .dragon-deco.right { right: 12px; top: 50%; transform: translateY(-50%) scaleX(-1); }
+
+    .jade-table-body { padding: 24px; }
+
+    .jade-row {
+      display: flex;
+      border-bottom: 1px solid rgba(212,168,67,0.3);
+      min-height: 48px;
+      align-items: stretch;
+    }
+    .jade-row:last-child { border-bottom: none; }
+    .jade-label {
+      width: 100px;
+      min-width: 100px;
+      padding: 12px 16px;
+      background: rgba(212,168,67,0.08);
+      font-family: var(--font-title);
+      font-size: 16px;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid rgba(212,168,67,0.3);
+      letter-spacing: 0.1em;
+    }
+    .jade-value {
+      flex: 1;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      color: var(--ink-light);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .jade-tag {
+      display: inline-flex;
+      padding: 4px 14px;
+      background: linear-gradient(135deg, rgba(196,30,58,0.08), rgba(212,168,67,0.08));
+      border: 1px solid rgba(196,30,58,0.2);
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+
+    .jade-motto {
+      margin-top: 20px;
+      padding: 20px;
+      background: rgba(212,168,67,0.05);
+      border-left: 4px solid var(--red);
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: var(--ink-light);
+      line-height: 2;
+      text-align: center;
+      letter-spacing: 0.1em;
+    }
+
+    /* ═══════════════════════════════════════════
+       TIMELINE - 编年史
+       ═══════════════════════════════════════════ */
+    .chronicle {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 50px;
+    }
+    .chronicle::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom: 0;
+      width: 10px;
+      background: url('assets/templates/martial-legend/timeline-line.png') center repeat-y;
+      background-size: 10px 60px;
+    }
+    .chronicle-item {
+      position: relative;
+      margin-bottom: 32px;
+      padding: 20px 24px;
+      background: var(--parchment-light);
+      border: 1px solid rgba(212,168,67,0.3);
+      border-left: 3px solid var(--red);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .chronicle-item:hover {
+      transform: translateX(8px);
+      box-shadow: 0 4px 20px rgba(184,134,11,0.15);
+    }
+    .chronicle-dot {
+      position: absolute;
+      left: -38px;
+      top: 20px;
+      width: 40px;
+      height: 40px;
+      z-index: 2;
+    }
+    .chronicle-dot img { width: 100%; height: 100%; object-fit: contain; }
+    .chronicle-year {
+      font-family: var(--font-title);
+      font-size: 14px;
+      color: var(--gold-dark);
+      margin-bottom: 6px;
+      letter-spacing: 0.1em;
+    }
+    .chronicle-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .chronicle-desc {
+      font-size: 14px;
+      color: var(--ink-light);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════════
+       ABILITIES - 武功等级
+       ═══════════════════════════════════════════ */
+    .kungfu-grid {
+      max-width: 700px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+    .kungfu-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--parchment-light);
+      border: 1px solid rgba(212,168,67,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .kungfu-item::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--red), var(--gold));
+    }
+    .kungfu-rank {
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+    }
+    .kungfu-rank img { width: 100%; height: 100%; object-fit: contain; }
+    .kungfu-info { flex: 1; }
+    .kungfu-name {
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+    .kungfu-bar-track {
+      height: 24px;
+      background: url('assets/templates/martial-legend/ability-bar-bg.png') center/100% 100% no-repeat;
+      overflow: hidden;
+      position: relative;
+    }
+    .kungfu-bar-fill {
+      height: 100%;
+      background: url('assets/templates/martial-legend/ability-bar-fill.png') center/cover no-repeat;
+      background-size: 700px 100%;
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .kungfu-score {
+      font-family: var(--font-title);
+      font-size: 20px;
+      color: var(--red);
+      font-weight: 700;
+      min-width: 50px;
+      text-align: right;
+    }
+
+    /* ═══════════════════════════════════════════
+       PET - 灵兽录
+       ═══════════════════════════════════════════ */
+    .beast-card {
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(184,134,11,0.18);
+      border: 2px solid var(--gold);
+    }
+    .beast-card-bg {
+      position: absolute;
+      inset: 0;
+      background: url('assets/templates/martial-legend/beast-card-bg.png') center/cover;
+      z-index: 0;
+    }
+    .beast-card-frame {
+      position: absolute;
+      inset: 0;
+      background: url('assets/templates/martial-legend/beast-card-frame.png') center/contain no-repeat;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.85;
+    }
+    .beast-card > *:not(.beast-card-bg):not(.beast-card-frame) {
+      position: relative;
+      z-index: 5;
+      background: transparent;
+    }
+    .beast-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 32px 28px 20px;
+      background: linear-gradient(135deg, rgba(212,168,67,0.25), rgba(196,30,58,0.1)), rgba(255,248,220,0.92);
+      border-bottom: 1px solid rgba(212,168,67,0.35);
+    }
+    .beast-avatar-wrap {
+      width: 120px; height: 120px;
+      border-radius: 12px;
+      border: 3px solid var(--gold);
+      overflow: hidden;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(196,30,58,0.08));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px;
+      box-shadow: 0 4px 16px rgba(184,134,11,0.2);
+      position: relative;
+      cursor: pointer;
+    }
+    .beast-avatar-wrap:hover::after {
+      content: '📷 点击上传';
+      position: absolute; inset: 0;
+      background: rgba(29,24,54,0.6);
+      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+    .beast-avatar-wrap img.uploaded-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+    .beast-identity { flex: 1; }
+    .beast-name {
+      font-family: var(--font-title);
+      font-size: 26px;
+      color: var(--red);
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+    }
+    .beast-title {
+      font-size: 13px;
+      color: var(--gold-dark);
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .beast-title-badge {
+      background: linear-gradient(135deg, var(--red), #d4400a);
+      color: #fff;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+    .beast-type-text {
+      font-size: 13px;
+      color: var(--ink-light);
+    }
+    .beast-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-bottom: 1px solid rgba(212,168,67,0.25);
+      background: rgba(255,248,220,0.88);
+    }
+    .beast-stat {
+      text-align: center;
+      padding: 14px 8px;
+      border-right: 1px solid rgba(212,168,67,0.2);
+    }
+    .beast-stat:last-child { border-right: none; }
+    .beast-stat-label {
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .beast-stat-value {
+      font-family: var(--font-title);
+      font-size: 16px;
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+    .beast-body {
+      padding: 20px 28px;
+      text-align: center;
+      line-height: 1.8;
+      color: var(--ink-light);
+      font-size: 15px;
+      min-height: 60px;
+      background: rgba(255,248,220,0.7);
+    }
+    .beast-traits {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 28px 16px;
+      flex-wrap: wrap;
+    }
+    .beast-trait {
+      font-size: 12px;
+      padding: 3px 12px;
+      border: 1px solid rgba(212,168,67,0.4);
+      border-radius: 20px;
+      color: var(--gold-dark);
+      background: rgba(212,168,67,0.08);
+      letter-spacing: 0.05em;
+    }
+    .beast-seal {
+      text-align: center;
+      padding: 12px 28px 16px;
+      font-family: var(--font-title);
+      font-size: 13px;
+      color: var(--seal-red);
+      letter-spacing: 0.1em;
+      border-top: 1px solid rgba(212,168,67,0.3);
+      background: rgba(196,30,58,0.04);
+      background: rgba(196,30,58,0.04);
+    }
+
+    /* ═══════════════════════════════════════════
+       MESSAGES - 群臣奏折
+       ═══════════════════════════════════════════ */
+    .memorial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .memorial {
+      background: url('assets/templates/martial-legend/memorial-bg.png') center/cover no-repeat;
+      border: 1px solid rgba(212,168,67,0.4);
+      padding: 24px;
+      position: relative;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .memorial-fold {
+      position: absolute;
+      top: -8px;
+      left: 0;
+      right: 0;
+      height: 20px;
+      z-index: 2;
+    }
+    .memorial-fold img { width: 100%; height: 100%; object-fit: cover; }
+    .memorial:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(184,134,11,0.15);
+    }
+    .memorial::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--red), var(--gold), var(--red));
+    }
+    .memorial-from {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .memorial-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: linear-gradient(135deg, rgba(212,168,67,0.2), rgba(196,30,58,0.1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .memorial-name {
+      font-family: var(--font-title);
+      font-size: 16px;
+      color: var(--red);
+      letter-spacing: 0.05em;
+    }
+    .memorial-date {
+      font-size: 12px;
+      color: var(--gold-dark);
+    }
+    .memorial-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink-light);
+      padding: 12px 0;
+      border-top: 1px solid rgba(212,168,67,0.2);
+    }
+    .memorial-seal-stamp {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+    }
+    .memorial-seal-stamp img { width: 100%; height: 100%; object-fit: contain; }
+    .memorial-seal {
+      text-align: right;
+      font-family: var(--font-title);
+      font-size: 12px;
+      color: var(--seal-red);
+      opacity: 0.6;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+
+    /* ═══════════════════════════════════════════
+       TEACHER - 太傅赠言
+       ═══════════════════════════════════════════ */
+    .tutor-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--parchment-light);
+      border: 2px solid var(--gold);
+      padding: 40px;
+      position: relative;
+      text-align: center;
+    }
+    .tutor-card::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px solid var(--gold-dark);
+      pointer-events: none;
+    }
+    .tutor-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 4px 12px rgba(184,134,11,0.3);
+    }
+    .tutor-title {
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+    .tutor-name {
+      font-size: 14px;
+      color: var(--gold-dark);
+      margin-bottom: 20px;
+    }
+    .tutor-message {
+      font-family: var(--font-title);
+      font-size: 20px;
+      line-height: 2;
+      color: var(--ink);
+      padding: 20px;
+      border-top: 1px solid var(--gold);
+      border-bottom: 1px solid var(--gold);
+      letter-spacing: 0.08em;
+    }
+
+    /* ═══════════════════════════════════════════
+       LETTER - 密旨锦囊
+       ═══════════════════════════════════════════ */
+    .pouch-wrapper {
+      max-width: 480px;
+      margin: 0 auto;
+      perspective: 1000px;
+    }
+    .pouch {
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.4s;
+    }
+    .pouch:hover { transform: translateY(-4px); }
+    .pouch-body {
+      background: url('assets/templates/martial-legend/pouch-closed.png') center/cover no-repeat;
+      min-height: 350px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .pouch-body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(139,0,0,0.6) 0%, rgba(139,0,0,0.3) 40%, rgba(255,248,220,0.5) 100%);
+      z-index: 0;
+    }
+    .pouch-body > * { position: relative; z-index: 1; }
+    .pouch.open .pouch-body {
+      background: url('assets/templates/martial-legend/pouch-open.png') center/cover no-repeat;
+    }
+    .pouch.open .pouch-body::before {
+      background: linear-gradient(180deg, rgba(255,248,220,0.3) 0%, rgba(245,230,200,0.6) 100%);
+    }
+    .pouch-seal-icon {
+      position: relative;
+      z-index: 2;
+      width: 70px;
+      height: 70px;
+      margin-bottom: 12px;
+    }
+    .pouch-seal-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .pouch-title {
+      position: relative;
+      z-index: 2;
+      font-family: var(--font-title);
+      font-size: 22px;
+      color: var(--gold-bright);
+      margin-bottom: 8px;
+      letter-spacing: 0.15em;
+    }
+    .pouch-hint {
+      position: relative;
+      z-index: 2;
+      font-size: 14px;
+      color: rgba(255,253,245,0.7);
+      margin-bottom: 20px;
+    }
+    .pouch-tassel {
+      position: absolute;
+      right: -20px;
+      top: 10px;
+      width: 40px;
+      height: 120px;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .pouch-tassel img { width: 100%; height: 100%; object-fit: contain; }
+    .pouch-stitching {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      height: 1px;
+      background: repeating-linear-gradient(90deg, var(--gold) 0, var(--gold) 8px, transparent 8px, transparent 16px);
+    }
+    .decree-letter {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.8s cubic-bezier(0.2, 0, 0, 1), opacity 0.4s;
+      opacity: 0;
+    }
+    .pouch.open .decree-letter {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 24px;
+    }
+    .decree-letter-inner {
+      background: rgba(255,248,220,0.8);
+      border: 1px solid var(--gold);
+      padding: 24px;
+      font-family: var(--font-title);
+      font-size: 17px;
+      line-height: 2.2;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      white-space: pre-wrap;
+      text-align: left;
+    }
+
+    /* ═══════════════════════════════════════════
+       FINALE - 御印尾页
+       ═══════════════════════════════════════════ */
+    .finale {
+      text-align: center;
+      padding: clamp(60px, 10vw, 120px) 20px;
+      position: relative;
+      background:
+        radial-gradient(ellipse at center, rgba(212,168,67,0.1), transparent 60%),
+        linear-gradient(180deg, var(--parchment-light), var(--parchment-dark));
+    }
+    .finale-title {
+      font-family: var(--font-title);
+      font-size: clamp(36px, 8vw, 64px);
+      color: var(--red);
+      letter-spacing: 0.2em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 0 rgba(212,168,67,0.2);
+    }
+    .finale-subtitle {
+      font-family: var(--font-title);
+      font-size: clamp(16px, 3vw, 20px);
+      color: var(--gold-dark);
+      line-height: 2;
+      letter-spacing: 0.1em;
+    }
+
+    /* Big seal stamp */
+    .finale-seal {
+      display: inline-block;
+      width: 200px;
+      height: 200px;
+      margin-top: 40px;
+      transform: rotate(-8deg);
+      animation: stampIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s both;
+    }
+    .finale-seal img { width: 100%; height: 100%; object-fit: contain; }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ */
+    .pagefoot {
+      text-align: center;
+      padding: 20px;
+      color: var(--gold-dark);
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      border-top: 1px solid rgba(212,168,67,0.3);
+    }
+
+    /* ═══ Particles ═══ */
+    .particles-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ═══ Responsive ═══ */
+    @media (max-width: 600px) {
+      .imperial-frame { margin: 10px; }
+      .section { padding: 30px 16px; }
+      .jade-row { flex-direction: column; }
+      .jade-label { width: 100%; min-width: unset; border-right: none; border-bottom: 1px solid rgba(212,168,67,0.3); padding: 8px 16px; }
+      .jade-value { padding: 8px 16px; }
+      .decree-scroll-top, .decree-scroll-bottom { height: 20px; }
+      .decree-body { padding: 30px 20px; }
+      .corner-deco { width: 50px; height: 50px; }
+      .beast-header { flex-direction: column; text-align: center; gap: 12px; }
+      .beast-avatar-wrap { width: 100px; height: 100px; }
+      .beast-traits { gap: 6px; }
+    }
+
+    /* ═══ Edit Mode Styles ═══ */
+    .edit-toggle {
+      position: fixed; top: 20px; right: 20px; z-index: 9999;
+      background: var(--red); color: #fff; border: 2px solid var(--gold);
+      border-radius: 8px; padding: 8px 18px; font-size: 14px;
+      font-family: var(--font-body); cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.2s;
+    }
+    .edit-toggle:hover { background: var(--gold); color: var(--ink); }
+    .edit-toggle.active { background: var(--gold); color: var(--ink); }
+
+    body.edit-mode .editable-field {
+      outline: 2px dashed var(--gold);
+      outline-offset: 2px;
+      min-height: 1.4em;
+      cursor: text;
+      border-radius: 4px;
+      padding: 2px 6px;
+      transition: outline-color 0.2s;
+    }
+    body.edit-mode .editable-field:focus {
+      outline: 2px solid var(--red);
+      background: rgba(255,253,245,0.9);
+    }
+    body.edit-mode .upload-zone {
+      position: relative;
+      cursor: pointer;
+    }
+    body.edit-mode .upload-zone::after {
+      content: '📷 点击上传';
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(212,168,67,0.15);
+      color: var(--gold-dark);
+      font-size: 14px;
+      border: 2px dashed var(--gold);
+      border-radius: 12px;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    body.edit-mode .upload-zone:hover::after { opacity: 1; }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-zone .uploaded-img {
+      width: 100%; height: 100%; object-fit: cover;
+      border-radius: 12px;
+    }
+
+    /* Profile avatar upload */
+    .jade-avatar-wrap {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      border: 3px solid var(--gold);
+      overflow: hidden;
+      margin: 0 auto 12px;
+      background: var(--parchment);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px;
+    }
+    .jade-avatar-wrap img.uploaded-img { border-radius: 50%; }
+
+    /* Beast avatar upload */
+    /* Message compose */
+    .msg-compose {
+      background: var(--parchment-light);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    body.edit-mode .msg-compose { display: block; }
+    .msg-compose h4 {
+      font-family: var(--font-title);
+      color: var(--red);
+      font-size: 18px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .msg-compose select, .msg-compose textarea {
+      width: 100%;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 10px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      background: #fff;
+      margin-bottom: 10px;
+    }
+    .msg-compose textarea { min-height: 80px; resize: vertical; }
+    .msg-compose .voice-hint {
+      font-size: 12px; color: var(--gold-dark);
+      text-align: center; margin-bottom: 10px;
+    }
+    .msg-compose .msg-btn-row {
+      display: flex; gap: 10px; justify-content: center;
+    }
+    .msg-compose button {
+      padding: 8px 24px;
+      border-radius: 8px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      cursor: pointer;
+      border: 2px solid var(--gold);
+    }
+    .msg-compose .btn-submit {
+      background: var(--red); color: #fff; border-color: var(--red);
+    }
+    .msg-compose .btn-cancel {
+      background: transparent; color: var(--ink);
+    }
+    .msg-photo-upload {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 10px;
+    }
+    .msg-photo-upload label {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 14px;
+      background: var(--parchment-dark);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      font-size: 13px; cursor: pointer;
+      color: var(--gold-dark);
+    }
+    .msg-photo-upload input[type="file"] { display: none; }
+    .msg-photo-preview {
+      width: 60px; height: 60px;
+      border-radius: 8px;
+      border: 1px solid var(--gold);
+      object-fit: cover;
+      display: none;
+    }
+
+    /* Edit banner */
+    .edit-banner {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--gold);
+      color: var(--ink);
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      font-family: var(--font-body);
+      z-index: 9998;
+      display: none;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+    body.edit-mode .edit-banner { display: block; }
+
+    /* ═══ Imperial Gallery (相册轮播) ═══ */
+    .gallery-tabs{
+      display:flex;justify-content:center;gap:12px;margin-bottom:32px;flex-wrap:wrap
+    }
+    .gallery-tab{
+      padding:6px 20px;border-radius:20px;font-size:14px;font-weight:600;
+      font-family:var(--font-body);letter-spacing:0.05em;
+      color:var(--parchment);background:transparent;
+      border:1px solid var(--gold);cursor:pointer;
+      transition:all 0.25s ease;
+    }
+    .gallery-tab:hover{
+      background:rgba(212,168,67,0.15);border-color:var(--gold-bright);
+    }
+    .gallery-tab.active{
+      background:linear-gradient(135deg,var(--gold-dark),var(--gold));
+      color:var(--ink);border-color:var(--gold-bright);
+      box-shadow:0 2px 12px rgba(212,168,67,0.4);
+    }
+    .carousel-wrapper{
+      position:relative;max-width:820px;margin:0 auto;
+      border:2px solid var(--gold);border-radius:4px;overflow:hidden;
+      background:var(--parchment);box-shadow:
+        inset 0 0 0 1px rgba(139,69,19,0.2),
+        0 8px 32px rgba(139,0,0,0.2);
+    }
+    .carousel-wrapper::before{
+      content:'';position:absolute;inset:4px;border:1px solid var(--gold-dark);
+      pointer-events:none;z-index:3;
+    }
+    .carousel-track{display:flex;transition:transform .5s cubic-bezier(0.4,0,0.2,1)}
+    .carousel-slide{min-width:100%;position:relative;overflow:hidden}
+    .carousel-slide img{
+      width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+    }
+    .carousel-slide .slide-label{
+      position:absolute;bottom:0;left:0;right:0;
+      padding:24px 20px 16px;
+      background:linear-gradient(transparent,rgba(26,16,8,.7));
+      color:#fff;font-size:14px;font-weight:500;
+      font-family:var(--font-body);letter-spacing:0.05em;
+    }
+    .carousel-slide .slide-category{
+      display:inline-block;padding:2px 10px;border-radius:10px;
+      background:var(--gold);color:var(--ink);font-size:12px;
+      margin-bottom:6px;font-weight:600;
+    }
+    .carousel-nav{
+      position:absolute;top:50%;transform:translateY(-50%);
+      width:42px;height:42px;border-radius:50%;
+      background:rgba(255,248,220,.88);
+      border:1px solid var(--gold);font-size:22px;line-height:1;
+      cursor:pointer;transition:all 0.2s ease;
+      display:grid;place-items:center;color:var(--ink);
+      backdrop-filter:blur(8px);z-index:4;
+      font-family:serif;
+    }
+    .carousel-nav:hover{
+      background:var(--gold);color:var(--ink);
+      transform:translateY(-50%) scale(1.1);
+      box-shadow:0 4px 16px rgba(212,168,67,0.5);
+    }
+    .carousel-nav.prev{left:10px}.carousel-nav.next{right:10px}
+    .carousel-dots{display:flex;justify-content:center;gap:8px;padding:16px 0}
+    .carousel-dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--gold-dark);border:1px solid var(--gold);
+      cursor:pointer;transition:all 0.2s ease;
+    }
+    .carousel-dot.active{
+      background:var(--gold-bright);transform:scale(1.3);
+      box-shadow:0 0 8px rgba(255,215,0,0.6);
+    }
+  </style>
+</head>
+<body>
+<nav class="imperial-nav">
+  <div class="imperial-nav-inner">
+    <a href="index.html" class="imperial-nav-brand">🏮 时光纪念册</a>
+    <div class="imperial-nav-links">
+      <a href="index.html#teachers" onclick="smoothTo('teachers')">师恩铭刻</a>
+      <a href="index.html#students" onclick="smoothTo('students')">同窗录</a>
+      <a href="#gallery">御用相册</a>
+      <a href="index.html#group-photo" onclick="smoothTo('group-photo')">毕业合影</a>
+      <a href="index.html#messages-wall" onclick="smoothTo('messages-wall')">留言墙</a>
+    </div>
+  </div>
+</nav>
+<button class="edit-toggle" id="editToggle" onclick="toggleEditMode()">✏️ 编辑模式</button>
+  <div class="edit-banner">编辑模式已开启 · 点击文字可直接修改 · 点击照片区域可上传图片 · 修改后自动保存到浏览器</div>
+
+<div class="imperial-frame">
+  <!-- Corner Dragon Decorations -->
+  <div class="corner-deco corner-tl"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 70C10 50 20 30 40 20C50 15 60 15 70 10" stroke="#D4A843" stroke-width="1.5" opacity="0.6"/><path d="M15 65C15 48 25 30 42 22C48 19 55 18 62 15" stroke="#D4A843" stroke-width="1" opacity="0.4"/><circle cx="55" cy="18" r="4" fill="#D4A843" opacity="0.3"/><path d="M40 20L45 15L48 22" stroke="#D4A843" stroke-width="1" fill="#D4A843" fill-opacity="0.2" opacity="0.5"/><path d="M5 75Q5 40 35 20" stroke="#C41E3A" stroke-width="0.5" opacity="0.3" stroke-dasharray="2 3"/></svg></div>
+  <div class="corner-deco corner-tr"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 70C10 50 20 30 40 20C50 15 60 15 70 10" stroke="#D4A843" stroke-width="1.5" opacity="0.6"/><path d="M15 65C15 48 25 30 42 22C48 19 55 18 62 15" stroke="#D4A843" stroke-width="1" opacity="0.4"/><circle cx="55" cy="18" r="4" fill="#D4A843" opacity="0.3"/><path d="M40 20L45 15L48 22" stroke="#D4A843" stroke-width="1" fill="#D4A843" fill-opacity="0.2" opacity="0.5"/><path d="M5 75Q5 40 35 20" stroke="#C41E3A" stroke-width="0.5" opacity="0.3" stroke-dasharray="2 3"/></svg></div>
+  <div class="corner-deco corner-bl"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 70C10 50 20 30 40 20C50 15 60 15 70 10" stroke="#D4A843" stroke-width="1.5" opacity="0.6"/><path d="M15 65C15 48 25 30 42 22C48 19 55 18 62 15" stroke="#D4A843" stroke-width="1" opacity="0.4"/><circle cx="55" cy="18" r="4" fill="#D4A843" opacity="0.3"/><path d="M40 20L45 15L48 22" stroke="#D4A843" stroke-width="1" fill="#D4A843" fill-opacity="0.2" opacity="0.5"/><path d="M5 75Q5 40 35 20" stroke="#C41E3A" stroke-width="0.5" opacity="0.3" stroke-dasharray="2 3"/></svg></div>
+  <div class="corner-deco corner-br"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 70C10 50 20 30 40 20C50 15 60 15 70 10" stroke="#D4A843" stroke-width="1.5" opacity="0.6"/><path d="M15 65C15 48 25 30 42 22C48 19 55 18 62 15" stroke="#D4A843" stroke-width="1" opacity="0.4"/><circle cx="55" cy="18" r="4" fill="#D4A843" opacity="0.3"/><path d="M40 20L45 15L48 22" stroke="#D4A843" stroke-width="1" fill="#D4A843" fill-opacity="0.2" opacity="0.5"/><path d="M5 75Q5 40 35 20" stroke="#C41E3A" stroke-width="0.5" opacity="0.3" stroke-dasharray="2 3"/></svg></div>
+
+  <!-- ═══════════════════════════════════
+       HERO - 圣旨开屏
+       ═══════════════════════════════════ -->
+  <section class="hero paper-texture section" data-od-id="hero">
+    <div class="hero-glow"><img src="assets/templates/martial-legend/hero.png" alt=""></div>
+    <canvas class="particles-canvas" id="particles"></canvas>
+    <div class="cloud">☁️</div>
+    <div class="cloud">☁️</div>
+    <div class="cloud">☁️</div>
+
+    <div class="decree">
+      <div class="decree-scroll-top">
+        <span class="cap-img"><img src="assets/templates/martial-legend/scroll-left-cap.png" alt=""></span>
+        <div class="decree-scroll-bar"></div>
+        <span class="cap-img"><img src="assets/templates/martial-legend/scroll-right-cap.png" alt=""></span>
+      </div>
+      <img src="assets/templates/martial-legend/scroll-top-deco.png" alt="" style="width:100%;max-width:520px;display:block;margin:0 auto;position:relative;z-index:3;">
+      <div class="decree-body">
+        <div class="decree-stamp"><img src="assets/templates/martial-legend/scroll-seal.png" alt="御用"></div>
+        <div class="decree-opening">
+          奉天承运<br>皇帝诏曰
+        </div>
+        <div class="decree-name">张迤恩</div>
+        <div class="decree-title">朕的同学录 · 皇家御制版</div>
+        <div class="decree-badge">✨ 发起人 · 松柏第二小学 · 六年级4班</div>
+      </div>
+      <div class="decree-scroll-bottom">
+        <span class="cap-img"><img src="assets/templates/martial-legend/scroll-left-cap.png" alt=""></span>
+        <div class="decree-scroll-bar"></div>
+        <span class="cap-img"><img src="assets/templates/martial-legend/scroll-right-cap.png" alt=""></span>
+      </div>
+
+      <div class="scroll-hint">
+        <span>▾</span>
+        向下翻阅朕的圣旨
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       PROFILE - 皇家玉牒
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" data-od-id="profile">
+    <div class="section-title reveal">
+      <h2>皇家玉牒</h2>
+      <div class="section-subtitle">Imperial Genealogy · 个人档案</div>
+    </div>
+    <div class="jade-table reveal reveal-delay-1">
+      <div class="jade-table-bg"></div>
+      <div class="jade-table-frame"></div>
+      <div class="jade-corner-tl"><img src="assets/templates/martial-legend/jade-card-corner-tl.png" alt=""></div>
+      <div class="jade-corner-br"><img src="assets/templates/martial-legend/jade-card-corner-br.png" alt=""></div>
+      <div class="jade-table-header">
+        <span class="dragon-deco left">🐉</span>
+        <span class="dragon-deco right">🐉</span>
+        <h3>朕之档案</h3>
+        <p>松柏第二小学 · 六年级4班 · 2026届</p>
+      </div>
+      <!-- Avatar Upload -->
+      <div class="jade-avatar-wrap upload-zone" data-field="avatar" onclick="handleUpload(this)">
+        <input type="file" accept="image/*" onchange="previewImage(this, this.parentElement)">
+        <span>👤</span>
+      </div>
+      <div class="jade-table-body">
+        <div class="jade-row">
+          <div class="jade-label">御名</div>
+          <div class="jade-value" data-field="name"><span class="editable-field" contenteditable="false" data-key="name">张迤恩</span></div>
+        </div>
+        <div class="jade-row">
+          <div class="jade-label">雅号</div>
+          <div class="jade-value"><span class="editable-field" contenteditable="false" data-key="nickname">迤恩</span></div>
+        </div>
+        <div class="jade-row">
+          <div class="jade-label">学号</div>
+          <div class="jade-value">No. 50</div>
+        </div>
+        <div class="jade-row">
+          <div class="jade-label">封号</div>
+          <div class="jade-value">
+            <span class="jade-tag editable-field" contenteditable="false" data-key="tag1">靠谱小队长</span>
+            <span class="jade-tag editable-field" contenteditable="false" data-key="tag2">暖心闺蜜</span>
+            <span class="jade-tag editable-field" contenteditable="false" data-key="tag3">科技小达人</span>
+          </div>
+        </div>
+        <div class="jade-row">
+          <div class="jade-label">特长</div>
+          <div class="jade-value"><span class="editable-field" contenteditable="false" data-key="specialty">游泳 · AI编程 · 认真负责</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       GALLERY - 御用相册
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" id="gallery" data-od-id="gallery">
+    <div class="section-title reveal">
+      <h2>御用相册</h2>
+      <div class="section-subtitle">Imperial Gallery · 定格瞬间</div>
+    </div>
+    <div class="gallery-tabs reveal">
+      <button class="gallery-tab active" onclick="emperorFilterGallery('all',this)">全部</button>
+      <button class="gallery-tab" onclick="emperorFilterGallery('life',this)">生活照</button>
+      <button class="gallery-tab" onclick="emperorFilterGallery('school',this)">校园照</button>
+      <button class="gallery-tab" onclick="emperorFilterGallery('future',this)">AI未来</button>
+    </div>
+    <div class="carousel-wrapper reveal" id="emperorCarouselWrapper">
+      <div class="carousel-track" id="emperorCarouselTrack"></div>
+      <button class="carousel-nav prev" onclick="emperorMoveSlide(-1)">&#8249;</button>
+      <button class="carousel-nav next" onclick="emperorMoveSlide(1)">&#8250;</button>
+      <div class="carousel-dots" id="emperorCarouselDots"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       TIMELINE - 编年史
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" data-od-id="timeline">
+    <div class="section-title reveal">
+      <h2>编年史</h2>
+      <div class="section-subtitle">Imperial Chronicle · 闪光时刻</div>
+    </div>
+    <div class="chronicle">
+      <div class="chronicle-item reveal">
+        <div class="chronicle-dot"><img src="assets/templates/martial-legend/seal-swim.png" alt="泳"></div>
+        <div class="chronicle-year">甲辰年 · 2024</div>
+        <div class="chronicle-title">校级游泳比赛获佳绩</div>
+        <div class="chronicle-desc">龙腾水域，朕在校级游泳比赛中大展身手，勇夺佳绩</div>
+      </div>
+      <div class="chronicle-item reveal reveal-delay-1">
+        <div class="chronicle-dot"><img src="assets/templates/martial-legend/seal-tech.png" alt="技"></div>
+        <div class="chronicle-year">乙巳年 · 2026春</div>
+        <div class="chronicle-title">AI编程作品展示</div>
+        <div class="chronicle-desc">朕独立完成AI编程作品并公开展示，朝野上下称奇</div>
+      </div>
+      <div class="chronicle-item reveal reveal-delay-2">
+        <div class="chronicle-dot"><img src="assets/templates/martial-legend/seal-star.png" alt="星"></div>
+        <div class="chronicle-year">乙巳年 · 2026夏</div>
+        <div class="chronicle-title">担任班级小队长</div>
+        <div class="chronicle-desc">朕认真负责，是老师的好帮手，深得民心</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       ABILITIES - 武功等级
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" id="abilities" data-od-id="abilities">
+    <div class="section-title reveal">
+      <h2>武功秘籍</h2>
+      <div class="section-subtitle">Martial Arts · 朕的绝学</div>
+    </div>
+    <div class="kungfu-grid">
+      <div class="kungfu-item reveal">
+        <div class="kungfu-rank"><img src="assets/templates/martial-legend/rank-badge-4.png" alt="出神入化"></div>
+        <div class="kungfu-info">
+          <div class="kungfu-name">🐉 御水术（游泳实力）</div>
+          <div class="kungfu-bar-track"><div class="kungfu-bar-fill" data-width="95"></div></div>
+        </div>
+        <div class="kungfu-score">95</div>
+      </div>
+      <div class="kungfu-item reveal reveal-delay-1">
+        <div class="kungfu-rank"><img src="assets/templates/martial-legend/rank-badge-3.png" alt="登堂入室"></div>
+        <div class="kungfu-info">
+          <div class="kungfu-name">💻 天机术（科技能力）</div>
+          <div class="kungfu-bar-track"><div class="kungfu-bar-fill" data-width="88"></div></div>
+        </div>
+        <div class="kungfu-score">88</div>
+      </div>
+      <div class="kungfu-item reveal reveal-delay-2">
+        <div class="kungfu-rank"><img src="assets/templates/martial-legend/rank-badge-4.png" alt="出神入化"></div>
+        <div class="kungfu-info">
+          <div class="kungfu-name">🛡️ 护国心法（责任心）</div>
+          <div class="kungfu-bar-track"><div class="kungfu-bar-fill" data-width="92"></div></div>
+        </div>
+        <div class="kungfu-score">92</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       PET - 灵兽录
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" data-od-id="pet">
+    <div class="section-title reveal">
+      <h2>灵兽录</h2>
+      <div class="section-subtitle">Spirit Beast · 朕的灵宠</div>
+    </div>
+    <div class="beast-card reveal">
+      <div class="beast-card-bg"></div>
+      <div class="beast-card-frame"></div>
+      <div class="beast-header">
+        <div class="beast-avatar-wrap upload-zone" data-field="petPhoto" onclick="handleUpload(this)">
+          <input type="file" accept="image/*" onchange="previewImage(this, this.parentElement)">
+          <span>🐱</span>
+        </div>
+        <div class="beast-identity">
+          <div class="beast-name editable-field" contenteditable="false" data-key="petName">年糕</div>
+          <div class="beast-title">
+            <span class="beast-title-badge">御赐灵兽</span>
+            <span class="beast-type-text editable-field" contenteditable="false" data-key="petType">橘猫 · 灵猫科</span>
+          </div>
+        </div>
+      </div>
+      <div class="beast-stats">
+        <div class="beast-stat">
+          <div class="beast-stat-label">年龄</div>
+          <div class="beast-stat-value editable-field" contenteditable="false" data-key="petAge">3岁</div>
+        </div>
+        <div class="beast-stat">
+          <div class="beast-stat-label">体重</div>
+          <div class="beast-stat-value editable-field" contenteditable="false" data-key="petWeight">5.2斤</div>
+        </div>
+        <div class="beast-stat">
+          <div class="beast-stat-label">可爱值</div>
+          <div class="beast-stat-value">★★★★★</div>
+        </div>
+      </div>
+      <div class="beast-traits">
+        <span class="beast-trait">🐱 爱打盹</span>
+        <span class="beast-trait">🐟 小鱼干控</span>
+        <span class="beast-trait">☀️ 阳光爱好者</span>
+        <span class="beast-trait">🐾 踏奶高手</span>
+      </div>
+      <div class="beast-body editable-field" contenteditable="false" data-key="petDesc">一只超萌的橘色灵兽，最爱在阳光下打盹和享用小鱼干。深得朕的宠爱，日常陪伴左右。</div>
+      <div class="beast-seal">— 御赐灵兽 · 不可侵犯 —</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       MESSAGES - 群臣奏折
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" data-od-id="messages">
+    <div class="section-title reveal">
+      <h2>群臣奏折</h2>
+      <div class="section-subtitle">Memorials · 同学留言</div>
+    </div>
+
+    <!-- Compose Message -->
+    <div class="msg-compose" id="msgCompose">
+      <h4>📜 给同学写奏折</h4>
+      <select id="msgTarget">
+        <option value="">— 选择要留言的同学 —</option>
+        <option value="01">01号同学</option>
+        <option value="02">02号同学</option>
+        <option value="03">03号同学</option>
+        <option value="04">04号同学</option>
+        <option value="05">05号同学</option>
+        <option value="06">06号同学</option>
+        <option value="07">07号同学</option>
+        <option value="08">08号同学</option>
+        <option value="09">09号同学</option>
+        <option value="10">10号同学</option>
+        <option value="more" disabled>... 更多同学 ...</option>
+        <option value="49">49号同学</option>
+        <option value="50">50号 · 张迤恩</option>
+        <option value="51">51号同学</option>
+        <option value="52">52号同学</option>
+        <option value="53">53号同学</option>
+        <option value="54">54号同学</option>
+        <option value="55">55号同学</option>
+      </select>
+      <div class="voice-hint">💡 可以用手机语音输入法哦</div>
+      <textarea id="msgText" placeholder="写下你的心里话...（这位同学会在TA的页面看到你的留言）"></textarea>
+      <div class="msg-photo-upload">
+        <label>
+          📷 上传手写留言照片
+          <input type="file" accept="image/*" onchange="previewMsgPhoto(this)">
+        </label>
+        <img class="msg-photo-preview" id="msgPhotoPreview" alt="预览">
+      </div>
+      <div class="msg-btn-row">
+        <button class="btn-cancel" onclick="cancelMsg()">取消</button>
+        <button class="btn-submit" onclick="submitMsg()">呈上奏折</button>
+      </div>
+    </div>
+
+    <div class="memorial-grid">
+      <div class="memorial reveal">
+        <div class="memorial-fold"><img src="assets/templates/martial-legend/memorial-fold-top.png" alt=""></div>
+        <div class="memorial-from">
+          <div class="memorial-avatar">🌟</div>
+          <div>
+            <div class="memorial-name">李小明</div>
+            <div class="memorial-date">乙巳年夏</div>
+          </div>
+        </div>
+        <div class="memorial-text">
+          迤恩陛下，六年同窗，臣深感荣幸。陛下之靠谱，臣佩服不已，愿友谊地久天长！
+        </div>
+        <div class="memorial-seal"><span class="memorial-seal-stamp"><img src="assets/templates/martial-legend/memorial-seal.png" alt=""></span>臣 小明 上奏</div>
+      </div>
+      <div class="memorial reveal reveal-delay-1">
+        <div class="memorial-fold"><img src="assets/templates/martial-legend/memorial-fold-top.png" alt=""></div>
+        <div class="memorial-from">
+          <div class="memorial-avatar">🌸</div>
+          <div>
+            <div class="memorial-name">王小花</div>
+            <div class="memorial-date">乙巳年夏</div>
+          </div>
+        </div>
+        <div class="memorial-text">
+          最暖心的闺蜜陛下，谢谢你一直以来的陪伴和照顾，到了初中也要继续做好朋友哦！
+        </div>
+        <div class="memorial-seal"><span class="memorial-seal-stamp"><img src="assets/templates/martial-legend/memorial-seal.png" alt=""></span>臣 小花 上奏</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       TEACHER - 太傅赠言
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" data-od-id="teacher">
+    <div class="section-title reveal">
+      <h2>太傅赠言</h2>
+      <div class="section-subtitle">Tutor's Words · 老师寄语</div>
+    </div>
+    <div class="tutor-card reveal">
+      <div class="tutor-icon">📜</div>
+      <div class="tutor-title">太傅 赠言</div>
+      <div class="tutor-name">周黎老师 · 班主任</div>
+      <div class="tutor-message">
+        迤恩同学，你是一个靠谱又暖心的好孩子。老师相信，未来的你一定会更加出色，愿你前程似锦，一路繁花！
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       LETTER - 密旨锦囊
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="section paper-texture" data-od-id="letter">
+    <div class="section-title reveal">
+      <h2>密旨锦囊</h2>
+      <div class="section-subtitle">Secret Decree · 致未来的自己</div>
+    </div>
+    <div class="pouch-wrapper reveal">
+      <div class="pouch" id="pouch" onclick="this.classList.toggle('open')">
+        <div class="pouch-body">
+          <div class="pouch-seal-icon"><img src="assets/templates/martial-legend/pouch-wax-seal.png" alt="封蜡"></div>
+          <div class="pouch-tassel"><img src="assets/templates/martial-legend/pouch-tassel.png" alt=""></div>
+          <div class="pouch-title">朕的密旨</div>
+          <div class="pouch-hint">点击打开锦囊 →</div>
+          <div class="pouch-stitching"></div>
+          <div class="decree-letter">
+            <div class="decree-letter-inner">亲爱的初中自己：
+
+愿你依然阳光开朗，依然热爱游泳和AI，依然对世界充满好奇...
+
+朕在此立诏，未来可期，不负韶华！</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       FINALE - 御印尾页
+       ═══════════════════════════════════ -->
+  <div class="section-divider"></div>
+  <section class="finale paper-texture" data-od-id="finale">
+    <div class="finale-title reveal">龙行天下</div>
+    <p class="finale-subtitle reveal reveal-delay-1">
+      乙巳年夏 · 松柏第二小学 · 六年级4班<br>
+      愿朕与诸位爱卿，历尽千帆，归来仍是少年
+    </p>
+    <div class="finale-seal reveal reveal-delay-2"><img src="assets/templates/martial-legend/seal-emperor.png" alt="朕已阅"></div>
+  </section>
+
+  <footer class="pagefoot">
+    朕的同学录 · 皇家御制版 · 松柏第二小学2026届 · 六年级4班
+  </footer>
+</div>
+
+<script>
+function smoothTo(anchor) {
+  window.location.href = 'index.html#' + anchor;
+}
+/* ═══ Particles (Golden Dust with Image Sprites) ═══ */
+(function() {
+  const canvas = document.getElementById('particles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let particles = [], w, h;
+
+  const goldImg = new Image();
+  goldImg.src = 'assets/templates/martial-legend/particle-gold.png';
+  const petalImg = new Image();
+  petalImg.src = 'assets/templates/martial-legend/particle-petal.png';
+  const sprites = [goldImg, goldImg, petalImg];
+  let loaded = 0;
+  [goldImg, petalImg].forEach(img => {
+    img.onload = () => loaded++;
+  });
+
+  function resize() {
+    const hero = canvas.parentElement;
+    w = canvas.width = hero.offsetWidth;
+    h = canvas.height = hero.offsetHeight;
+  }
+
+  function createP() {
+    const isPetal = Math.random() < 0.25;
+    return {
+      x: Math.random() * w,
+      y: h + Math.random() * 40,
+      size: isPetal ? (Math.random() * 16 + 12) : (Math.random() * 8 + 4),
+      sx: (Math.random() - 0.5) * 0.6,
+      sy: -(Math.random() * 0.8 + 0.3),
+      rot: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.03,
+      opacity: Math.random() * 0.5 + 0.2,
+      sprite: isPetal ? petalImg : goldImg,
+      life: Math.random() * 300 + 150
+    };
+  }
+
+  function init() {
+    resize();
+    particles = [];
+    const count = Math.min(Math.floor(w * h / 10000), 60);
+    for (let i = 0; i < count; i++) {
+      const p = createP();
+      p.y = Math.random() * h;
+      particles.push(p);
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    if (loaded < 2) { requestAnimationFrame(draw); return; }
+    particles.forEach(p => {
+      ctx.save();
+      ctx.globalAlpha = p.opacity;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.drawImage(p.sprite, -p.size/2, -p.size/2, p.size, p.size);
+      ctx.restore();
+
+      p.x += p.sx;
+      p.y += p.sy;
+      p.rot += p.rotSpeed;
+      p.life--;
+
+      if (p.life <= 0 || p.y < -20) {
+        Object.assign(p, createP());
+      }
+    });
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  init();
+  draw();
+})();
+
+/* ═══ Scroll Reveal ═══ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ═══ Ability Bars Animation ═══ */
+const abIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.kungfu-bar-fill').forEach(f => {
+        setTimeout(() => {
+          f.style.width = f.getAttribute('data-width') + '%';
+        }, 200);
+      });
+      abIO.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+const ab = document.getElementById('abilities');
+if (ab) abIO.observe(ab);
+
+/* ═══ Edit Mode Logic ═══ */
+var STORAGE_KEY = 'emperor-edit-data';
+
+function getEditData() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }
+  catch(e) { return {}; }
+}
+function saveEditData(data) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+function saveField(key, value) {
+  var d = getEditData();
+  d[key] = value;
+  saveEditData(d);
+}
+
+function toggleEditMode() {
+  var body = document.body;
+  var btn = document.getElementById('editToggle');
+  var isEdit = !body.classList.contains('edit-mode');
+  body.classList.toggle('edit-mode', isEdit);
+  btn.classList.toggle('active', isEdit);
+  btn.textContent = isEdit ? '\u2705 退出编辑' : '\u270F\uFE0F 编辑模式';
+  document.querySelectorAll('.editable-field').forEach(function(el) {
+    el.contentEditable = isEdit ? 'true' : 'false';
+  });
+}
+
+function handleUpload(zone) {
+  var input = zone.querySelector('input[type="file"]');
+  if (input) input.click();
+}
+
+function previewImage(input, container) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var img = container.querySelector('.uploaded-img');
+    if (!img) {
+      img = document.createElement('img');
+      img.className = 'uploaded-img';
+      container.appendChild(img);
+    }
+    img.src = e.target.result;
+    var field = container.getAttribute('data-field');
+    if (field) saveField(field, e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function previewMsgPhoto(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var preview = document.getElementById('msgPhotoPreview');
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    preview.src = e.target.result;
+    preview.style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+}
+
+function cancelMsg() {
+  document.getElementById('msgTarget').value = '';
+  document.getElementById('msgText').value = '';
+  var preview = document.getElementById('msgPhotoPreview');
+  preview.src = ''; preview.style.display = 'none';
+}
+
+function submitMsg() {
+  var target = document.getElementById('msgTarget').value;
+  var text = document.getElementById('msgText').value.trim();
+  var photo = document.getElementById('msgPhotoPreview').src;
+  if (!target) { alert('请选择要留言的同学'); return; }
+  if (!text && (!photo || photo === window.location.href)) { alert('请写下留言或上传手写照片'); return; }
+
+  var d = getEditData();
+  if (!d.sentMessages) d.sentMessages = [];
+  d.sentMessages.push({
+    to: target, text: text,
+    photo: photo.startsWith('data:') ? photo : '',
+    time: new Date().toISOString()
+  });
+  saveEditData(d);
+
+  var grid = document.querySelector('.memorial-grid');
+  var card = document.createElement('div');
+  card.className = 'memorial reveal visible';
+  var html = '<div class="memorial-fold"><img src="assets/templates/martial-legend/memorial-fold-top.png" alt=""></div>';
+  html += '<div class="memorial-from"><div class="memorial-avatar">\u2709\uFE0F</div><div>';
+  html += '<div class="memorial-name">\u6715 \u2192 ' + target + '\u53F7\u540C\u5B66</div>';
+  html += '<div class="memorial-date">\u521A\u521A\u5448\u4E0A</div></div></div>';
+  html += '<div class="memorial-text">' + (text || '\uFF08\u624B\u5199\u7559\u8A00\uFF09') + '</div>';
+  if (photo && photo.startsWith('data:')) {
+    html += '<div style="margin-top:8px;text-align:center;"><img src="' + photo + '" style="max-width:100%;border-radius:8px;border:1px solid var(--gold);"></div>';
+  }
+  html += '<div class="memorial-seal"><span class="memorial-seal-stamp"><img src="assets/templates/martial-legend/memorial-seal.png" alt=""></span>\u5DF2\u5448\u4E0A</div>';
+  card.innerHTML = html;
+  grid.insertBefore(card, grid.firstChild);
+  cancelMsg();
+  alert('\u594F\u6298\u5DF2\u5448\u4E0A\uFF01');
+}
+
+document.addEventListener('blur', function(e) {
+  if (e.target.classList && e.target.classList.contains('editable-field')) {
+    var key = e.target.getAttribute('data-key');
+    if (key) saveField(key, e.target.textContent);
+  }
+}, true);
+
+(function restoreData() {
+  var d = getEditData();
+  document.querySelectorAll('.editable-field[data-key]').forEach(function(el) {
+    var key = el.getAttribute('data-key');
+    if (d[key]) el.textContent = d[key];
+  });
+  document.querySelectorAll('.upload-zone[data-field]').forEach(function(zone) {
+    var field = zone.getAttribute('data-field');
+    if (d[field]) {
+      var img = zone.querySelector('.uploaded-img');
+      if (!img) {
+        img = document.createElement('img');
+        img.className = 'uploaded-img';
+        zone.appendChild(img);
+      }
+      img.src = d[field];
+    }
+  });
+})();
+
+/* ═══ Imperial Gallery Carousel ═══ */
+var emperorPhotos = [];
+var emperorCurrentIdx = 0;
+var emperorAutoTimer = null;
+
+function emperorInitGallery() {
+  var photos = { life: [], school: [], future: [] };
+  var sData = {};
+  try { sData = JSON.parse(localStorage.getItem('student-50') || '{}'); } catch(e) {}
+  if (sData && sData.photos) {
+    if (sData.photos.life) photos.life = sData.photos.life;
+    if (sData.photos.school) photos.school = sData.photos.school;
+    if (sData.photos.future) photos.future = sData.photos.future;
+  }
+  var eData = getEditData();
+  if (eData.galleryPhotos) {
+    eData.galleryPhotos.forEach(function(p) {
+      if (photos[p.type]) photos[p.type].push(p.src);
+    });
+  }
+
+  var all = [];
+  photos.life.forEach(function(src, i) { all.push({ src: src, type: 'life', label: '生活照 ' + (i+1) }); });
+  photos.school.forEach(function(src, i) { all.push({ src: src, type: 'school', label: '校园照 ' + (i+1) }); });
+  photos.future.forEach(function(src, i) { all.push({ src: src, type: 'future', label: 'AI未来 ' + (i+1) }); });
+
+  if (all.length === 0) {
+    var sec = document.getElementById('gallery');
+    if (sec) sec.style.display = 'none';
+    // Hide the section-divider before gallery too
+    var dividers = document.querySelectorAll('.section-divider');
+    return;
+  }
+
+  emperorPhotos = all;
+  emperorRenderSlides(all);
+  emperorStartAutoPlay();
+
+  var gallery = document.getElementById('gallery');
+  if (gallery) {
+    var gio = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
+          gio.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    gio.observe(gallery);
+  }
+}
+
+function emperorRenderSlides(items) {
+  var track = document.getElementById('emperorCarouselTrack');
+  var dots = document.getElementById('emperorCarouselDots');
+  if (!track) return;
+  track.innerHTML = items.map(function(p) {
+    var catLabel = p.type === 'life' ? '生活照' : p.type === 'school' ? '校园照' : 'AI未来';
+    return '<div class="carousel-slide">' +
+      '<img src="' + p.src + '" alt="' + p.label + '" loading="lazy">' +
+      '<div class="slide-label"><span class="slide-category">' + catLabel + '</span><br>' + p.label + '</div>' +
+      '</div>';
+  }).join('');
+  if (dots) {
+    dots.innerHTML = items.map(function(_, i) {
+      return '<button class="carousel-dot' + (i === 0 ? ' active' : '') + '" onclick="emperorGoToSlide(' + i + ')"></button>';
+    }).join('');
+  }
+  emperorCurrentIdx = 0;
+  track.style.transform = 'translateX(0)';
+}
+
+function emperorFilterGallery(type, btn) {
+  document.querySelectorAll('.gallery-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  var items = type === 'all' ? emperorPhotos : emperorPhotos.filter(function(p) { return p.type === type; });
+  emperorRenderSlides(items);
+  emperorStopAutoPlay();
+  emperorStartAutoPlay();
+}
+
+function emperorMoveSlide(dir) {
+  var track = document.getElementById('emperorCarouselTrack');
+  if (!track) return;
+  var slides = track.querySelectorAll('.carousel-slide');
+  if (slides.length === 0) return;
+  emperorCurrentIdx = (emperorCurrentIdx + dir + slides.length) % slides.length;
+  track.style.transform = 'translateX(-' + (emperorCurrentIdx * 100) + '%)';
+  emperorUpdateDots();
+  emperorStopAutoPlay();
+  emperorStartAutoPlay();
+}
+
+function emperorGoToSlide(idx) {
+  var track = document.getElementById('emperorCarouselTrack');
+  if (!track) return;
+  emperorCurrentIdx = idx;
+  track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  emperorUpdateDots();
+}
+
+function emperorUpdateDots() {
+  var dots = document.querySelectorAll('#emperorCarouselDots .carousel-dot');
+  dots.forEach(function(d, i) {
+    d.classList.toggle('active', i === emperorCurrentIdx);
+  });
+}
+
+function emperorStartAutoPlay() {
+  emperorStopAutoPlay();
+  emperorAutoTimer = setInterval(function() { emperorMoveSlide(1); }, 4000);
+}
+
+function emperorStopAutoPlay() {
+  if (emperorAutoTimer) { clearInterval(emperorAutoTimer); emperorAutoTimer = null; }
+}
+
+// Pause on hover
+(function() {
+  var wrapper = document.getElementById('emperorCarouselWrapper');
+  if (wrapper) {
+    wrapper.addEventListener('mouseenter', emperorStopAutoPlay);
+    wrapper.addEventListener('mouseleave', emperorStartAutoPlay);
+  }
+})();
+
+emperorInitGallery();
+</script>
+
+</body>
+</html>

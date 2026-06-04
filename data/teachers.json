@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "class": "松柏第二小学 · 六年级4班 · 2026届",
+  "totalTeachers": 8,
+  "version": "1.0.0",
+  "lastUpdated": "2026-06-02",
+  "teachers": [
+    {
+      "id": "T01",
+      "name": "周 黎",
+      "subject": "语文",
+      "subjectEn": "CHINESE",
+      "role": "班主任 · 语文老师",
+      "isHeadTeacher": true,
+      "photo": "photos/teachers/t01.jpg",
+      "quote": "六年的时光，看着你们从稚童长成少年。愿你们带着善良与勇气，走向更广阔的星辰大海。",
+      "message": ""
+    },
+    {
+      "id": "T02",
+      "name": "",
+      "subject": "数学",
+      "subjectEn": "MATH",
+      "role": "数学老师",
+      "isHeadTeacher": false,
+      "photo": "",
+      "quote": "",
+      "message": ""
+    },
+    {
+      "id": "T03",
+      "name": "",
+      "subject": "英语",
+      "subjectEn": "ENGLISH",
+      "role": "英语老师",
+      "isHeadTeacher": false,
+      "photo": "",
+      "quote": "",
+      "message": ""
+    },
+    {
+      "id": "T04",
+      "name": "",
+      "subject": "美术",
+      "subjectEn": "ART",
+      "role": "美术老师",
+      "isHeadTeacher": false,
+      "photo": "",
+      "quote": "",
+      "message": ""
+    },
+    {
+      "id": "T05",
+      "name": "",
+      "subject": "科学",
+      "subjectEn": "SCIENCE",
+      "role": "科学老师",
+      "isHeadTeacher": false,
+      "photo": "",
+      "quote": "",
+      "message": ""
+    },
+    {
+      "id": "T06",
+      "name": "",
+      "subject": "体育",
+      "subjectEn": "SPORTS",
+      "role": "体育老师",
+      "isHeadTeacher": false,
+      "photo": "",
+      "quote": "",
+      "message": ""
+    },
+    {
+      "id": "T07",
+      "name": "",
+      "subject": "品德",
+      "subjectEn": "MORAL",
+      "role": "品德老师",
+      "isHeadTeacher": false,
+      "photo": "",
+      "quote": "",
+      "message": ""
+    },
+    {
+      "id": "T08",
+      "name": "",
+      "subject": "其他",
+      "subjectEn": "OTHER",
+      "role": "其他老师（预留）",
+      "isHeadTeacher": false,
+      "photo": "",
+      "quote": "",
+      "message": ""
+    }
+  ]
+}

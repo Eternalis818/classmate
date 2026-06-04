@@ -1,0 +1,35 @@
+/* ───────────────────────────────────────────
+   模板 07 · 古风经典 (ancient-classic)
+   适用：传统中国风，典雅古韵
+   参考：鼠尾草绿 #E8E8D0，森林绿 #5C8A5C，烫金 #D4AF37
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #F5F2E8;
+  --surface: #FFFDF5;
+  --surface-warm: #EDE8D0;
+  --surface-cool: #E0DCD0;
+  --fg: #1F2A1A;
+  --fg-2: #3D5236;
+  --muted: #7A8A6E;
+  --border: #C8C0A8;
+  --border-soft: #DCD8C8;
+  --accent: #5C8A5C;
+  --accent-coral: #7BA87B;
+  --accent-mint: #A0C8A0;
+  --accent-gold: #D4AF37;
+
+  --particle-colors: #5C8A5C, #D4AF37, #8B6914, #A0C8A0;
+  --hero-gradient: linear-gradient(135deg, #EDE8D0 0%, #E0DCD0 40%, #F5F2E8 100%);
+  --envelope-gradient: linear-gradient(135deg, #FFFDF5, #EDE8D0, #F5F0DC);
+
+  --font-display: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+/* 模板特征：
+   - 鼠尾草绿 + 烫金，传统文人雅韵
+   - 衬线字体，古典排版韵律
+   - 山水画意境渐变背景
+   - 金色粒子如落叶缓缓飘落
+   - 适合喜欢古风、国风、经典韵味的同学
+*/

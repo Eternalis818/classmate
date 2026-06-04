@@ -1,0 +1,47 @@
+/* ───────────────────────────────────────────
+   模板 10 · 圣旨卷轴 (imperial-scroll)
+   适用：古风宫廷，御用金龙风格
+   参考：student-50-emperor.html 御用主题
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #FFF8DC;
+  --surface: #FFFDF5;
+  --surface-warm: #F5E6C8;
+  --surface-cool: #FFF0D0;
+  --fg: #1A1008;
+  --fg-2: #3D2B1F;
+  --muted: #8B7355;
+  --border: #D4AF37;
+  --border-soft: #F0E0B0;
+  --accent: #C41E3A;
+  --accent-coral: #CC2936;
+  --accent-mint: #D4AF37;
+  --accent-gold: #FFD700;
+  --accent-gold-dark: #B8860B;
+  --seal-red: #CC2936;
+  --jade-green: #2E6B4F;
+  --blue-imperial: #1A237E;
+  --parchment: #FFF8DC;
+  --parchment-dark: #F5E6C8;
+  --parchment-light: #FFFDF5;
+
+  --particle-colors: #FFD700, #D4AF37, #CC2936, #B8860B;
+  --hero-gradient: linear-gradient(135deg, #FFF8DC 0%, #F5E6C8 40%, #F0D8A0 100%);
+  --envelope-gradient: linear-gradient(135deg, #FFFDF5, #F5E6C8, #E8D4A0);
+
+  --font-display: 'Ma Shan Zheng', 'STKaiti', 'KaiTi', serif;
+  --font-body: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+}
+
+/* 模板特征：
+   - 圣旨卷轴展开动画（Hero）
+   - 皇家玉牒档案卡（三重边框：红+金+金）
+   - 编年史时间线（朱砂印章标记）
+   - 武功秘籍能力条（武林等级）
+   - 灵兽录宠物卡片
+   - 群臣奏折留言板
+   - 密旨锦囊信封（点击可开合）
+   - 金色粒子飘落特效
+   - 末尾"朕已阅"玉玺大印
+   - AI素材目录：assets/templates/martial-legend/
+*/

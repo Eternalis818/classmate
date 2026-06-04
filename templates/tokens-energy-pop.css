@@ -1,0 +1,35 @@
+/* ───────────────────────────────────────────
+   模板 08 · 活力波普 (energy-pop)
+   适用：活力潮流风，大胆撞色
+   参考：亮黄 #FFD700，鲜绿 #32CD32，亮紫 #BA55D3
+   ─────────────────────────────────────────── */
+:root {
+  --bg: #FFFEF5;
+  --surface: #FFFFFF;
+  --surface-warm: #FFF8DC;
+  --surface-cool: #F0FFF0;
+  --fg: #1A1A2E;
+  --fg-2: #3D3D5C;
+  --muted: #8888AA;
+  --border: #E0D8F0;
+  --border-soft: #EDE8F8;
+  --accent: #BA55D3;
+  --accent-coral: #FFD700;
+  --accent-mint: #32CD32;
+  --accent-gold: #FF6B6B;
+
+  --particle-colors: #BA55D3, #FFD700, #32CD32, #FF6B6B, #00CED1;
+  --hero-gradient: linear-gradient(135deg, #FFD700 0%, #FF6B6B 33%, #BA55D3 66%, #32CD32 100%);
+  --envelope-gradient: linear-gradient(135deg, #FFF8DC, #F0FFF0, #F8F0FF);
+
+  --font-display: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', system-ui, sans-serif;
+}
+
+/* 模板特征：
+   - 紫黄绿红多色撞色，波普艺术风
+   - 大胆四色渐变Hero区
+   - 几何图形粒子动画
+   - 高饱和度、高对比度、高活力
+   - 适合喜欢潮流、波普、有个性的同学
+*/
