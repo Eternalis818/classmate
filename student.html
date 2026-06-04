@@ -174,6 +174,18 @@
     .upload-status.error{color:var(--danger)}
     .upload-status.success{color:var(--success)}
 
+    /* Messages UI (留言板) */
+    .message-card{position:relative}
+    .featured-badge{position:absolute;top:8px;right:8px;font-size:18px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.2));animation:float 3s ease-in-out infinite}
+    .message-actions{display:flex;gap:6px;flex-wrap:wrap}
+    .msg-feat-btn,.msg-del-btn{padding:4px 10px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--muted);transition:all var(--motion-fast)}
+    .msg-feat-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+    .msg-feat-btn.featured{border-color:#fbbf24;color:#b45309;background:#fef3c7}
+    .msg-del-btn:hover{border-color:var(--danger);color:var(--danger)}
+    body.msg-owner .message-actions{display:inline-flex}
+    .msg-empty{padding:var(--space-12);text-align:center;color:var(--muted)}
+    .msg-empty-icon{font-size:48px;margin-bottom:var(--space-3);opacity:.4}
+
     /* Section header */
     .section-header{text-align:center;margin-bottom:var(--space-12)}
     .section-header h2{margin-bottom:var(--space-3)}
@@ -640,6 +652,9 @@ function showTsToast(msg) {
   window._student = student;
   window._data = data;
 
+  /* 后台拉取云端留言并合并（异步，不阻塞渲染） */
+  fetchAndMergeMessages(student).catch(() => {});
+
   /* Check privacy */
   if (!student.isPublic && student.password) {
     const lock = document.getElementById('lockOverlay');
@@ -854,20 +869,45 @@ function render(s, data) {
         <div class="section-icon coral">💬</div>
         <p class="eyebrow">Messages · 同学留言板</p>
         <h2>那些温暖的话语</h2>
+        <div style="margin-top:var(--space-4);display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+          <button class="gallery-upload-btn" onclick="openMessageSend()">💌 给 TA 留言</button>
+          <button class="gallery-tab" onclick="toggleMessageOwnerView()" id="msgOwnerBtn">⭐ 精选管理（${s.name}）</button>
+        </div>
+        <p class="meta" style="margin-top:10px;" id="msgHint">点击「💌 给 TA 留言」写一句心里话 · 每人至多 1 条，可随时修改</p>
       </div>
-      <div class="message-grid">
-        ${s.messages.map(m => `
-        <div class="message-card reveal">
+      <div class="message-grid" id="messageGrid">
+        ${s.messages.map((m, i) => `
+        <div class="message-card reveal" data-msg-id="${m.id || ''}" data-from-id="${m.fromId || ''}">
+          ${m.is_featured ? '<div class="featured-badge" title="精选上墙">⭐</div>' : ''}
           <div class="message-avatar">${m.emoji || avatarFromName(m.from)}</div>
           <div class="message-name">${m.from}</div>
           <div class="message-date">2026年6月</div>
           <div class="message-text">${m.text || ''}</div>
           ${m.handwritten ? '<div class="message-handwritten"><img src="' + m.handwritten + '" alt="手写留言" /></div>' : ''}
+          <div class="message-actions" style="margin-top:12px;display:none;gap:6px;">
+            <button class="msg-feat-btn" onclick="toggleFeatured('${m.id}','${m.fromId || ''}')" title="精选上墙">${m.is_featured ? '⭐ 已精选' : '☆ 精选'}</button>
+            <button class="msg-del-btn" onclick="deleteMessage('${m.id}')" title="删除">🗑️</button>
+          </div>
         </div>`).join('')}
       </div>
     </div>
   </section>
-  <hr class="divider" />` : ''}
+  <hr class="divider" />` : `
+  <!-- Messages (empty) -->
+  <section class="section" id="messages" data-od-id="messages">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-icon coral">💬</div>
+        <p class="eyebrow">Messages · 同学留言板</p>
+        <h2>那些温暖的话语</h2>
+        <div style="margin-top:var(--space-4);">
+          <button class="gallery-upload-btn" onclick="openMessageSend()">💌 给 TA 留言</button>
+        </div>
+        <p class="meta" style="margin-top:10px;">还没有同学留言哦，做第一个吧～</p>
+      </div>
+    </div>
+  </section>
+  <hr class="divider" />`}
 
   ${s.futureLetter ? `
   <!-- Letter -->
@@ -1367,6 +1407,229 @@ function showUploadToast(msg) {
   document.body.appendChild(t);
   setTimeout(() => t.classList.add('show'), 10);
   setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 1800);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MESSAGES (留言板) — 后端 /api/messages
+   ═══════════════════════════════════════════════════════════ */
+let _allStudentsCache = null;
+
+async function loadAllStudents() {
+  if (_allStudentsCache) return _allStudentsCache;
+  /* 优先用 window._data.students（可能不完整） */
+  let all = (window._data && Array.isArray(window._data.students)) ? window._data.students : [];
+  if (all.length <= 1) {
+    try {
+      const res = await fetch('data/students.json');
+      const data = await res.json();
+      all = data.students || [];
+    } catch (e) { /* ignore */ }
+  }
+  _allStudentsCache = all;
+  return all;
+}
+
+function openMessageSend() {
+  if (!window._student) { alert('学生数据未加载'); return; }
+  loadAllStudents().then(all => {
+    const me = window._student;
+    const otherStudents = all.filter(s => s.id !== me.id);
+    const html = `
+      <div class="upload-overlay" id="msgSendOverlay" onclick="if(event.target===this)closeMessageSend()">
+        <div class="upload-card" onclick="event.stopPropagation()">
+          <div class="upload-head">
+            <h3>💌 留言给 ${me.name}</h3>
+            <button class="ts-close" onclick="closeMessageSend()">×</button>
+          </div>
+          <div class="upload-body">
+            <div class="upload-field">
+              <span class="upload-label">你是…（留言发送者）</span>
+              <select id="msgFromId" class="upload-input">
+                <option value="">— 请选择你的学号 —</option>
+                ${otherStudents.map(s => `<option value="${s.id}">${s.id} · ${s.name}${s.nickname ? '（' + s.nickname + '）' : ''}</option>`).join('')}
+              </select>
+            </div>
+            <div class="upload-field">
+              <span class="upload-label">你的密码（确认身份）</span>
+              <input type="password" id="msgFromPassword" class="upload-input" placeholder="你的纪念册密码" autocomplete="off" />
+            </div>
+            <div class="upload-field">
+              <span class="upload-label">留言给 TA</span>
+              <input type="text" class="upload-input" value="📍 ${me.id} · ${me.name}" disabled />
+            </div>
+            <div class="upload-field">
+              <span class="upload-label">想对 TA 说…</span>
+              <textarea id="msgText" class="upload-input" rows="4" maxlength="500" placeholder="写下你的心里话…（500 字以内）" style="resize:vertical;line-height:1.6;font-family:inherit"></textarea>
+            </div>
+            <div class="upload-status" id="msgSendStatus"></div>
+          </div>
+          <div class="upload-foot">
+            <button class="upload-btn" onclick="closeMessageSend()">取消</button>
+            <button class="upload-btn primary" id="msgSendBtn" onclick="submitMessage()">发送</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.insertAdjacentHTML('beforeend', html);
+  });
+}
+function closeMessageSend() {
+  const el = document.getElementById('msgSendOverlay');
+  if (el) el.remove();
+}
+function setMsgStatus(msg, type) {
+  const el = document.getElementById('msgSendStatus');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'upload-status' + (type ? ' ' + type : '');
+}
+async function submitMessage() {
+  const s = window._student;
+  if (!s) return;
+  const fromId = document.getElementById('msgFromId').value;
+  const password = document.getElementById('msgFromPassword').value;
+  const text = document.getElementById('msgText').value.trim();
+  if (!fromId) { setMsgStatus('请选择你的学号', 'error'); return; }
+  if (!password) { setMsgStatus('请输入密码', 'error'); return; }
+  if (!text) { setMsgStatus('请输入留言内容', 'error'); return; }
+  if (text.length > 500) { setMsgStatus('留言不能超过 500 字', 'error'); return; }
+
+  const btn = document.getElementById('msgSendBtn');
+  btn.disabled = true;
+  btn.textContent = '发送中…';
+  setMsgStatus('正在发送…');
+
+  try {
+    const res = await fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from_student_id: fromId,
+        from_password: password,
+        to_student_id: s.id,
+        text
+      })
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      setMsgStatus('发送失败：' + (json.error || res.statusText), 'error');
+      btn.disabled = false;
+      btn.textContent = '发送';
+      return;
+    }
+    setMsgStatus(json.updated ? '✓ 已更新（等待审核）' : '✓ 已提交（等待审核）', 'success');
+    showUploadToast('💌 留言已发送');
+    setTimeout(() => closeMessageSend(), 800);
+  } catch (e) {
+    setMsgStatus('网络错误：' + e.message, 'error');
+    btn.disabled = false;
+    btn.textContent = '发送';
+  }
+}
+
+function toggleMessageOwnerView() {
+  const btn = document.getElementById('msgOwnerBtn');
+  if (!btn) return;
+  const entering = !document.body.classList.contains('msg-owner');
+  if (entering) {
+    const pwd = prompt('请输入你的纪念册密码（解锁精选管理）');
+    if (!pwd) return;
+    /* 验证密码（通过尝试一次无副作用的 API 调用） */
+    window._ownerPassword = pwd;
+    document.body.classList.add('msg-owner');
+    btn.textContent = '🔒 退出管理';
+    btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+    btn.style.color = '#fff';
+    btn.style.border = 'none';
+  } else {
+    document.body.classList.remove('msg-owner');
+    window._ownerPassword = null;
+    btn.textContent = '⭐ 精选管理（' + window._student.name + '）';
+    btn.style.background = '';
+    btn.style.color = '';
+    btn.style.border = '';
+  }
+}
+
+async function toggleFeatured(messageId, fromId) {
+  if (!messageId) { alert('这条留言暂未同步到云端，无法精选'); return; }
+  const s = window._student;
+  const pwd = window._ownerPassword;
+  if (!pwd) { alert('请先解锁精选管理'); return; }
+  const card = document.querySelector(`[data-msg-id="${messageId}"]`);
+  const isFeatured = card?.querySelector('.featured-badge') != null;
+  try {
+    const res = await fetch(`/api/messages/${encodeURIComponent(messageId)}/feature`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student_id: s.id, password: pwd, featured: !isFeatured })
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      alert('设置失败：' + (json.error || res.statusText));
+      return;
+    }
+    showUploadToast(isFeatured ? '☆ 已取消精选' : '⭐ 已精选上墙');
+    setTimeout(() => render(s, window._data), 600);
+  } catch (e) {
+    alert('网络错误：' + e.message);
+  }
+}
+
+async function deleteMessage(messageId) {
+  if (!messageId) { alert('这条留言暂未同步到云端'); return; }
+  const s = window._student;
+  const pwd = window._ownerPassword;
+  if (!pwd) { alert('请先解锁精选管理'); return; }
+  if (!confirm('确定要删除这条留言吗？')) return;
+  try {
+    const res = await fetch(`/api/messages/${encodeURIComponent(messageId)}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student_id: s.id, password: pwd })
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) { alert('删除失败：' + (json.error || res.statusText)); return; }
+    showUploadToast('🗑️ 已删除');
+    setTimeout(() => render(s, window._data), 600);
+  } catch (e) {
+    alert('网络错误：' + e.message);
+  }
+}
+
+/* 拉取云端留言并合并到当前学生 */
+async function fetchAndMergeMessages(s) {
+  try {
+    const res = await fetch(`/api/messages?to=${encodeURIComponent(s.id)}`);
+    if (!res.ok) return;
+    const json = await res.json();
+    const apiMsgs = json.messages || [];
+    if (!s.messages) s.messages = [];
+    /* 用 from_student_id 做 key 合并 */
+    const localByFrom = new Map();
+    s.messages.forEach(m => {
+      if (m.fromId) localByFrom.set(m.fromId, m);
+    });
+    apiMsgs.forEach(am => {
+      const fromId = am.from_student_id;
+      const local = localByFrom.get(fromId);
+      if (local) {
+        local.text = am.text;
+        local.is_featured = !!am.is_featured;
+        local.id = am.id;
+      } else {
+        s.messages.push({
+          id: am.id,
+          fromId,
+          from: am.from_name,
+          text: am.text,
+          is_featured: !!am.is_featured
+        });
+      }
+    });
+    /* 持久化到 localStorage */
+    try { localStorage.setItem('student-' + s.id, JSON.stringify(s)); } catch (e) {}
+    /* 不重渲染（避免打断用户浏览） */
+  } catch (e) { /* 静默失败 */ }
 }
 </script>
 </body>
