@@ -1,0 +1,17 @@
+# ─────────────────────────────────────────────────────
+# Cloudflare Pages 路由配置
+# 路径: /public/_redirects (Pages 自动识别)
+# ─────────────────────────────────────────────────────
+
+# 静态文件优先（默认行为，无需配置）
+
+# /api/* 请求路由到 Pages Functions
+# Pages Functions 在 functions/ 目录，无需重写
+# 这里只需要处理 404 → 友好提示页
+# （暂未启用，等静态前端完全对接 fetch API 后再加）
+
+# 启用 Brotli 压缩
+# /_next/*   /index.html   200
+
+# 强制 HTTPS
+# /*  https://$host:$uri  301

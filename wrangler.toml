@@ -1,0 +1,30 @@
+name = "gradbook"
+compatibility_date = "2026-06-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = "."
+
+# ─── D1 Database (SQLite) ───────────────────────────
+# Run: wrangler d1 create gradbook-db
+# Then replace REPLACE_AFTER_CREATING_D1 with the returned database_id
+[[d1_databases]]
+binding = "DB"
+database_name = "gradbook-db"
+database_id = "REPLACE_AFTER_CREATING_D1"
+migrations_dir = "migrations"
+
+# ─── R2 Object Storage (照片/手写图) ──────────────────
+# Run: wrangler r2 bucket create gradbook-photos
+[[r2_buckets]]
+binding = "PHOTOS"
+bucket_name = "gradbook-photos"
+
+# ─── Environment Variables ───────────────────────────
+[vars]
+ALLOWED_ORIGIN = "https://gradbook.pages.dev"
+MAX_UPLOAD_MB = "10"
+ADMIN_PASSWORD_HASH = "REPLACE_WITH_BCRYPT_HASH"
+# bcrypt 哈希生成：node -e "console.log(require('bcryptjs').hashSync('your-password', 10))"
+
+# ─── Production 环境（可选，后续绑自定义域名时启用）──
+# [env.production]
+# vars = { ALLOWED_ORIGIN = "https://gradbook.example.com" }
