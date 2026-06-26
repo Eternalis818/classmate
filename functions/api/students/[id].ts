@@ -28,6 +28,7 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
   const student = await context.env.DB.prepare(
     `SELECT id, name, nickname, student_number, class, school, tags, motto,
             highlights, abilities_swim, abilities_tech, abilities_resp,
+            abilities_creativity, abilities_warmth, abilities_learning,
             pet_json, future_letter, template, stickers, is_founder, is_public,
             created_at, updated_at
      FROM students WHERE id = ?`
@@ -146,6 +147,9 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
            abilities_swim = ?,
            abilities_tech = ?,
            abilities_resp = ?,
+           abilities_creativity = ?,
+           abilities_warmth = ?,
+           abilities_learning = ?,
            pet_json = ?,
            future_letter = ?,
            template = ?,
@@ -166,6 +170,9 @@ export const onRequestPut: PagesFunction<Env> = async (context) => {
         clamp(ab.swimming),
         clamp(ab.tech),
         clamp(ab.responsibility),
+        clamp(ab.creativity),
+        clamp(ab.warmth),
+        clamp(ab.learning),
         safePet ? JSON.stringify(safePet) : null,
         String(body.futureLetter || '').trim().slice(0, 3000),
         safeTemplate,

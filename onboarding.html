@@ -1030,6 +1030,7 @@ let currentPhotoTarget = null;
       isPublic: true, password: '',
       name: '', nickname: '', motto: '', tags: [],
       photos: { avatar:'', life:[], school:[], future:[], pet:[] },
+      photoIds: { avatar:null, life:[], school:[], future:[], pet:[] },
       highlights: [],
       abilities: { swimming:50, tech:50, responsibility:50, creativity:50, warmth:50, learning:50 },
       pet: null,
@@ -1043,10 +1044,16 @@ let currentPhotoTarget = null;
     if (cloudTeacher) formData = Object.assign(formData, cloudTeacher);
   }
 
-  /* 学生 edit 模式：从云端拉回最新资料（含照片），这样换设备/清缓存也能返回修改 */
+  /* 学生 edit 模式：以云端为权威完整替换（避免 localStorage 旧草稿竞态覆盖）*/
   if (personType === 'student' && editMode) {
     const cloudStudent = await loadStudentFromCloud().catch(() => null);
-    if (cloudStudent) formData = Object.assign(formData, cloudStudent);
+    if (cloudStudent) {
+      const keepPwd = formData.password || '';
+      formData = Object.assign({}, cloudStudent, { password: keepPwd });
+    } else {
+      formData._cloudLoadFailed = true;
+      showToast('加载云端数据失败，请刷新重试', true);
+    }
   }
 
   if (personType === 'teacher') {
@@ -1191,6 +1198,14 @@ function saveCurrentStep() {
       break;
     case 5:
       formData.abilities = collectAbilities();
+      break;
+    case 6:
+      if (document.getElementById('switchPet')?.classList.contains('on')) {
+        formData.pet = Object.assign({}, formData.pet || {});
+        formData.pet.name = document.getElementById('petName')?.value?.trim() || '';
+        formData.pet.type = document.getElementById('petType')?.value?.trim() || '';
+        formData.pet.desc = document.getElementById('petDesc')?.value?.trim() || '';
+      }
       break;
     case 7:
       formData.futureLetter = document.getElementById('futureLetter').value.trim();
@@ -1392,13 +1407,38 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
   e.target.value = '';
 });
 
-function deletePhoto(category, index) {
+async function deletePhoto(category, index) {
+  const photoId = (category === 'avatar')
+    ? (formData.photoIds?.avatar || null)
+    : (formData.photoIds?.[category]?.[index] || null);
+  if (photoId) {
+    const password = formData.password || prompt('删除照片需要纪念册密码：') || '';
+    if (!password) { showToast('需要密码才能删除云端照片', true); return; }
+    try {
+      const res = await fetch('/api/photos/' + encodeURIComponent(photoId), {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ student_id: personId, password })
+      });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        showToast('云端删除失败：' + (j.error || res.statusText), true);
+        return;
+      }
+    } catch (e) {
+      showToast('网络错误，照片未删除：' + e.message, true);
+      return;
+    }
+  }
   if (category === 'avatar') {
     formData.photos.avatar = '';
+    if (formData.photoIds) formData.photoIds.avatar = null;
   } else {
     formData.photos[category]?.splice(index, 1);
+    formData.photoIds?.[category]?.splice(index, 1);
   }
   renderUploadedPhotos();
+  showToast('已删除', false, 'success');
 }
 
 function compressImage(dataUrl, maxW, quality, cb) {
@@ -1540,6 +1580,10 @@ function buildPreview() {
    GENERATE
    ═══════════════════════════════════════════════════════════ */
 async function generate() {
+  if (formData._cloudLoadFailed) {
+    showToast('云端数据加载失败，请刷新页面后再保存', true);
+    return;
+  }
   saveCurrentStep();
   formData.name = document.getElementById('inputName')?.value?.trim() || formData.name;
   if (personType !== 'teacher') {
@@ -1549,11 +1593,12 @@ async function generate() {
     formData.abilities = collectAbilities();
     formData.futureLetter = document.getElementById('futureLetter')?.value?.trim() || '';
     if (document.getElementById('switchPet').classList.contains('on')) {
+      const _petPhotoUrl = formData.photos?.pet?.[0] || '';
       formData.pet = {
         name: document.getElementById('petName').value.trim(),
         type: document.getElementById('petType').value.trim(),
         desc: document.getElementById('petDesc').value.trim(),
-        photo: ''
+        photo: _petPhotoUrl.startsWith('data:') ? '' : _petPhotoUrl
       };
     }
   }
@@ -1610,9 +1655,9 @@ async function loadStudentFromCloud() {
   if (!res.ok) return null;
   const raw = await res.json();
   const num = (v, fb) => (typeof v === 'number' && isFinite(v)) ? Math.round(v) : fb;
-  const ab = raw.abilities || {};
   const ph = raw.photos || {};
-  const photoUrls = (p) => (Array.isArray(p) ? p : []).map(x => x && x.url).filter(Boolean);
+  const urls = (p) => (Array.isArray(p) ? p : []).map(x => x && x.url).filter(Boolean);
+  const ids = (p) => (Array.isArray(p) ? p : []).map(x => x && x.id).filter(Boolean);
   return {
     type: 'student',
     id: raw.id || personId,
@@ -1625,21 +1670,28 @@ async function loadStudentFromCloud() {
     isPublic: raw.is_public !== 0 && raw.is_public !== false,
     highlights: Array.isArray(raw.highlights) ? raw.highlights : [],
     abilities: {
-      swimming: num(raw.abilities_swim, num(ab.swimming, 50)),
-      tech: num(raw.abilities_tech, num(ab.tech, 50)),
-      responsibility: num(raw.abilities_resp, num(ab.responsibility, 50)),
-      creativity: num(ab.creativity, 50),
-      warmth: num(ab.warmth, 50),
-      learning: num(ab.learning, 50)
+      swimming: num(raw.abilities_swim, 50),
+      tech: num(raw.abilities_tech, 50),
+      responsibility: num(raw.abilities_resp, 50),
+      creativity: num(raw.abilities_creativity, 50),
+      warmth: num(raw.abilities_warmth, 50),
+      learning: num(raw.abilities_learning, 50)
     },
     pet: raw.pet || null,
     futureLetter: raw.future_letter || raw.futureLetter || '',
     photos: {
       avatar: (ph.avatar && ph.avatar.url) || '',
-      life: photoUrls(ph.life),
-      school: photoUrls(ph.school),
-      future: photoUrls(ph.future),
+      life: urls(ph.life),
+      school: urls(ph.school),
+      future: urls(ph.future),
       pet: (ph.pet && ph.pet.url) ? [ph.pet.url] : []
+    },
+    photoIds: {
+      avatar: (ph.avatar && ph.avatar.id) || null,
+      life: ids(ph.life),
+      school: ids(ph.school),
+      future: ids(ph.future),
+      pet: (ph.pet && ph.pet.id) ? [ph.pet.id] : []
     }
   };
 }
@@ -1744,17 +1796,35 @@ function getStudentPasswordForSave() {
 
 async function uploadDraftPhotosToCloud(password) {
   const jobs = [];
-  const add = (category, value) => {
+  const add = (category, index, value) => {
     if (value && typeof value === 'string' && value.startsWith('data:image/')) {
-      jobs.push(uploadOneDraftPhoto(category, value, password));
+      const oldId = (category === 'avatar')
+        ? (formData.photoIds?.avatar || null)
+        : (formData.photoIds?.[category]?.[index] || null);
+      jobs.push((async () => {
+        const res = await uploadOneDraftPhoto(category, value, password);
+        const newId = res && res.id;
+        if (category === 'avatar') {
+          if (formData.photoIds) formData.photoIds.avatar = newId || null;
+        } else if (formData.photoIds && Array.isArray(formData.photoIds[category])) {
+          formData.photoIds[category][index] = newId || null;
+        }
+        if (oldId && oldId !== newId) {
+          await fetch('/api/photos/' + encodeURIComponent(oldId), {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ student_id: personId, password })
+          }).catch(() => {});
+        }
+      })());
     }
   };
 
-  add('avatar', formData.photos?.avatar);
-  (formData.photos?.life || []).forEach(v => add('life', v));
-  (formData.photos?.school || []).forEach(v => add('school', v));
-  (formData.photos?.future || []).forEach(v => add('future', v));
-  addPhotoValue('pet', formData.photos?.pet, add);
+  add('avatar', 0, formData.photos?.avatar);
+  (formData.photos?.life || []).forEach((v, i) => add('life', i, v));
+  (formData.photos?.school || []).forEach((v, i) => add('school', i, v));
+  (formData.photos?.future || []).forEach((v, i) => add('future', i, v));
+  (formData.photos?.pet || []).forEach((v, i) => add('pet', i, v));
 
   if (!jobs.length) return;
   showToast('正在上传照片...', false, 'success');
