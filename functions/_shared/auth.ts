@@ -5,7 +5,9 @@
 
 export interface Env {
   DB: D1Database;
+  PHOTOS: R2Bucket;
   ADMIN_PASSWORD_HASH?: string;
+  MAX_UPLOAD_MB?: string;
   R2_PUBLIC_URL?: string;
 }
 
@@ -69,4 +71,8 @@ export async function authenticate(
   }
 
   return { valid: false, isAdmin: false };
+}
+
+export async function isAdminPassword(password: string, env: Env): Promise<boolean> {
+  return !!password && !!env.ADMIN_PASSWORD_HASH && verifyPassword(password, env.ADMIN_PASSWORD_HASH);
 }

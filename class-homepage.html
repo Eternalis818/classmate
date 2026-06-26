@@ -1,14 +1,95 @@
-
 <!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>时光纪念册 · 松柏第二小学2026届 · 六年级4班</title>
-  <link rel="stylesheet" href="index.html" />
+  <meta http-equiv="refresh" content="1; url=index.html" />
+  <title>班级首页 · 时光纪念册</title>
+  <style>
+    :root {
+      --bg: #faf5ff;
+      --surface: #ffffff;
+      --fg: #1d1836;
+      --muted: #796f91;
+      --border: #e8ddf5;
+      --accent: #a855f7;
+      --accent-coral: #f97385;
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(168, 85, 247, 0.18), transparent 32%),
+        radial-gradient(circle at 80% 30%, rgba(249, 115, 133, 0.16), transparent 30%),
+        var(--bg);
+      color: var(--fg);
+      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      line-height: 1.6;
+    }
+    main {
+      width: min(520px, 100%);
+      padding: 32px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: color-mix(in oklch, var(--surface) 88%, transparent);
+      box-shadow: 0 18px 44px rgba(29, 24, 54, 0.10);
+      text-align: center;
+      backdrop-filter: blur(18px);
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 7vw, 42px);
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+    p { margin: 0; color: var(--muted); }
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 24px;
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--fg);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      background: var(--surface);
+    }
+    a.primary {
+      grid-column: 1 / -1;
+      border-color: transparent;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), var(--accent-coral));
+    }
+    @media (max-width: 420px) {
+      main { padding: 24px; }
+      .actions { grid-template-columns: 1fr; }
+      a.primary { grid-column: auto; }
+    }
+  </style>
 </head>
 <body>
-<p>班级首页已写入 <code>index.html</code>，请在预览面板查看完整渲染效果。</p>
-<p>同步交付：<code>student-50.html</code> · <code>data/students.json</code> · <code>data/teachers.json</code> · <code>templates/index.html</code>（模板预览）</p>
+  <main data-od-id="class-homepage">
+    <h1>正在进入班级首页</h1>
+    <p>松柏第二小学 · 六年级4班 · 2026届</p>
+    <div class="actions">
+      <a class="primary" href="index.html">打开班级首页</a>
+      <a href="student.html?id=50">张迤恩</a>
+      <a href="templates/index.html">主题预览</a>
+    </div>
+  </main>
 </body>
 </html>

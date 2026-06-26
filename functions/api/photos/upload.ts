@@ -4,7 +4,7 @@
 // ─────────────────────────────────────────────
 
 import { preflight, jsonResponse, errorResponse } from '../../_shared/cors';
-import { authenticate, type Env } from '../../_shared/auth';
+import { authenticate, hashPassword, type Env } from '../../_shared/auth';
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const pre = preflight(context.request);
@@ -21,16 +21,26 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!file) return errorResponse('缺少文件', 400);
     if (!category) return errorResponse('缺少分类', 400);
     if (!studentId) return errorResponse('缺少学生 ID', 400);
-    if (!password) return errorResponse('缺少密码', 401);
 
     const validCategories = ['avatar', 'life', 'school', 'future', 'pet', 'handwritten'];
     if (!validCategories.includes(category)) {
       return errorResponse('无效的分类', 400, { allowed: validCategories });
     }
 
-    // 2) 鉴权
-    const auth = await authenticate(password, studentId, context.env);
-    if (!auth.valid) return errorResponse('密码错误', 403);
+    // 2) 鉴权：无密码时自动视为"首次设置密码"（学生本人无密码 + 无 admin）
+    let auth = await authenticate(password || '', studentId, context.env);
+    if (!auth.valid && !password) {
+      // 空密码：首次上传，自动把密码写进 students 表
+      const hash = await hashPassword('');
+      await context.env.DB.prepare(
+        'UPDATE students SET password_hash = ?, updated_at = unixepoch() WHERE id = ? AND password_hash IS NULL'
+      )
+        .bind(hash, studentId)
+        .run();
+      auth = { valid: true, isAdmin: false, studentId };
+    } else if (!auth.valid) {
+      return errorResponse('密码错误', 403);
+    }
 
     // 3) 文件大小校验（默认 10MB）
     const maxMB = parseInt(context.env.MAX_UPLOAD_MB || '10', 10);
@@ -62,10 +72,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       },
     });
 
-    // 7) 生成公开 URL
+    // 7) 生成可访问 URL：有 R2 自定义域名时直出，否则走 Pages Function 代理
     const publicUrl = context.env.R2_PUBLIC_URL
       ? `${context.env.R2_PUBLIC_URL.replace(/\/$/, '')}/${key}`
-      : `https://r2.example.com/${key}`; // 占位，部署时配置 R2_PUBLIC_URL
+      : `/api/photos/file/${key}`;
 
     // 8) 写入 D1 元数据
     await context.env.DB.prepare(
@@ -75,43 +85,15 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       .bind(photoId, studentId, category, publicUrl, file.size)
       .run();
 
-    // 9) 更新 students 表的 photo 数组
-    const columnMap: Record<string, string> = {
-      avatar: 'photos_avatar',
-      life: 'photos_life',
-      school: 'photos_school',
-      future: 'photos_future',
-      pet: 'pet_photo',
-      handwritten: 'handwritten_photo',
-    };
-
-    // avatar/pet/handwritten 是单个字符串，其他是 JSON 数组
-    if (category === 'avatar' || category === 'pet' || category === 'handwritten') {
-      await context.env.DB.prepare(
-        `UPDATE students SET ${columnMap[category]} = ?, updated_at = unixepoch() WHERE id = ?`
-      )
-        .bind(publicUrl, studentId)
-        .run();
-    } else {
-      // 数组类型：读取现有值，追加新 URL
-      const colName = category === 'life' ? 'photos_life' : category === 'school' ? 'photos_school' : 'photos_future';
-      const row = await context.env.DB.prepare(
-        `SELECT ${colName} FROM students WHERE id = ?`
-      )
-        .bind(studentId)
-        .first<{ [k: string]: string | null }>();
-      const existing: string[] = row?.[colName] ? JSON.parse(row[colName] as string) : [];
-      existing.push(publicUrl);
-      await context.env.DB.prepare(
-        `UPDATE students SET ${colName} = ?, updated_at = unixepoch() WHERE id = ?`
-      )
-        .bind(JSON.stringify(existing), studentId)
-        .run();
-    }
+    // 9) 照片真实来源统一为 photos 表；students 表只更新时间戳，避免多处状态不一致
+    await context.env.DB.prepare('UPDATE students SET updated_at = unixepoch() WHERE id = ?')
+      .bind(studentId)
+      .run();
 
     return jsonResponse({
       id: photoId,
       url: publicUrl,
+      key,
       category,
       student_id: studentId,
       file_size: file.size,

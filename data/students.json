@@ -4,27 +4,118 @@
   "totalStudents": 55,
   "founderId": "50",
   "version": "1.0.0",
-  "lastUpdated": "2026-06-02",
+  "lastUpdated": "2026-06-04",
   "templates": [
-    { "id": "starlight-admission", "name": "星光录取通知书", "audience": "男女皆宜", "emoji": "📜" },
-    { "id": "sakura-macaron", "name": "樱花马卡龙", "audience": "女生", "emoji": "🍰" },
-    { "id": "cosmic-exam", "name": "星际答题卡", "audience": "男生", "emoji": "🚀" },
-    { "id": "martial-legend", "name": "江湖风云榜", "audience": "中性偏男", "emoji": "⚔️" },
-    { "id": "mint-journal", "name": "薄荷手账", "audience": "中性", "emoji": "📓" },
-    { "id": "cute-hamster", "name": "萌系仓鼠", "audience": "男女皆宜", "emoji": "🐹" },
-    { "id": "ancient-classic", "name": "古风经典", "audience": "男女皆宜", "emoji": "🏯" },
-    { "id": "energy-pop", "name": "活力波普", "audience": "男女皆宜", "emoji": "💥" },
-    { "id": "crayon-style", "name": "蜡笔手绘", "audience": "男女皆宜", "emoji": "🖍️" },
-    { "id": "imperial-scroll", "name": "圣旨卷轴（御用）", "audience": "古风宫廷", "emoji": "🏮" },
-    { "id": "delta-force", "name": "三角洲行动", "audience": "男生", "emoji": "🎖️" }
+    {
+      "id": "starlight-admission",
+      "name": "星光录取通知书",
+      "audience": "男女皆宜",
+      "emoji": "📜"
+    },
+    {
+      "id": "sakura-macaron",
+      "name": "樱花马卡龙",
+      "audience": "女生",
+      "emoji": "🍰"
+    },
+    {
+      "id": "cosmic-exam",
+      "name": "星际答题卡",
+      "audience": "男生",
+      "emoji": "🚀"
+    },
+    {
+      "id": "martial-legend",
+      "name": "江湖风云榜",
+      "audience": "中性偏男",
+      "emoji": "⚔️"
+    },
+    {
+      "id": "mint-journal",
+      "name": "薄荷手账",
+      "audience": "中性",
+      "emoji": "📓"
+    },
+    {
+      "id": "cute-hamster",
+      "name": "萌系仓鼠",
+      "audience": "男女皆宜",
+      "emoji": "🐹"
+    },
+    {
+      "id": "ancient-classic",
+      "name": "古风经典",
+      "audience": "男女皆宜",
+      "emoji": "🏯"
+    },
+    {
+      "id": "energy-pop",
+      "name": "活力波普",
+      "audience": "男女皆宜",
+      "emoji": "💥"
+    },
+    {
+      "id": "crayon-style",
+      "name": "蜡笔手绘",
+      "audience": "男女皆宜",
+      "emoji": "🖍️"
+    },
+    {
+      "id": "imperial-scroll",
+      "name": "圣旨卷轴（御用）",
+      "audience": "古风宫廷",
+      "emoji": "🏮"
+    },
+    {
+      "id": "delta-force",
+      "name": "三角洲行动",
+      "audience": "男生",
+      "emoji": "🎖️"
+    }
   ],
   "stickers": {
-    "animals": ["cat", "dog", "rabbit", "panda", "fox", "hamster"],
-    "sports": ["swim", "football", "basketball", "run", "archery"],
-    "tech": ["robot", "laptop", "rocket", "gamepad"],
-    "food": ["cake", "icecream", "milktea", "pizza", "lollipop"],
-    "nature": ["sakura", "star", "rainbow", "moon", "sun"],
-    "personality": ["crown", "gem", "music", "pencil", "book"]
+    "animals": [
+      "cat",
+      "dog",
+      "rabbit",
+      "panda",
+      "fox",
+      "hamster"
+    ],
+    "sports": [
+      "swim",
+      "football",
+      "basketball",
+      "run",
+      "archery"
+    ],
+    "tech": [
+      "robot",
+      "laptop",
+      "rocket",
+      "gamepad"
+    ],
+    "food": [
+      "cake",
+      "icecream",
+      "milktea",
+      "pizza",
+      "lollipop"
+    ],
+    "nature": [
+      "sakura",
+      "star",
+      "rainbow",
+      "moon",
+      "sun"
+    ],
+    "personality": [
+      "crown",
+      "gem",
+      "music",
+      "pencil",
+      "book"
+    ]
   },
   "students": [
     {
@@ -43,7 +134,1403 @@
         "future": []
       },
       "highlights": [],
-      "abilities": { "swimming": 0, "tech": 0, "responsibility": 0 },
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "02",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "02",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "03",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "03",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "04",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "04",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "05",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "05",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "06",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "06",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "07",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "07",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "08",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "08",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "09",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "09",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "10",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "10",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "11",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "11",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "12",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "12",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "13",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "13",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "14",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "14",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "15",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "15",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "16",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "16",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "17",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "17",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "18",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "18",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "19",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "19",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "20",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "20",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "21",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "21",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "22",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "22",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "23",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "23",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "24",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "24",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "25",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "25",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "26",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "26",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "27",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "27",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "28",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "28",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "29",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "29",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "30",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "30",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "31",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "31",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "32",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "32",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "33",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "33",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "34",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "34",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "35",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "35",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "36",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "36",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "37",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "37",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "38",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "38",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "39",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "39",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "40",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "40",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "41",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "41",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "42",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "42",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "43",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "43",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "44",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "44",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "45",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "45",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "46",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "46",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "47",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "47",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "48",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "48",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "49",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "49",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
       "pet": null,
       "futureLetter": "",
       "template": "starlight-admission",
@@ -60,20 +1547,46 @@
       "studentNumber": "50",
       "class": "六年级4班",
       "school": "松柏第二小学",
-      "tags": ["靠谱小队长", "暖心闺蜜", "科技小达人"],
+      "tags": [
+        "靠谱小队长",
+        "暖心闺蜜",
+        "科技小达人"
+      ],
       "motto": "",
       "photos": {
         "avatar": "photos/50/avatar.jpg",
-        "life": ["photos/50/life-1.jpg"],
-        "school": ["photos/50/school-1.jpg"],
-        "future": ["photos/50/future-1.jpg"]
+        "life": [
+          "photos/50/life-1.jpg"
+        ],
+        "school": [
+          "photos/50/school-1.jpg"
+        ],
+        "future": [
+          "photos/50/future-1.jpg"
+        ]
       },
       "highlights": [
-        { "year": "2024", "title": "校级游泳比赛获奖", "desc": "在校级游泳比赛中获得佳绩" },
-        { "year": "2026", "title": "AI编程作品展示", "desc": "独立完成AI编程作品并展示" },
-        { "year": "2026", "title": "担任班级小队长", "desc": "认真负责，是老师的好帮手" }
+        {
+          "year": "2024",
+          "title": "校级游泳比赛获奖",
+          "desc": "在校级游泳比赛中获得佳绩"
+        },
+        {
+          "year": "2026",
+          "title": "AI编程作品展示",
+          "desc": "独立完成AI编程作品并展示"
+        },
+        {
+          "year": "2026",
+          "title": "担任班级小队长",
+          "desc": "认真负责，是老师的好帮手"
+        }
       ],
-      "abilities": { "swimming": 95, "tech": 88, "responsibility": 92 },
+      "abilities": {
+        "swimming": 95,
+        "tech": 88,
+        "responsibility": 92
+      },
       "pet": {
         "name": "年糕",
         "type": "橘猫",
@@ -81,8 +1594,12 @@
         "desc": "一只超萌的橘猫，最爱晒太阳和吃小鱼干"
       },
       "futureLetter": "亲爱的初中自己：愿你依然阳光开朗，依然热爱游泳和AI，依然对世界充满好奇...",
-      "template": "starlight-admission",
-      "stickers": ["star", "cat", "swim"],
+      "template": "delta-force",
+      "stickers": [
+        "star",
+        "cat",
+        "swim"
+      ],
       "isFounder": true,
       "isPublic": true,
       "password": "",
@@ -96,7 +1613,152 @@
           "type": "personal"
         }
       ]
+    },
+    {
+      "id": "51",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "51",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "52",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "52",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "53",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "53",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "54",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "54",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
+    },
+    {
+      "id": "55",
+      "name": "",
+      "nickname": "",
+      "studentNumber": "55",
+      "class": "六年级4班",
+      "school": "松柏第二小学",
+      "tags": [],
+      "motto": "",
+      "photos": {
+        "avatar": "",
+        "life": [],
+        "school": [],
+        "future": []
+      },
+      "highlights": [],
+      "abilities": {
+        "swimming": 0,
+        "tech": 0,
+        "responsibility": 0
+      },
+      "pet": null,
+      "futureLetter": "",
+      "template": "starlight-admission",
+      "stickers": [],
+      "isPublic": true,
+      "password": "",
+      "messages": []
     }
   ],
-  "_note": "其他53位同学的schema结构与id=01相同，由录入页(editor.html)逐个填充"
+  "_note": "55位同学占位已补齐；id=50为发起人完整示例，其余同学可由录入页逐个填充。"
 }

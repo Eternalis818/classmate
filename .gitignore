@@ -11,3 +11,22 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# ─── 凭证（绝不提交）───
+.admin-credentials.local.md
+
+# ─── 运行时数据 ───
+.wrangler/
+.playwright-mcp/
+.spec-workflow/
+
+# ─── 日志 ───
+*.log
+
+# ─── 调试截图（仅根目录，不影响 assets/ 下主题素材）───
+/verify-*.png
+/d1-console-*.png
+/delta-*.png
+/gradbook-live.png
+/student-50-delta-live-hero.png
+/mpxx6wy3-hero.png

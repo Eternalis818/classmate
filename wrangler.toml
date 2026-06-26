@@ -22,8 +22,8 @@ bucket_name = "gradbook-photos"
 [vars]
 ALLOWED_ORIGIN = "https://gradbook.pages.dev"
 MAX_UPLOAD_MB = "10"
-ADMIN_PASSWORD_HASH = "REPLACE_WITH_BCRYPT_HASH"
-# bcrypt 哈希生成：node -e "console.log(require('bcryptjs').hashSync('your-password', 10))"
+ADMIN_PASSWORD_HASH = "8db33f465e1f936cc5142ecde6c3dbfa1dc4fadef81f8bca86ca7bfa797bba89"
+# SHA-256 + 盐哈希生成：node -e "const c=require('crypto');const h=c.createHash('sha256').update('gradbook-2026-'+'your-password').digest('hex');console.log(h)"
 
 # ─── Production 环境（可选，后续绑自定义域名时启用）──
 # [env.production]

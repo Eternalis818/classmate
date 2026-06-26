@@ -1,0 +1,25 @@
+# Local/dev-only files that must not become public static assets on Cloudflare Pages.
+.git/
+.gitignore
+.assetsignore
+.admin-credentials.local.md
+AGENTS.md
+CLAUDE.md
+.claude/
+.od-skills/
+.playwright-mcp/
+.spec-workflow/
+.wrangler/
+
+# Cloudflare source/config should be used by Wrangler, not served as public files.
+functions/
+migrations/
+wrangler.toml
+
+# Open Design metadata and local verification captures.
+*.artifact.json
+*.log
+d1-console-*.png
+delta-*.png
+gradbook-live.png
+student-50-delta-live-hero.png

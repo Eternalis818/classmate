@@ -248,6 +248,44 @@
     .template-preview-bar span {
       width: 24px; height: 8px; border-radius: 4px;
     }
+    .template-card .preview-btn {
+      position: absolute; bottom: 8px; right: 8px;
+      font-size: 10px; padding: 3px 8px; border-radius: 999px;
+      background: rgba(0,0,0,0.6); color: #fff;
+      opacity: 0; transition: opacity 0.2s;
+      cursor: pointer; border: none; pointer-events: auto;
+    }
+    .template-card:hover .preview-btn { opacity: 1; }
+
+    /* Theme Preview Modal (onboarding) */
+    .tp-mask{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:20px}
+    .tp-mask.open{display:flex}
+    .tp-card{background:var(--bg,#1a1a1a);border-radius:20px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,0.5);color:var(--fg,#fff)}
+    .tp-hero{height:240px;background:var(--hero-gradient,linear-gradient(135deg,#444,#222));border-radius:20px 20px 0 0;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .tp-hero::before{content:'';position:absolute;inset:0;background-image:var(--asset-hero-bg,none);background-size:cover;background-position:center;opacity:0}
+    .tp-hero.has-asset-hero-bg::before{opacity:1}
+    .tp-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.4) 100%)}
+    .tp-hero-content{position:relative;z-index:1;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,0.4)}
+    .tp-hero-emoji{font-size:56px;margin-bottom:8px}
+    .tp-hero-name{font-size:24px;font-weight:700;letter-spacing:0.02em}
+    .tp-hero-tagline{font-size:13px;opacity:0.85;margin-top:4px;font-family:var(--font-mono)}
+    .tp-body{padding:24px 28px}
+    .tp-section{margin-bottom:18px}
+    .tp-section:last-child{margin-bottom:0}
+    .tp-label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;opacity:0.6;margin-bottom:8px;font-family:var(--font-mono)}
+    .tp-swatches{display:flex;gap:8px}
+    .tp-swatch{flex:1;height:48px;border-radius:10px;position:relative;display:flex;align-items:flex-end;justify-content:center;padding:4px;font-size:10px;font-family:var(--font-mono);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1)}
+    .tp-info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .tp-info-cell{background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px}
+    .tp-info-cell .k{font-size:10px;opacity:0.6;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.05em}
+    .tp-info-cell .v{font-size:13px;font-weight:500;margin-top:3px;word-break:break-all}
+    .tp-ability{height:8px;border-radius:4px;background:rgba(255,255,255,0.1);overflow:hidden;margin-top:4px}
+    .tp-ability-fill{height:100%;border-radius:4px;background:var(--accent,#fbbf24)}
+    .tp-foot{padding:16px 28px 24px;display:flex;gap:12px;border-top:1px solid rgba(255,255,255,0.08)}
+    .tp-foot button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:transform 0.15s}
+    .tp-foot button:hover{transform:translateY(-1px)}
+    .tp-foot .tp-cancel{background:rgba(255,255,255,0.08);color:inherit;border:none}
+    .tp-foot .tp-choose{background:linear-gradient(135deg,#a78bfa,#ec4899);color:#fff;border:none;box-shadow:0 4px 16px rgba(167,139,250,0.3)}
     .tpl-type-badge {
       position: absolute; top: 8px; left: 8px;
       font-size: 10px; padding: 2px 8px; border-radius: 999px;
@@ -672,7 +710,10 @@
       <span class="emoji" id="topEmoji">🎨</span>
       <span id="topTitle">选择模板</span>
     </div>
-    <a href="index.html" class="back-home">← 返回首页</a>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="btn btn-sm btn-ghost" onclick="openClassPhotoAdmin()" title="班级管理">🏫 班级管理</button>
+      <a href="index.html" class="back-home">← 返回首页</a>
+    </div>
   </div>
 </div>
 
@@ -833,6 +874,66 @@
 
 <input type="file" id="fileInput" accept="image/*" style="display:none" />
 
+<!-- ═══ 主题预览 Modal ═══ -->
+<div class="tp-mask" id="tpMask" onclick="if(event.target===this)closeThemePreview()">
+  <div class="tp-card" onclick="event.stopPropagation()">
+    <div class="tp-hero" id="tpHero">
+      <div class="tp-hero-content">
+        <div class="tp-hero-emoji" id="tpEmoji"></div>
+        <div class="tp-hero-name" id="tpName"></div>
+        <div class="tp-hero-tagline" id="tpTagline"></div>
+      </div>
+    </div>
+    <div class="tp-body">
+      <div class="tp-section">
+        <div class="tp-label">色彩调色板</div>
+        <div class="tp-swatches" id="tpSwatches"></div>
+      </div>
+      <div class="tp-section">
+        <div class="tp-label">主题信息</div>
+        <div class="tp-info-grid" id="tpInfo"></div>
+      </div>
+    </div>
+    <div class="tp-foot">
+      <button class="tp-cancel" onclick="closeThemePreview()">取消</button>
+      <button class="tp-choose" id="tpChoose" onclick="confirmThemePreview()">✓ 选这个主题</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 班级管理 Modal（大合照） ═══ -->
+<div class="modal-overlay" id="classPhotoAdminMask" style="display:none" onclick="if(event.target===this)closeClassPhotoAdmin()">
+  <div class="modal-card" style="max-width:520px;width:90vw;" onclick="event.stopPropagation()">
+    <div class="modal-head">
+      <h3>🏫 班级管理 · 大合照</h3>
+      <button class="modal-close" onclick="closeClassPhotoAdmin()">×</button>
+    </div>
+    <div class="modal-body" style="padding:var(--space-6);">
+      <p class="modal-hint" style="margin-bottom:var(--space-4);line-height:1.6;">
+        上传一次大合照，所有同学的纪念册页面都会自动在 Hero 区域显示这张合照。需管理员密码。
+      </p>
+      <div id="classPhotoCurrentWrap" style="margin-bottom:var(--space-4);text-align:center;">
+        <img id="classPhotoCurrent" src="" alt="当前大合照" style="max-width:100%;max-height:240px;border-radius:var(--radius-md);box-shadow:0 4px 16px rgba(0,0,0,0.1);display:none;" />
+        <div id="classPhotoEmpty" class="ph-img" style="aspect-ratio:16/9;display:grid;align-items:center;justify-content:center;">尚未上传大合照</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">管理员密码</label>
+        <input type="password" id="classPhotoPwd" class="form-input" placeholder="请输入管理员密码" autocomplete="off" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">选择图片（≤20MB · JPEG/PNG/WebP）</label>
+        <input type="file" id="classPhotoFile" accept="image/jpeg,image/png,image/webp" />
+        <img id="classPhotoPreview" src="" alt="预览" style="max-width:100%;max-height:200px;margin-top:var(--space-3);border-radius:var(--radius-sm);display:none;" />
+      </div>
+      <div id="classPhotoStatus" class="meta" style="min-height:20px;margin-top:var(--space-3);"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="tpl-btn tpl-btn-ghost" onclick="closeClassPhotoAdmin()">取消</button>
+      <button class="tpl-btn tpl-btn-primary" id="classPhotoSubmit" onclick="submitClassPhoto()">📤 上传大合照</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ═══════════════════════════════════════════════════════════
    TEMPLATES
@@ -845,7 +946,7 @@ const TEMPLATES = [
   { id:'cosmic-exam', name:'星际答题卡', emoji:'🚀', audience:'男生',
     colors:['#1E3A8A','#2563EB','#D4AF37','#F0F4FA'] },
   { id:'martial-legend', name:'江湖风云榜', emoji:'⚔️', audience:'中性偏男',
-    colors:['#C84032','#D4A86A','#F5F0E6','#2A1F14'] },
+    colors:['#1F1410','#C84032','#D4C5A9','#8FA3B0'] },
   { id:'mint-journal', name:'薄荷手账', emoji:'📓', audience:'中性',
     colors:['#2EAA7F','#45C898','#F0FAF6','#88DCC0'] },
   { id:'cute-hamster', name:'萌系仓鼠', emoji:'🐹', audience:'男女皆宜',
@@ -911,7 +1012,7 @@ let currentPhotoTarget = null;
 /* ═══════════════════════════════════════════════════════════
    INIT
    ═══════════════════════════════════════════════════════════ */
-(function init() {
+(async function init() {
   const draftKey = 'draft-' + personType + '-' + personId;
   const saved = localStorage.getItem(draftKey);
   const stored = localStorage.getItem(personType + '-' + personId);
@@ -928,12 +1029,24 @@ let currentPhotoTarget = null;
       template: 'starlight-admission',
       isPublic: true, password: '',
       name: '', nickname: '', motto: '', tags: [],
-      photos: { avatar:'', life:[], school:[], future:[] },
+      photos: { avatar:'', life:[], school:[], future:[], pet:[] },
       highlights: [],
       abilities: { swimming:50, tech:50, responsibility:50, creativity:50, warmth:50, learning:50 },
       pet: null,
       futureLetter: ''
     };
+  }
+
+  await syncSharedTemplates().catch(() => {});
+  if (personType === 'teacher' && !saved) {
+    const cloudTeacher = await loadTeacherFromCloud().catch(() => null);
+    if (cloudTeacher) formData = Object.assign(formData, cloudTeacher);
+  }
+
+  /* 学生 edit 模式：从云端拉回最新资料（含照片），这样换设备/清缓存也能返回修改 */
+  if (personType === 'student' && editMode) {
+    const cloudStudent = await loadStudentFromCloud().catch(() => null);
+    if (cloudStudent) formData = Object.assign(formData, cloudStudent);
   }
 
   if (personType === 'teacher') {
@@ -1057,6 +1170,10 @@ function validateStep(n) {
 function saveCurrentStep() {
   if (personType === 'teacher') {
     formData.name = document.getElementById('inputName')?.value?.trim() || formData.name;
+    formData.role = document.getElementById('inputNickname')?.value?.trim() || formData.role || '';
+    formData.quote = document.getElementById('inputMotto')?.value?.trim() || formData.quote || '';
+    formData.photos = formData.photos || { avatar:'', life:[], school:[], future:[], pet:[] };
+    localStorage.setItem('draft-' + personType + '-' + personId, JSON.stringify(formData));
     return;
   }
   switch (currentStep) {
@@ -1084,7 +1201,16 @@ function saveCurrentStep() {
 
 function loadFormToUI() {
   if (personType === 'teacher') {
+    const nickname = document.getElementById('inputNickname');
+    const motto = document.getElementById('inputMotto');
+    const tagGroup = document.getElementById('tagPool')?.closest('.form-group');
+    if (nickname) nickname.placeholder = '如：数学老师、班主任 · 语文老师';
+    if (motto) motto.placeholder = '写给同学们的一句寄语...';
+    if (tagGroup) tagGroup.style.display = 'none';
     if (formData.name) document.getElementById('inputName').value = formData.name;
+    if (formData.role || formData.subject) document.getElementById('inputNickname').value = formData.role || formData.subject || '';
+    if (formData.quote) document.getElementById('inputMotto').value = formData.quote;
+    renderUploadedPhotos();
     return;
   }
   if (formData.template) selectTemplate(formData.template, false);
@@ -1250,7 +1376,7 @@ document.getElementById('fileInput').addEventListener('change', function(e) {
   reader.onload = function(ev) {
     compressImage(ev.target.result, 800, 0.7, (compressed) => {
       const { category, index } = currentPhotoTarget;
-      if (!formData.photos) formData.photos = { avatar:'', life:[], school:[], future:[] };
+      if (!formData.photos) formData.photos = { avatar:'', life:[], school:[], future:[], pet:[] };
       if (category === 'avatar') {
         formData.photos.avatar = compressed;
       } else {
@@ -1320,6 +1446,7 @@ function collectTimelineData() {
    ═══════════════════════════════════════════════════════════ */
 function renderAbilitySliders() {
   const wrap = document.getElementById('abilitySliders');
+  if (!wrap) return;
   wrap.innerHTML = ABILITIES.map(a => `
     <div class="ability-slider-item">
       <div class="ability-slider-header">
@@ -1355,8 +1482,20 @@ function collectAbilities() {
 function buildPreview() {
   saveCurrentStep();
   const d = formData;
-  const tpl = TEMPLATES.find(t => t.id === d.template) || TEMPLATES[0];
+  const tpl = getTemplateById(d.template) || TEMPLATES[0];
   const frame = document.getElementById('previewFrame');
+  if (personType === 'teacher') {
+    const avatarHtml = d.photos?.avatar ? `<img src="${d.photos.avatar}" alt="" />` : (d.name ? d.name[0] : '师');
+    frame.innerHTML = `
+      <div class="preview-hero" style="background:#fff7ed">
+        <div class="preview-avatar">${avatarHtml}</div>
+        <div class="preview-name">${d.name || '未填写'}</div>
+        ${d.role ? `<div class="preview-nickname">${d.role}</div>` : ''}
+      </div>
+      ${d.quote ? `<div class="preview-section" style="font-style:italic;color:var(--fg-2);text-align:center;">"${d.quote}"</div>` : ''}
+    `;
+    return;
+  }
   const c1 = tpl.colors[0], c2 = tpl.colors[1], bg = tpl.colors[2] || '#faf5ff';
 
   const avatarHtml = d.photos?.avatar
@@ -1400,7 +1539,7 @@ function buildPreview() {
 /* ═══════════════════════════════════════════════════════════
    GENERATE
    ═══════════════════════════════════════════════════════════ */
-function generate() {
+async function generate() {
   saveCurrentStep();
   formData.name = document.getElementById('inputName')?.value?.trim() || formData.name;
   if (personType !== 'teacher') {
@@ -1414,12 +1553,26 @@ function generate() {
         name: document.getElementById('petName').value.trim(),
         type: document.getElementById('petType').value.trim(),
         desc: document.getElementById('petDesc').value.trim(),
-        photo: formData.photos?.pet?.[0] || ''
+        photo: ''
       };
     }
   }
   const key = personType + '-' + personId;
-  localStorage.setItem(key, JSON.stringify(formData));
+
+  if (personType === 'student') {
+    const cloudOk = await saveStudentToCloud();
+    if (!cloudOk) return;
+  }
+  if (personType === 'teacher') {
+    const cloudOk = await saveTeacherToCloud();
+    if (!cloudOk) return;
+  }
+
+  if (personType === 'teacher') {
+    localStorage.removeItem(key);
+  } else {
+    localStorage.removeItem(key);
+  }
   localStorage.removeItem('draft-' + personType + '-' + personId);
 
   showToast('生成成功！正在跳转...', false, 'success');
@@ -1430,6 +1583,215 @@ function generate() {
       location.href = 'student.html?id=' + personId;
     }
   }, 1200);
+}
+
+async function loadTeacherFromCloud() {
+  if (!personId) return null;
+  const res = await fetch('/api/teachers/' + encodeURIComponent(personId));
+  if (!res.ok) return null;
+  const json = await res.json();
+  const raw = json.teacher || json;
+  return {
+    type: 'teacher',
+    id: raw.id || personId,
+    name: raw.name || '',
+    subject: raw.subject || '',
+    subjectEn: raw.subjectEn || '',
+    role: raw.role || raw.subject || '',
+    quote: raw.quote || '',
+    message: raw.message || '',
+    photos: { avatar: raw.photo || '', life: [], school: [], future: [], pet: [] }
+  };
+}
+
+async function loadStudentFromCloud() {
+  if (!personId) return null;
+  const res = await fetch('/api/students/' + encodeURIComponent(personId));
+  if (!res.ok) return null;
+  const raw = await res.json();
+  const num = (v, fb) => (typeof v === 'number' && isFinite(v)) ? Math.round(v) : fb;
+  const ab = raw.abilities || {};
+  const ph = raw.photos || {};
+  const photoUrls = (p) => (Array.isArray(p) ? p : []).map(x => x && x.url).filter(Boolean);
+  return {
+    type: 'student',
+    id: raw.id || personId,
+    name: raw.name || '',
+    nickname: raw.nickname || '',
+    motto: raw.motto || '',
+    tags: Array.isArray(raw.tags) ? raw.tags : [],
+    template: raw.template || 'starlight-admission',
+    stickers: Array.isArray(raw.stickers) ? raw.stickers : [],
+    isPublic: raw.is_public !== 0 && raw.is_public !== false,
+    highlights: Array.isArray(raw.highlights) ? raw.highlights : [],
+    abilities: {
+      swimming: num(raw.abilities_swim, num(ab.swimming, 50)),
+      tech: num(raw.abilities_tech, num(ab.tech, 50)),
+      responsibility: num(raw.abilities_resp, num(ab.responsibility, 50)),
+      creativity: num(ab.creativity, 50),
+      warmth: num(ab.warmth, 50),
+      learning: num(ab.learning, 50)
+    },
+    pet: raw.pet || null,
+    futureLetter: raw.future_letter || raw.futureLetter || '',
+    photos: {
+      avatar: (ph.avatar && ph.avatar.url) || '',
+      life: photoUrls(ph.life),
+      school: photoUrls(ph.school),
+      future: photoUrls(ph.future),
+      pet: (ph.pet && ph.pet.url) ? [ph.pet.url] : []
+    }
+  };
+}
+
+async function saveTeacherToCloud() {
+  const password = prompt('保存老师资料需要管理员密码。') || '';
+  if (!password) {
+    showToast('需要管理员密码才能保存老师资料', true);
+    return false;
+  }
+
+  try {
+    showToast('正在保存老师资料到云端...', false, 'success');
+    const payload = {
+      password,
+      name: formData.name || '',
+      subject: formData.subject || '',
+      subjectEn: formData.subjectEn || '',
+      role: formData.role || '',
+      photo: formData.photos?.avatar?.startsWith('data:image/') ? undefined : (formData.photos?.avatar || ''),
+      quote: formData.quote || '',
+      message: formData.message || ''
+    };
+    const res = await fetch('/api/teachers/' + encodeURIComponent(personId), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      showToast('老师资料保存失败：' + (json.error || res.statusText), true);
+      return false;
+    }
+    return true;
+  } catch (e) {
+    showToast('老师资料保存失败：' + e.message, true);
+    return false;
+  }
+}
+
+async function saveStudentToCloud() {
+  const password = getStudentPasswordForSave();
+  if (!password) return false;
+
+  try {
+    showToast('正在保存资料到云端...', false, 'success');
+    const payload = {
+      password,
+      name: formData.name,
+      nickname: formData.nickname,
+      class: '六年级4班',
+      school: '松柏第二小学',
+      tags: formData.tags || [],
+      motto: formData.motto || '',
+      highlights: formData.highlights || [],
+      abilities: formData.abilities || {},
+      pet: formData.pet,
+      futureLetter: formData.futureLetter || '',
+      template: formData.template || 'starlight-admission',
+      stickers: formData.stickers || [],
+      isPublic: formData.isPublic !== false
+    };
+
+    const res = await fetch('/api/students/' + encodeURIComponent(personId), {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      showToast('云端保存失败：' + (json.error || res.statusText), true);
+      return false;
+    }
+
+    await uploadDraftPhotosToCloud(password);
+    formData.password = password;
+    return true;
+  } catch (e) {
+    showToast('云端保存失败：' + e.message, true);
+    return false;
+  }
+}
+
+function getStudentPasswordForSave() {
+  let password = document.getElementById('inputPassword')?.value || formData.password || '';
+  if (!password) {
+    password = prompt('请设置一个纪念册密码。以后上传照片、修改资料和保存主题都会用到它。') || '';
+    if (password) {
+      formData.password = password;
+      const input = document.getElementById('inputPassword');
+      const confirm = document.getElementById('inputPasswordConfirm');
+      if (input) input.value = password;
+      if (confirm) confirm.value = password;
+    }
+  }
+  if (!password) {
+    showToast('需要设置纪念册密码才能保存到云端', true);
+    return '';
+  }
+  return password;
+}
+
+async function uploadDraftPhotosToCloud(password) {
+  const jobs = [];
+  const add = (category, value) => {
+    if (value && typeof value === 'string' && value.startsWith('data:image/')) {
+      jobs.push(uploadOneDraftPhoto(category, value, password));
+    }
+  };
+
+  add('avatar', formData.photos?.avatar);
+  (formData.photos?.life || []).forEach(v => add('life', v));
+  (formData.photos?.school || []).forEach(v => add('school', v));
+  (formData.photos?.future || []).forEach(v => add('future', v));
+  addPhotoValue('pet', formData.photos?.pet, add);
+
+  if (!jobs.length) return;
+  showToast('正在上传照片...', false, 'success');
+  await Promise.all(jobs);
+}
+
+async function uploadOneDraftPhoto(category, dataUrl, password) {
+  const file = dataUrlToFile(dataUrl, personId + '-' + category + '-' + Date.now() + '.jpg');
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('category', category);
+  fd.append('student_id', personId);
+  fd.append('password', password);
+
+  const res = await fetch('/api/photos/upload', { method: 'POST', body: fd });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error('照片上传失败：' + (json.error || res.statusText));
+  }
+  return json;
+}
+
+function addPhotoValue(category, value, add) {
+  if (Array.isArray(value)) {
+    value.forEach(v => add(category, v));
+  } else {
+    add(category, value);
+  }
+}
+
+function dataUrlToFile(dataUrl, filename) {
+  const parts = dataUrl.split(',');
+  const mime = (parts[0].match(/data:(.*?);base64/) || [])[1] || 'image/jpeg';
+  const bin = atob(parts[1] || '');
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new File([bytes], filename, { type: mime });
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1458,6 +1820,12 @@ function getTemplateRegistry() {
 function saveTemplateRegistry(reg) {
   localStorage.setItem(TPL_REGISTRY_KEY, JSON.stringify(reg));
 }
+function updateRegisteredTemplate(tpl) {
+  if (!tpl || !tpl.id) return;
+  const reg = getTemplateRegistry();
+  reg[tpl.id] = Object.assign({}, reg[tpl.id] || {}, tpl);
+  saveTemplateRegistry(reg);
+}
 function registerCustomTemplate(tpl) {
   if (!tpl || !tpl.id) { showToast('主题包格式错误：缺少 id', true); return false; }
   const reg = getTemplateRegistry();
@@ -1468,6 +1836,35 @@ function registerCustomTemplate(tpl) {
     type: 'custom', createdAt: new Date().toISOString()
   }, tpl);
   saveTemplateRegistry(reg);
+  return true;
+}
+
+async function syncSharedTemplates() {
+  const res = await fetch('/api/templates');
+  if (!res.ok) return;
+  const json = await res.json();
+  const shared = json.templates || [];
+  if (!shared.length) return;
+  const reg = getTemplateRegistry();
+  shared.forEach(tpl => {
+    reg[tpl.id] = Object.assign({ type: tpl.type || 'custom', shared: true }, tpl);
+  });
+  saveTemplateRegistry(reg);
+}
+
+async function publishSharedTemplate(tpl) {
+  const password = prompt('发布到全班共享主题库需要管理员密码。取消则只保存到本机。') || '';
+  if (!password) return false;
+  const res = await fetch('/api/templates', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password, template: tpl })
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    showToast('本机已保存，共享发布失败：' + (json.error || res.statusText), true);
+    return false;
+  }
   return true;
 }
 
@@ -1591,7 +1988,7 @@ function previewUploadJson() {
   }
 }
 
-function confirmUploadTemplate() {
+async function confirmUploadTemplate() {
   const txt = document.getElementById('uploadJsonArea').value.trim();
   if (!txt) { showToast('请先选择文件或粘贴 JSON', true); return; }
   let tpl;
@@ -1601,7 +1998,8 @@ function confirmUploadTemplate() {
   tpl.colors = tpl.colors || ['#FFB6C1','#87CEEB','#FFFACD','#2C2C2C'];
   tpl.layout = tpl.layout || { hero:'default', profile:'card', timeline:'dot', abilities:'bar', pet:'card', gallery:'carousel' };
   if (registerCustomTemplate(tpl)) {
-    showToast('✓ 主题包已注册：' + tpl.name, false, 'success');
+    const shared = await publishSharedTemplate(tpl);
+    showToast(shared ? '✓ 主题包已发布到全班：' + tpl.name : '✓ 主题包已保存到本机：' + tpl.name, false, 'success');
     closeModal('uploadModal');
     renderTemplateGrid();
   }
@@ -1639,6 +2037,11 @@ function openAIModal() {
               <span class="kw-pill" onclick="addAiKeyword('彩虹')">🌈 彩虹</span>
             </div>
           </div>
+          <div class="form-group">
+            <label class="form-label">🌄 Hero 背景图（可选，上传后 AI 主题可带全屏背景）</label>
+            <input type="file" id="aiHeroBg" accept="image/*" class="form-input" style="padding:6px;" />
+            <div id="aiHeroBgPreview" style="margin-top:8px;font-size:12px;color:var(--muted);"></div>
+          </div>
           <div class="ai-preview" id="aiPreview" style="display:none"></div>
         </div>
         <div class="modal-foot">
@@ -1649,6 +2052,16 @@ function openAIModal() {
       </div>
     </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
+  /* 预览 heroBg 缩略图 */
+  document.getElementById('aiHeroBg')?.addEventListener('change', function() {
+    const file = this.files?.[0];
+    const preview = document.getElementById('aiHeroBgPreview');
+    if (!file) { preview.textContent = ''; return; }
+    const url = URL.createObjectURL(file);
+    preview.textContent = '已选: ' + file.name;
+    const card = document.querySelector('#aiPreview .preview-card');
+    if (card) card.style.backgroundImage = 'url(' + url + ')';
+  });
 }
 
 function addAiKeyword(kw) {
@@ -1751,16 +2164,39 @@ function aiParseTemplate(prompt) {
   };
 }
 
-function saveAiTemplate() {
+async function saveAiTemplate() {
   if (!currentAiTemplate) { showToast('请先生成主题', true); return; }
   if (registerCustomTemplate(currentAiTemplate)) {
-    // Add to AI history
     try {
       const hist = JSON.parse(localStorage.getItem(TPL_AI_KEY) || '[]');
       hist.unshift(currentAiTemplate);
       localStorage.setItem(TPL_AI_KEY, JSON.stringify(hist.slice(0, 20)));
     } catch(e) {}
-    showToast('✓ AI 主题已保存：' + currentAiTemplate.name, false, 'success');
+    const shared = await publishSharedTemplate(currentAiTemplate);
+    /* 上传 heroBg 到 R2（D1 save 成功后才能拿到 real template ID） */
+    const heroFile = document.getElementById('aiHeroBg')?.files?.[0];
+    if (heroFile && shared) {
+      try {
+        const fd = new FormData();
+        fd.append('file', heroFile);
+        fd.append('slot', 'heroBg');
+        fd.append('password', prompt('上传 hero 背景图需要管理员密码') || '');
+        const upRes = await fetch('/api/templates/' + currentAiTemplate.id + '/assets', { method: 'POST', body: fd });
+        const upJson = await upRes.json().catch(() => ({}));
+        if (upJson.url) {
+          currentAiTemplate.assets = currentAiTemplate.assets || {};
+          currentAiTemplate.assets.heroBg = upJson.url;
+          updateRegisteredTemplate(currentAiTemplate);
+        }
+      } catch(e) { /* heroBg upload optional, skip on error */ }
+    } else if (heroFile && !shared) {
+      /* 仅本机保存：转为本地 URL */
+      const localUrl = URL.createObjectURL(heroFile);
+      currentAiTemplate.assets = currentAiTemplate.assets || {};
+      currentAiTemplate.assets.heroBg = localUrl;
+      registerCustomTemplate(currentAiTemplate);
+    }
+    showToast(shared ? '✓ AI 主题已发布到全班：' + currentAiTemplate.name : '✓ AI 主题已保存到本机：' + currentAiTemplate.name, false, 'success');
     closeModal('aiModal');
     renderTemplateGrid();
     currentAiTemplate = null;
@@ -1840,6 +2276,7 @@ function closeModal(id) {
 /* ——— 增强 renderTemplateGrid 显示用量 & 标记 ——— */
 function renderTemplateGrid() {
   const grid = document.getElementById('templateGrid');
+  if (!grid) return;
   const stats = getTemplateStats();
   const all = getAllTemplates();
   grid.innerHTML = all.map(t => {
@@ -1861,6 +2298,96 @@ function renderTemplateGrid() {
     </div>`;
   }).join('');
 }
+
+/* ═══════════════════════════════════════════════════════════
+   CLASS PHOTO ADMIN
+   ═══════════════════════════════════════════════════════════ */
+function openClassPhotoAdmin() {
+  const mask = document.getElementById('classPhotoAdminMask');
+  if (!mask) return;
+  /* 拉取当前大合照 */
+  fetch('/api/class/config').then(r => r.json()).then(data => {
+    const items = (data.config || []);
+    const photo = items.find(x => x.key === 'class_photo_url');
+    const img = document.getElementById('classPhotoCurrent');
+    const empty = document.getElementById('classPhotoEmpty');
+    if (photo && photo.value) {
+      img.src = photo.value;
+      img.style.display = 'inline-block';
+      empty.style.display = 'none';
+    } else {
+      img.style.display = 'none';
+      empty.style.display = 'grid';
+    }
+  }).catch(() => {});
+  mask.style.display = 'flex';
+}
+
+function closeClassPhotoAdmin() {
+  const mask = document.getElementById('classPhotoAdminMask');
+  if (mask) mask.style.display = 'none';
+  /* 重置表单 */
+  document.getElementById('classPhotoPwd').value = '';
+  document.getElementById('classPhotoFile').value = '';
+  document.getElementById('classPhotoPreview').style.display = 'none';
+  document.getElementById('classPhotoStatus').textContent = '';
+}
+
+/* 文件预览 */
+document.getElementById('classPhotoFile')?.addEventListener('change', (e) => {
+  const f = e.target.files[0];
+  const preview = document.getElementById('classPhotoPreview');
+  if (f) {
+    preview.src = URL.createObjectURL(f);
+    preview.style.display = 'inline-block';
+  } else {
+    preview.style.display = 'none';
+  }
+});
+
+async function submitClassPhoto() {
+  const pwd = document.getElementById('classPhotoPwd').value;
+  const file = document.getElementById('classPhotoFile').files[0];
+  const status = document.getElementById('classPhotoStatus');
+  const btn = document.getElementById('classPhotoSubmit');
+
+  if (!pwd) { status.textContent = '❌ 请输入管理员密码'; status.style.color = 'var(--danger)'; return; }
+  if (!file) { status.textContent = '❌ 请选择图片'; status.style.color = 'var(--danger)'; return; }
+  if (file.size > 20 * 1024 * 1024) { status.textContent = '❌ 文件超过 20MB'; status.style.color = 'var(--danger)'; return; }
+
+  btn.disabled = true;
+  status.textContent = '⏳ 上传中…';
+  status.style.color = 'var(--muted)';
+
+  try {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('password', pwd);
+    const res = await fetch('/api/class/photo', { method: 'POST', body: fd });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || '上传失败');
+
+    status.textContent = '✅ 上传成功！所有同学的页面都会自动显示这张大合照';
+    status.style.color = 'var(--success)';
+    /* 同步显示 */
+    const img = document.getElementById('classPhotoCurrent');
+    img.src = data.url;
+    img.style.display = 'inline-block';
+    document.getElementById('classPhotoEmpty').style.display = 'none';
+
+    /* 清除所有客户端缓存（让学生页下次访问时拉取新图） */
+    try { localStorage.removeItem('class-config'); } catch (e) {}
+
+    showToast && showToast('✅ 大合照已上传！');
+  } catch (e) {
+    status.textContent = '❌ ' + (e.message || '上传失败');
+    status.style.color = 'var(--danger)';
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+Object.assign(window, { openClassPhotoAdmin, closeClassPhotoAdmin, submitClassPhoto });
 </script>
 </body>
 </html>

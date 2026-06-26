@@ -709,7 +709,7 @@
       position: relative;
       border-radius: var(--radius-xl);
       overflow: hidden;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 10 / 7;
       background: linear-gradient(135deg, var(--accent-soft) 0%, var(--surface-warm) 50%, var(--surface-cool) 100%);
       display: grid;
       place-items: center;
@@ -734,6 +734,12 @@
     .class-photo-placeholder .hint {
       font-size: var(--text-sm);
       color: var(--muted);
+    }
+    .class-photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
     .class-quote {
       text-align: center;
@@ -891,7 +897,7 @@
   <div class="hero-eyebrow">松柏第二小学 · 六年级4班</div>
   <h1>
     时光纪念册
-    <span class="sub">2 0 2 5 届</span>
+    <span class="sub">2 0 2 6 届</span>
   </h1>
   <p class="hero-meta">我们一起走过的<strong>六年</strong>，是写给未来最美的<strong>情书</strong></p>
 
@@ -980,11 +986,7 @@
   </div>
 
   <div class="class-photo-frame reveal">
-    <div class="class-photo-placeholder">
-      <div class="icon">📸</div>
-      <div class="text">毕业大合影占位</div>
-      <div class="hint">建议尺寸 1920×1080 · 横幅构图</div>
-    </div>
+    <img class="class-photo-img" src="/api/class/file/class/photo.jpg" alt="厦门市松柏第二小学2026届六年级4班毕业大合影 · 2026.5.27" loading="lazy" />
   </div>
 
   <p class="class-quote reveal">
@@ -1030,6 +1032,7 @@
   function renderQuote(text) {
     quoteEl.innerHTML = text.replace(/\n/g, '<br>');
   }
+  window.renderHeadTeacherQuote = renderQuote;
 
   var saved = localStorage.getItem(STORAGE_KEY);
   if (saved) renderQuote(saved);
@@ -1045,11 +1048,24 @@
     modal.classList.remove('active');
   });
 
-  saveBtn.addEventListener('click', function() {
+  saveBtn.addEventListener('click', async function() {
     var val = textarea.value.trim();
     if (val) {
       localStorage.setItem(STORAGE_KEY, val);
       renderQuote(val);
+      var password = prompt('同步保存到云端需要管理员密码。取消则只保存在本机。') || '';
+      if (password) {
+        try {
+          var res = await fetch('/api/teachers/T01', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: password, quote: val })
+          });
+          if (!res.ok) alert('云端保存失败，本机预览已更新。');
+        } catch(e) {
+          alert('云端保存失败，本机预览已更新。');
+        }
+      }
     }
     modal.classList.remove('active');
   });
@@ -1087,9 +1103,9 @@ if (localStorage.getItem(GATE_KEY)) {
 }
 
 /* ───────────────────────────────────────────
-   班级数据 (后续从 data/students.json 加载)
+   班级数据（优先从 data/*.json 加载；失败时使用内置占位）
    ─────────────────────────────────────────── */
-const STUDENTS = [
+let STUDENTS = [
   { n: '01', name: '同学01' }, { n: '02', name: '同学02' }, { n: '03', name: '同学03' },
   { n: '04', name: '同学04' }, { n: '05', name: '同学05' }, { n: '06', name: '同学06' },
   { n: '07', name: '同学07' }, { n: '08', name: '同学08' }, { n: '09', name: '同学09' },
@@ -1113,7 +1129,7 @@ const STUDENTS = [
 ];
 
 /* ─── 老师数据 ─── */
-const TEACHERS = [
+let TEACHERS = [
   { id: 'T01', name: '周 黎',  subject: '语文', subjectEn: 'CHINESE',  emoji: '语', isHeadTeacher: true,  placeholder: '班主任 · 语文' },
   { id: 'T02', name: '',       subject: '数学', subjectEn: 'MATH',      emoji: '数', isHeadTeacher: false, placeholder: '数学老师' },
   { id: 'T03', name: '',       subject: '英语', subjectEn: 'ENGLISH',  emoji: 'En', isHeadTeacher: false, placeholder: '英语老师' },
@@ -1123,6 +1139,89 @@ const TEACHERS = [
   { id: 'T07', name: '',       subject: '品德', subjectEn: 'MORAL',    emoji: '德', isHeadTeacher: false, placeholder: '品德老师' },
   { id: 'T08', name: '',       subject: '其他', subjectEn: 'OTHER',   emoji: '+', isHeadTeacher: false, placeholder: '其他老师' }
 ];
+
+const SUBJECT_EMOJI = { '语文':'语', '数学':'数', '英语':'En', '美术':'美', '科学':'科', '体育':'体', '品德':'德', '其他':'+' };
+
+function normalizeStudent(raw) {
+  var id = raw.id || raw.n || '';
+  var isFounder = !!(raw.isFounder || raw.founder);
+  var hasName = raw.name && raw.name.length > 0;
+  return {
+    n: id,
+    name: hasName ? raw.name : '同学' + id,
+    founder: isFounder,
+    isPublic: raw.isPublic !== false && raw.is_public !== 0,
+    filled: hasName
+  };
+}
+
+function normalizeTeacher(raw) {
+  var subject = raw.subject || '其他';
+  return {
+    id: raw.id,
+    name: raw.name || '',
+    subject: subject,
+    subjectEn: raw.subjectEn || raw.subject_en || subject.toUpperCase(),
+    emoji: raw.emoji || SUBJECT_EMOJI[subject] || '+',
+    isHeadTeacher: !!(raw.isHeadTeacher || raw.is_head_teacher),
+    placeholder: raw.role || (subject + '老师'),
+    role: raw.role || (subject + '老师'),
+    quote: raw.quote || '',
+    photo: raw.photo || raw.photo_url || ''
+  };
+}
+
+async function loadClassData() {
+  try {
+    const res = await fetch('data/students.json');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.students) && data.students.length) {
+        STUDENTS = data.students.map(normalizeStudent);
+      }
+    }
+  } catch(e) {}
+
+  try {
+    const res = await fetch('/api/teachers');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.teachers) && data.teachers.length) {
+        TEACHERS = data.teachers.map(normalizeTeacher);
+        renderHeadTeacher();
+        return;
+      }
+    }
+  } catch(e) {}
+
+  try {
+    const res = await fetch('data/teachers.json');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.teachers) && data.teachers.length) {
+        TEACHERS = data.teachers.map(normalizeTeacher);
+        renderHeadTeacher();
+      }
+    }
+  } catch(e) {}
+}
+
+function renderHeadTeacher() {
+  var ht = TEACHERS.find(function(t) { return t.isHeadTeacher; }) || TEACHERS[0];
+  if (!ht) return;
+  var avatar = document.querySelector('.ht-avatar');
+  var meta = document.querySelector('.ht-meta');
+  var name = document.querySelector('.ht-name');
+  var role = document.querySelector('.ht-role');
+  if (avatar) {
+    var badge = avatar.querySelector('.ht-badge')?.outerHTML || '<div class="ht-badge">班主任</div>';
+    avatar.innerHTML = (ht.name ? ht.name.trim()[0] : ht.emoji || '师') + badge;
+  }
+  if (meta) meta.textContent = (ht.subjectEn || '').toUpperCase() + ' · ' + (ht.subject || '老师');
+  if (name) name.textContent = ht.name || '待填入';
+  if (role) role.textContent = '松柏第二小学 · 六年级4班 ' + (ht.role || '老师');
+  if (ht.quote && window.renderHeadTeacherQuote) window.renderHeadTeacherQuote(ht.quote);
+}
 
 /* 检查 localStorage 是否已有学生填写数据 */
 function hasStudentData(id) {
@@ -1146,7 +1245,7 @@ function renderTeachers() {
   if (!tGrid) return;
   tGrid.innerHTML = '';
   TEACHERS.forEach(function(t) {
-    var filled = hasTeacherData(t.id);
+    var filled = !!t.name || hasTeacherData(t.id);
     var href = filled
       ? 'onboarding.html?type=teacher&id=' + t.id + '&mode=edit'
       : 'onboarding.html?type=teacher&id=' + t.id;
@@ -1162,7 +1261,6 @@ function renderTeachers() {
     tGrid.appendChild(card);
   });
 }
-renderTeachers();
 
 /* 渲染学生卡片 */
 const grid = document.getElementById('studentsGrid');
@@ -1170,11 +1268,13 @@ function renderStudents(filter = '') {
   var f = filter.trim().toLowerCase();
   grid.innerHTML = '';
   STUDENTS.forEach(function(s) {
-    var matches = !f || s.n.includes(f) || s.name.toLowerCase().includes(f);
+    var id = s.n || s.id;
+    var isFounder = !!(s.founder || s.isFounder);
+    var matches = !f || id.includes(f) || s.name.toLowerCase().includes(f);
     if (!matches) return;
 
     /* 张迤恩(50号)特殊处理：保留独立入口 */
-    if (s.n === '50') {
+    if (id === '50') {
       var card = document.createElement('div');
       card.className = 'student-card is-founder is-filled';
       card.innerHTML = ''
@@ -1184,6 +1284,7 @@ function renderStudents(filter = '') {
         + '<div class="student-name">张迤恩</div>'
         + '<div class="founder-links">'
         + '<a href="student-50-emperor.html" style="flex:1;text-align:center;padding:5px 6px;background:linear-gradient(135deg,#D4AF37,#C41E3A);color:#fff;border-radius:10px;font-size:11px;text-decoration:none;font-weight:600">🏮圣旨</a>'
+        + '<a href="student-50-delta.html" style="flex:1;text-align:center;padding:5px 6px;background:linear-gradient(135deg,#8BFF3D,#00C2FF);color:#0E1116;border-radius:10px;font-size:11px;text-decoration:none;font-weight:600">🎖️三角洲</a>'
         + '<a href="student-50-crayon.html" style="flex:1;text-align:center;padding:5px 6px;background:linear-gradient(135deg,#FF7EB6,#74C0FC);color:#fff;border-radius:10px;font-size:11px;text-decoration:none;font-weight:600">🖍️蜡笔</a>'
         + '<a href="student.html?id=50" style="flex:1;text-align:center;padding:5px 6px;background:linear-gradient(135deg,#C84032,#D4A86A);color:#fff;border-radius:10px;font-size:11px;text-decoration:none;font-weight:600">⚔️古风</a>'
         + '</div>';
@@ -1191,18 +1292,18 @@ function renderStudents(filter = '') {
       return;
     }
 
-    var filled = hasStudentData(s.n);
+    var filled = s.filled || hasStudentData(id);
     var href = filled
-      ? 'onboarding.html?type=student&id=' + s.n + '&mode=edit'
-      : 'onboarding.html?type=student&id=' + s.n;
+      ? 'student.html?id=' + id
+      : 'onboarding.html?type=student&id=' + id;
 
     var card = document.createElement('a');
     card.href = href;
-    card.className = 'student-card' + (s.founder ? ' is-founder' : '') + ' ' + (filled ? 'is-filled' : 'is-empty');
+    card.className = 'student-card' + (isFounder ? ' is-founder' : '') + ' ' + (filled ? 'is-filled' : 'is-empty');
     card.innerHTML = ''
-      + (s.founder ? '<span class="founder-badge">✨ 发起人</span>' : '')
-      + '<div class="student-avatar">' + (s.founder ? '迤恩' : s.n) + '</div>'
-      + '<div class="student-number">No.' + s.n + '</div>'
+      + (isFounder ? '<span class="founder-badge">✨ 发起人</span>' : '')
+      + '<div class="student-avatar">' + (isFounder ? '迤恩' : id) + '</div>'
+      + '<div class="student-number">No.' + id + '</div>'
       + '<div class="student-name">' + s.name + '</div>';
     grid.appendChild(card);
   });
@@ -1210,7 +1311,10 @@ function renderStudents(filter = '') {
     grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:48px;color:var(--muted);">没有找到匹配的同学，试试其他学号或姓名～</div>';
   }
 }
-renderStudents();
+loadClassData().finally(function() {
+  renderTeachers();
+  renderStudents();
+});
 
 document.getElementById('studentSearch').addEventListener('input', function(e) { renderStudents(e.target.value); });
 

@@ -1,6 +1,6 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Codex (Codex.ai/code) when working with code in this repository.
 
 ## Project Overview
 
@@ -21,7 +21,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 路由 = 文件路径。目录约定：
 
 - `functions/_shared/` — 横切关注点，所有 API 都从这里引入：
-  - `auth.ts` — `Env` 接口（`DB`/`PHOTOS`/`ADMIN_PASSWORD_HASH`/`MAX_UPLOAD_MB`/`R2_PUBLIC_URL`）、`authenticate()`、`hashPassword()`。**鉴权模型：管理员密码 OR 学生个人密码，二者任一通过即放行**。哈希算法是 SHA-256 + 固定盐前缀 `gradbook-2026-`（非 bcrypt，尽管部分迁移注释写成了 bcrypt，以 `auth.ts` 为准）。
+  - `auth.ts` — `Env` 接口（`DB`/`PHOTOS`/`ADMIN_PASSWORD_HASH`/`MAX_UPLOAD_MB`/`R2_PUBLIC_URL`）、`authenticate()`、`hashPassword()`。**鉴权模型：管理员密码 OR 学生个人密码，二者任一通过即放行**。哈希算法是 SHA-256 + 固定盐前缀 `gradbook-2026-`（非 bcrypt，以 `auth.ts` 为准）。
   - `cors.ts` — `preflight()` / `jsonResponse()` / `errorResponse()`，每个 handler 开头都先 `const pre = preflight(req); if (pre) return pre;`。
   - `teachers.ts` / `templates.ts` — 领域读取工具。
 - `functions/api/**` — 业务端点。命名模式：`students/[id].ts` 导出 `onRequestGet`/`onRequestPut`/`onRequestOptions`；嵌套资源用目录，如 `students/[id]/highlights.ts`、`messages/[id]/feature.ts`。

@@ -324,5 +324,176 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 const aObs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.width=e.target.dataset.value+'%';aObs.unobserve(e.target)}})},{threshold:.5});
 document.querySelectorAll('.ability-fill').forEach(el=>aObs.observe(el));
 </script>
+<script>
+/* ═══ 闪光时刻通用编辑脚本（兼容 .tl-item 和 .tl-card 两种结构） ═══ */
+(function() {
+  const PAGE_KEY = location.pathname.split('/').pop() || 'unknown';
+  const STORE_KEY = 'highlights-' + PAGE_KEY;
+
+  function getStore() {
+    try { return JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }
+    catch (e) { return {}; }
+  }
+  function setStore(d) { localStorage.setItem(STORE_KEY, JSON.stringify(d)); }
+
+  /* 收集所有时间线条目 — 同时兼容两种结构 */
+  const items = [];
+  const seen = new Set();
+  /* 结构 1：.tl-item > .tl-card > .tl-year/.tl-title/.tl-desc */
+  document.querySelectorAll('.tl-item').forEach(item => {
+    const year = item.querySelector('.tl-year');
+    const title = item.querySelector('.tl-title');
+    const desc = item.querySelector('.tl-desc');
+    if (year || title) {
+      items.push({ root: item, year: year, title: title, desc: desc });
+      seen.add(item);
+    }
+  });
+  /* 结构 2：.tl-card > .year/.title/.desc（独立卡片，非嵌套） */
+  document.querySelectorAll('.tl-card').forEach(card => {
+    if (seen.has(card) || card.closest('.tl-item')) return;
+    const year = card.querySelector('.year');
+    const title = card.querySelector('.title');
+    const desc = card.querySelector('.desc');
+    if (year || title) items.push({ root: card, year: year, title: title, desc: desc });
+  });
+
+  if (!items.length) return;
+
+  /* 给每个条目追加 感言 输入区 */
+  items.forEach((it, i) => {
+    /* 加载已保存的感言 */
+    const stored = getStore()[i] || {};
+
+    const wrap = document.createElement('div');
+    wrap.className = 'hl-reflection-wrap';
+    wrap.style.cssText = 'margin-top:10px;';
+
+    const disp = document.createElement('div');
+    disp.className = 'hl-reflection-display';
+    disp.dataset.key = 'reflectionDisplay';
+    disp.textContent = stored.reflection || '';
+    if (stored.reflection) {
+      disp.style.cssText = 'font-size:13px;color:var(--muted);font-style:italic;padding:8px 12px;background:color-mix(in oklch,var(--accent) 6%,transparent);border-left:3px solid var(--accent);border-radius:4px;line-height:1.6;';
+    } else {
+      disp.style.display = 'none';
+    }
+
+    const ta = document.createElement('textarea');
+    ta.className = 'hl-reflection-input';
+    ta.dataset.key = 'reflection';
+    ta.placeholder = '💬 写下这段时光的感言（编辑模式下可填）';
+    ta.rows = 2;
+    ta.value = stored.reflection || '';
+    ta.style.cssText = 'display:none;width:100%;margin-top:8px;padding:8px 10px;background:color-mix(in oklch,var(--accent) 4%,transparent);border:1px dashed var(--accent);border-radius:4px;font-family:inherit;font-size:13px;color:inherit;line-height:1.6;resize:vertical;min-height:50px;';
+
+    wrap.appendChild(disp);
+    wrap.appendChild(ta);
+    it.root.appendChild(wrap);
+
+    /* 给 year/title/desc 加上 hl- 类以便编辑模式样式生效 */
+    [it.year, it.title, it.desc].forEach(el => {
+      if (!el) return;
+      const tag = el.tagName.toLowerCase();
+      if (tag === 'div' || tag === 'span' || tag === 'p' || tag === 'h3' || tag === 'h4') {
+        el.classList.add('hl-year', 'hl-title', 'hl-desc');
+        /* 按位置判断 */
+        if (el === it.year) { el.classList.remove('hl-title', 'hl-desc'); el.classList.add('hl-year'); }
+        else if (el === it.title) { el.classList.remove('hl-year', 'hl-desc'); el.classList.add('hl-title'); }
+        else if (el === it.desc) { el.classList.remove('hl-year', 'hl-title'); el.classList.add('hl-desc'); }
+      }
+    });
+  });
+
+  /* 注入编辑模式 CSS */
+  const style = document.createElement('style');
+  style.textContent = `
+    body.edit-mode .hl-year, body.edit-mode .hl-title, body.edit-mode .hl-desc{
+      contenteditable:true;outline:1px dashed var(--accent);
+      background:color-mix(in oklch,var(--accent) 8%,transparent);
+      border-radius:3px;padding:1px 4px;margin:-1px -4px;
+      transition:background 0.15s;
+    }
+    body.edit-mode .hl-year:focus, body.edit-mode .hl-title:focus, body.edit-mode .hl-desc:focus{
+      outline:2px solid var(--accent);background:color-mix(in oklch,var(--accent) 14%,transparent);
+    }
+    body.edit-mode .hl-reflection-input{display:block !important}
+    body.edit-mode .hl-reflection-display{display:none !important}
+  `;
+  document.head.appendChild(style);
+
+  /* 创建浮动编辑按钮 */
+  const btn = document.createElement('button');
+  btn.id = 'hlEditBtn';
+  btn.innerHTML = '✏️ 编辑闪光时刻';
+  btn.style.cssText = 'position:fixed;bottom:24px;left:24px;z-index:999;padding:10px 18px;background:linear-gradient(135deg,var(--accent),var(--accent-coral));color:#fff;border:none;border-radius:999px;font-size:13px;font-weight:600;box-shadow:0 6px 20px rgba(0,0,0,0.18);cursor:pointer;transition:all 0.2s;font-family:inherit;';
+  btn.onmouseover = () => btn.style.transform = 'scale(1.05)';
+  btn.onmouseout = () => btn.style.transform = 'scale(1)';
+  document.body.appendChild(btn);
+
+  /* 自动保存 */
+  function saveAll() {
+    const data = getStore();
+    items.forEach((it, i) => {
+      data[i] = {
+        year: it.year ? it.year.textContent.trim() : '',
+        title: it.title ? it.title.textContent.trim() : '',
+        desc: it.desc ? it.desc.textContent.trim() : '',
+        reflection: it.root.querySelector('.hl-reflection-input').value.trim()
+      };
+    });
+    setStore(data);
+  }
+  function syncReflectionDisplay(item, text) {
+    const disp = item.querySelector('.hl-reflection-display');
+    if (!disp) return;
+    disp.textContent = text;
+    if (text) {
+      disp.style.cssText = 'font-size:13px;color:var(--muted);font-style:italic;padding:8px 12px;background:color-mix(in oklch,var(--accent) 6%,transparent);border-left:3px solid var(--accent);border-radius:4px;line-height:1.6;';
+    } else {
+      disp.style.display = 'none';
+    }
+  }
+  items.forEach((it, i) => {
+    [it.year, it.title, it.desc].forEach(el => {
+      if (!el) return;
+      el.addEventListener('blur', () => {
+        saveAll();
+        flashSaved();
+      });
+    });
+    const ta = it.root.querySelector('.hl-reflection-input');
+    ta.addEventListener('input', () => {
+      saveAll();
+      syncReflectionDisplay(it.root, ta.value.trim());
+    });
+  });
+
+  /* 切换编辑模式 */
+  btn.onclick = function() {
+    const isEdit = !document.body.classList.contains('edit-mode');
+    document.body.classList.toggle('edit-mode', isEdit);
+    btn.innerHTML = isEdit ? '💾 完成编辑' : '✏️ 编辑闪光时刻';
+    btn.style.background = isEdit
+      ? 'linear-gradient(135deg,var(--accent-mint),var(--accent))'
+      : 'linear-gradient(135deg,var(--accent),var(--accent-coral))';
+  };
+
+  /* 已保存提示 */
+  let _t = null;
+  function flashSaved() {
+    btn.innerHTML = '✅ 已保存';
+    btn.style.background = 'linear-gradient(135deg, #34d399, #10b981)';
+    clearTimeout(_t);
+    _t = setTimeout(() => {
+      btn.innerHTML = document.body.classList.contains('edit-mode') ? '💾 完成编辑' : '✏️ 编辑闪光时刻';
+      btn.style.background = document.body.classList.contains('edit-mode')
+        ? 'linear-gradient(135deg,var(--accent-mint),var(--accent))'
+        : 'linear-gradient(135deg,var(--accent),var(--accent-coral))';
+    }, 1200);
+  }
+})();
+</script>
+
 </body>
 </html>

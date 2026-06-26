@@ -40,7 +40,10 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
 
     // 从 R2 删除
     try {
-      const key = photo.url.split('/').slice(-4).join('/'); // students/{id}/{cat}/{file}
+      const marker = '/api/photos/file/';
+      const key = photo.url.includes(marker)
+        ? photo.url.slice(photo.url.indexOf(marker) + marker.length)
+        : photo.url.split('/').slice(-4).join('/'); // students/{id}/{cat}/{file}
       await context.env.PHOTOS.delete(key);
     } catch (e) {
       console.warn('R2 delete failed (continuing):', e);
@@ -51,40 +54,9 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
       .bind(photoId)
       .run();
 
-    // 从 students 表的 photo 数组中移除
-    const colMap: Record<string, string> = {
-      avatar: 'photos_avatar',
-      life: 'photos_life',
-      school: 'photos_school',
-      future: 'photos_future',
-      pet: 'pet_photo',
-      handwritten: 'handwritten_photo',
-    };
-    const col = colMap[photo.category];
-    if (col) {
-      if (['avatar', 'pet', 'handwritten'].includes(photo.category)) {
-        await context.env.DB.prepare(
-          `UPDATE students SET ${col} = NULL, updated_at = unixepoch() WHERE ${col} = ?`
-        )
-          .bind(photo.url)
-          .run();
-      } else {
-        const row = await context.env.DB.prepare(
-          `SELECT ${col} FROM students WHERE id = ?`
-        )
-          .bind(photo.owner_id)
-          .first<{ [k: string]: string | null }>();
-        if (row?.[col]) {
-          const arr: string[] = JSON.parse(row[col] as string);
-          const filtered = arr.filter((u) => u !== photo.url);
-          await context.env.DB.prepare(
-            `UPDATE students SET ${col} = ?, updated_at = unixepoch() WHERE id = ?`
-          )
-            .bind(JSON.stringify(filtered), photo.owner_id)
-            .run();
-        }
-      }
-    }
+    await context.env.DB.prepare('UPDATE students SET updated_at = unixepoch() WHERE id = ?')
+      .bind(photo.owner_id)
+      .run();
 
     return jsonResponse({ deleted: true, id: photoId });
   } catch (e: any) {

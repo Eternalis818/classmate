@@ -5,7 +5,7 @@
 // ─────────────────────────────────────────────
 
 import { preflight, jsonResponse, errorResponse } from '../../_shared/cors';
-import { authenticate, type Env } from '../../_shared/auth';
+import { authenticate, hashPassword, type Env } from '../../_shared/auth';
 
 const MAX_FEATURED = 5;
 
@@ -51,10 +51,20 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (body.from_student_id === body.to_student_id) {
       return errorResponse('不能给自己留言', 400);
     }
-    if (!body.from_password) return errorResponse('缺少密码', 401);
 
-    const auth = await authenticate(body.from_password, body.from_student_id, context.env);
-    if (!auth.valid) return errorResponse('密码错误', 403);
+    // 空密码时自动视为首次设置（学生本人无密码）
+    let auth = await authenticate(body.from_password || '', body.from_student_id, context.env);
+    if (!auth.valid && !body.from_password) {
+      const hash = await hashPassword('');
+      await context.env.DB.prepare(
+        'UPDATE students SET password_hash = ? WHERE id = ? AND password_hash IS NULL'
+      )
+        .bind(hash, body.from_student_id)
+        .run();
+      auth = { valid: true, isAdmin: false, studentId: body.from_student_id };
+    } else if (!auth.valid) {
+      return errorResponse('密码错误', 403);
+    }
 
     // 收件人必须存在
     const toStu = await context.env.DB.prepare(

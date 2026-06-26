@@ -65,6 +65,13 @@
     .ph-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in oklch,var(--accent) 6%,transparent),transparent)}
     .ph-img.portrait{aspect-ratio:3/4}.ph-img.square{aspect-ratio:1/1}.ph-img.wide{aspect-ratio:16/9}
 
+    .photo-frame{position:relative;overflow:hidden;background:var(--surface);border:1px solid var(--border);display:block}
+    .photo-frame>img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+    .photo-frame.is-square{aspect-ratio:1/1}
+    .photo-frame.is-circle{aspect-ratio:1/1;border-radius:50%}
+    .photo-frame.is-wide{aspect-ratio:16/9}
+    .photo-frame .photo-fallback{position:absolute;inset:0;display:grid;place-items:center;padding:var(--space-3);text-align:center;color:var(--muted);font-size:var(--text-sm);background:linear-gradient(135deg,var(--accent-soft),var(--fg-soft)),var(--surface)}
+
     .reveal{opacity:0;transform:translateY(40px);transition:opacity 0.6s var(--ease-standard),transform 0.6s var(--ease-standard)}
     .reveal.visible{opacity:1;transform:translateY(0)}
     .reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}.reveal-delay-3{transition-delay:.3s}
@@ -115,6 +122,7 @@
     }
     .ts-item:hover{border-color:var(--accent);transform:translateY(-2px)}
     .ts-item.selected{border-color:var(--accent);background:color-mix(in oklch,var(--accent) 8%,transparent)}
+    .ts-item.has-preview-bg{background-size:cover;background-position:center}
     .ts-emoji{font-size:30px;margin-bottom:4px}
     .ts-name{font-size:13px;font-weight:600}
     .ts-type{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:0.05em}
@@ -122,6 +130,36 @@
       padding:16px 24px;border-top:1px solid var(--border);
       display:flex;gap:10px;justify-content:space-between;
     }
+
+    /* Theme Preview Modal */
+    .tp-mask{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:20px}
+    .tp-mask.open{display:flex}
+    .tp-card{background:var(--bg,#1a1a1a);border-radius:20px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,0.5);color:#fff}
+    .tp-hero{height:240px;background:var(--hero-gradient,linear-gradient(135deg,#444,#222));border-radius:20px 20px 0 0;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+    .tp-hero::before{content:'';position:absolute;inset:0;background-image:var(--asset-hero-bg,none);background-size:cover;background-position:center;opacity:0;transition:opacity 0.3s}
+    .tp-hero.has-asset-hero-bg::before{opacity:1}
+    .tp-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.4) 100%)}
+    .tp-hero-content{position:relative;z-index:1;text-align:center;text-shadow:0 2px 8px rgba(0,0,0,0.4)}
+    .tp-hero-emoji{font-size:56px;margin-bottom:8px}
+    .tp-hero-name{font-size:24px;font-weight:700;letter-spacing:0.02em}
+    .tp-hero-tagline{font-size:13px;opacity:0.85;margin-top:4px;font-family:var(--font-mono)}
+    .tp-body{padding:24px 28px}
+    .tp-section{margin-bottom:18px}
+    .tp-section:last-child{margin-bottom:0}
+    .tp-label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;opacity:0.6;margin-bottom:8px;font-family:var(--font-mono)}
+    .tp-swatches{display:flex;gap:8px}
+    .tp-swatch{flex:1;height:48px;border-radius:10px;position:relative;display:flex;align-items:flex-end;justify-content:center;padding:4px;font-size:10px;font-family:var(--font-mono);color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.5);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.1)}
+    .tp-info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .tp-info-cell{background:rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px}
+    .tp-info-cell .k{font-size:10px;opacity:0.6;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.05em}
+    .tp-info-cell .v{font-size:13px;font-weight:500;margin-top:3px;word-break:break-all}
+    .tp-ability{height:8px;border-radius:4px;background:rgba(255,255,255,0.1);overflow:hidden;margin-top:4px}
+    .tp-ability-fill{height:100%;border-radius:4px;background:var(--accent,#fbbf24)}
+    .tp-foot{padding:16px 28px 24px;display:flex;gap:12px;border-top:1px solid rgba(255,255,255,0.08)}
+    .tp-foot button{flex:1;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:transform 0.15s}
+    .tp-foot button:hover{transform:translateY(-1px)}
+    .tp-foot .tp-cancel{background:rgba(255,255,255,0.08);color:#fff;border:none}
+    .tp-foot .tp-choose{background:linear-gradient(135deg,#a78bfa,#ec4899);color:#fff;border:none;box-shadow:0 4px 16px rgba(167,139,250,0.3)}
     .ts-btn{
       padding:8px 16px;border-radius:8px;border:1px solid var(--border);
       background:transparent;cursor:pointer;font-size:13px;font-weight:500;
@@ -160,8 +198,8 @@
     .upload-file{padding:14px;border:2px dashed var(--border);border-radius:12px;text-align:center;cursor:pointer;transition:border-color var(--motion-fast);font-size:13px;color:var(--muted)}
     .upload-file:hover{border-color:var(--accent);color:var(--accent)}
     .upload-file input{display:none}
-    .upload-file-preview{margin-top:8px;max-height:120px;display:none;border-radius:8px;overflow:hidden}
-    .upload-file-preview img{width:100%;height:120px;object-fit:cover;display:block}
+    .upload-file-preview{margin-top:8px;aspect-ratio:4/3;display:none;border-radius:8px;overflow:hidden}
+    .upload-file-preview img{width:100%;height:100%;object-fit:cover;display:block}
     .upload-input{padding:10px 14px;border:1px solid var(--border);border-radius:10px;font:inherit;font-size:14px;outline:none;transition:border-color var(--motion-fast);background:var(--bg)}
     .upload-input:focus{border-color:var(--accent)}
     .upload-foot{padding:14px 22px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end}
@@ -210,12 +248,22 @@
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
     .founder-crown{display:inline-block;padding:4px 14px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#fff;border-radius:var(--radius-pill);font-size:var(--text-xs);font-weight:600;margin-bottom:var(--space-4);box-shadow:0 2px 8px rgba(245,158,11,0.3)}
 
+    /* Class Photo */
+    .class-photo-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 16px;background:rgba(255,255,255,0.85);backdrop-filter:blur(12px);border-radius:var(--radius-pill);border:1px solid var(--border);font-size:var(--text-xs);color:var(--fg-2);cursor:pointer;transition:all var(--motion-base);box-shadow:0 2px 12px rgba(0,0,0,0.1)}
+    .class-photo-badge:hover{transform:scale(1.05);box-shadow:0 4px 20px rgba(0,0,0,0.15)}
+    .class-photo-badge img{width:28px;height:28px;border-radius:50%;object-fit:cover;border:2px solid #fff}
+    .class-photo-modal{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);display:none;align-items:center;justify-content:center;padding:var(--space-6)}
+    .class-photo-modal.open{display:flex}
+    .class-photo-modal img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:var(--radius-lg);box-shadow:0 24px 80px rgba(0,0,0,0.5)}
+    .class-photo-modal .close-btn{position:absolute;top:20px;right:20px;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.2);color:#fff;font-size:24px;display:grid;place-items:center;cursor:pointer;border:none;transition:background var(--motion-fast)}
+    .class-photo-modal .close-btn:hover{background:rgba(255,255,255,0.3)}
+
     /* Profile */
     .profile-card{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--elev-raised);overflow:hidden;max-width:900px;margin:0 auto}
     .profile-banner{height:140px;background:var(--hero-gradient);position:relative}
     .profile-banner-pattern{position:absolute;inset:0;opacity:.2;background-image:radial-gradient(circle at 20% 50%,rgba(255,255,255,.4) 1px,transparent 1px),radial-gradient(circle at 80% 20%,rgba(255,255,255,.3) 1px,transparent 1px);background-size:30px 30px,40px 40px}
     .profile-body{display:flex;gap:var(--space-8);padding:0 var(--space-8) var(--space-8);margin-top:-50px;position:relative}
-    .profile-avatar{width:120px;height:120px;border-radius:var(--radius-lg);border:4px solid var(--surface);box-shadow:var(--elev-raised);flex-shrink:0;overflow:hidden}
+    .profile-avatar{width:120px;height:120px;border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:var(--elev-raised);flex-shrink:0;overflow:hidden;background:var(--surface)}
     .profile-info{flex:1;padding-top:56px}
     .profile-name{font-size:var(--text-2xl);font-weight:700;margin-bottom:var(--space-1)}
     .profile-nickname{font-size:var(--text-lg);color:var(--accent);margin-bottom:var(--space-4)}
@@ -230,8 +278,8 @@
     .gallery-tab.active{background:var(--accent);color:var(--accent-on);border-color:var(--accent)}
     .carousel-wrapper{position:relative;max-width:900px;margin:0 auto;border-radius:var(--radius-lg);overflow:hidden;background:var(--surface);box-shadow:var(--elev-raised);border:1px solid var(--border)}
     .carousel-track{display:flex;transition:transform .5s var(--ease-standard)}
-    .carousel-slide{min-width:100%;position:relative;overflow:hidden}
-    .carousel-slide img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+    .carousel-slide{min-width:100%;position:relative;overflow:hidden;aspect-ratio:4/3;background:var(--surface-warm)}
+    .carousel-slide img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
     .carousel-slide .slide-label{position:absolute;bottom:0;left:0;right:0;padding:var(--space-4) var(--space-6);background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-size:var(--text-sm);font-weight:500}
     .carousel-empty{width:100%;aspect-ratio:16/9;display:grid;place-items:center;color:var(--muted);font-size:var(--text-lg);background:linear-gradient(135deg,var(--surface-warm),var(--surface-cool))}
     .carousel-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.85);border:1px solid var(--border);font-size:24px;line-height:1;cursor:pointer;transition:all var(--motion-base);display:grid;place-items:center;color:var(--fg);backdrop-filter:blur(8px);z-index:2}
@@ -284,7 +332,9 @@
     /* Pet */
     .pet-card{max-width:600px;margin:0 auto;background:var(--surface);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--elev-raised);border:1px solid var(--border)}
     .pet-header{padding:var(--space-6);background:linear-gradient(135deg,color-mix(in oklch,var(--accent) 20%,#fef3c7),color-mix(in oklch,var(--accent-coral) 15%,#fde68a));text-align:center}
-    .pet-emoji{font-size:64px;display:block;margin-bottom:var(--space-2)}
+    .pet-photo{width:120px;height:120px;margin:0 auto var(--space-4)}
+    .pet-photo .photo-fallback{border-radius:50%}
+    .pet-photo img{border-radius:50%}
     .pet-name{font-size:var(--text-2xl);font-weight:700}
     .pet-subtitle{font-size:var(--text-sm);margin-top:var(--space-1)}
     .pet-body{padding:var(--space-6)}
@@ -302,8 +352,8 @@
     .message-name{font-weight:600;margin-bottom:var(--space-1)}
     .message-date{font-size:var(--text-xs);color:var(--muted);margin-bottom:var(--space-4)}
     .message-text{font-size:var(--text-sm);line-height:1.7;color:var(--fg-2)}
-    .message-handwritten{margin-top:var(--space-4);border-radius:var(--radius-sm);overflow:hidden;border:1px solid var(--border)}
-    .message-handwritten img{width:100%;display:block}
+    .message-handwritten{margin-top:var(--space-4);overflow:hidden;border:1px solid var(--border)}
+    .message-handwritten img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 
     /* Teacher */
     .teacher-card{max-width:700px;margin:0 auto;background:var(--surface);border-radius:var(--radius-lg);padding:var(--space-10);border:1px solid var(--border);position:relative;overflow:hidden}
@@ -362,6 +412,16 @@
     /* Edit FAB */
     .edit-fab{position:fixed;bottom:24px;right:24px;z-index:90;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-coral));color:white;display:grid;place-items:center;font-size:22px;box-shadow:0 6px 20px rgba(168,85,247,0.35);cursor:pointer;transition:transform 0.2s var(--ease-bounce),box-shadow 0.2s}
     .edit-fab:hover{transform:scale(1.12);box-shadow:0 10px 30px rgba(168,85,247,0.45)}
+
+    /* 8 个素材槽位 — asset overlay rules */
+    .hero-section.has-asset-hero-bg::before{background-image:var(--asset-hero-bg);opacity:1}
+    .profile-card.has-asset-profile-frame{background-image:var(--asset-profile-frame);background-size:100% 100%;background-position:center;background-repeat:no-repeat}
+    .timeline-dot.has-asset-timeline-marker{background-image:var(--asset-timeline-marker);background-color:transparent;background-size:contain;background-position:center;background-repeat:no-repeat;box-shadow:none;border:none;border-radius:0;width:24px;height:24px;left:-38px}
+    .ability-track.has-asset-ability-bar-bg{background-image:var(--asset-ability-bar-bg);background-color:transparent;background-size:100% 100%}
+    .ability-fill.has-asset-ability-bar-fill{background-image:var(--asset-ability-bar-fill);background-color:transparent;background-size:100% 100%}
+    .envelope.has-asset-envelope-closed .envelope-body{background-image:var(--asset-envelope-closed),var(--envelope-gradient);background-size:contain,cover;background-repeat:no-repeat;background-position:center}
+    .envelope.open.has-asset-envelope-open .envelope-body{background-image:var(--asset-envelope-open),var(--envelope-gradient);background-size:contain,cover;background-repeat:no-repeat;background-position:center}
+    .envelope-seal.has-asset-stamp{background-image:var(--asset-stamp);background-size:contain;background-repeat:no-repeat;background-position:center;color:transparent;background-color:transparent;box-shadow:none}
   </style>
 </head>
 <body>
@@ -387,6 +447,33 @@
   <a href="index.html" class="empty-btn">返回班级首页</a>
 </div>
 
+<!-- Theme Preview Modal -->
+<div class="tp-mask" id="tpMask" onclick="if(event.target===this)closeThemePreview()">
+  <div class="tp-card" onclick="event.stopPropagation()">
+    <div class="tp-hero" id="tpHero">
+      <div class="tp-hero-content">
+        <div class="tp-hero-emoji" id="tpEmoji"></div>
+        <div class="tp-hero-name" id="tpName"></div>
+        <div class="tp-hero-tagline" id="tpTagline"></div>
+      </div>
+    </div>
+    <div class="tp-body">
+      <div class="tp-section">
+        <div class="tp-label">色彩调色板</div>
+        <div class="tp-swatches" id="tpSwatches"></div>
+      </div>
+      <div class="tp-section">
+        <div class="tp-label">主题信息</div>
+        <div class="tp-info-grid" id="tpInfo"></div>
+      </div>
+    </div>
+    <div class="tp-foot">
+      <button class="tp-cancel" onclick="closeThemePreview()">取消</button>
+      <button class="tp-choose" id="tpChoose" onclick="confirmThemePreview()">✓ 选这个主题</button>
+    </div>
+  </div>
+</div>
+
 <!-- Main content (rendered by JS) -->
 <div id="mainContent" style="display:none"></div>
 
@@ -395,17 +482,17 @@
    TEMPLATE TOKEN MAP
    ═══════════════════════════════════════════════════════════ */
 const TEMPLATE_META = {
-  'starlight-admission': { name:'星光录取通知书', emoji:'📜' },
-  'sakura-macaron':      { name:'樱花马卡龙', emoji:'🍰' },
-  'cosmic-exam':         { name:'星际答题卡', emoji:'🚀' },
-  'martial-legend':      { name:'江湖风云榜', emoji:'⚔️' },
-  'mint-journal':        { name:'薄荷手账', emoji:'📓' },
-  'cute-hamster':        { name:'萌系仓鼠', emoji:'🐹' },
-  'ancient-classic':     { name:'古风经典', emoji:'🏯' },
-  'energy-pop':          { name:'活力波普', emoji:'💥' },
-  'crayon-style':        { name:'蜡笔手绘', emoji:'🖍️' },
-  'imperial-scroll':     { name:'圣旨卷轴', emoji:'🐉' },
-  'delta-force':         { name:'三角洲行动', emoji:'🎖️' }
+  'starlight-admission': { name:'星光录取通知书', emoji:'📜', audience:'男女皆宜' },
+  'sakura-macaron':      { name:'樱花马卡龙', emoji:'🍰', audience:'女生' },
+  'cosmic-exam':         { name:'星际答题卡', emoji:'🚀', audience:'男生' },
+  'mint-journal':        { name:'薄荷手账', emoji:'📓', audience:'中性' },
+  'cute-hamster':        { name:'萌系仓鼠', emoji:'🐹', audience:'男女皆宜' },
+  'ancient-classic':     { name:'古风经典', emoji:'🏯', audience:'男女皆宜' },
+  'energy-pop':          { name:'活力波普', emoji:'💥', audience:'男女皆宜' },
+  'crayon-style':        { name:'蜡笔手绘', emoji:'🖍️', audience:'男女皆宜' },
+  'martial-legend':      { name:'江湖风云榜', emoji:'⚔️', audience:'中性偏男' },
+  'imperial-scroll':     { name:'圣旨卷轴', emoji:'🐉', audience:'古风爱好者' },
+  'delta-force':         { name:'三角洲行动', emoji:'🎖️', audience:'男生' }
 };
 const TEMPLATE_TOKENS = {
   'starlight-admission': {
@@ -435,14 +522,22 @@ const TEMPLATE_TOKENS = {
     '--envelope-gradient':'linear-gradient(135deg, #EFF6FF, #DBEAFE, #FEF3C7)',
     '--particle-colors':'#2563EB, #D4AF37, #60A5FA, #FCD34D'
   },
-  'martial-legend': {
+  'imperial-scroll': {
     '--bg':'#F5F0E6','--surface':'#FDFAF2','--surface-warm':'#F0E8D4','--surface-cool':'#E8DFC8',
     '--fg':'#2A1F14','--fg-2':'#5C4A36','--muted':'#8B7A62',
     '--border':'#D4C0A0','--border-soft':'#E0D4BC',
     '--accent':'#C84032','--accent-coral':'#E85D4E','--accent-mint':'#D4A86A',
     '--hero-gradient':'linear-gradient(135deg, #F0E8D4 0%, #E8DCC0 40%, #D4C8A8 100%)',
     '--envelope-gradient':'linear-gradient(135deg, #FDFAF2, #F0E8D4, #E8DCC0)',
-    '--particle-colors':'#C84032, #D4A86A, #8B4513, #DAA520'
+    '--particle-colors':'#C84032, #D4A86A, #8B4513, #DAA520',
+    '--asset-hero-bg':'url(assets/templates/imperial-scroll/hero.png)',
+    '--asset-profile-frame':'url(assets/templates/imperial-scroll/jade-card-frame.png)',
+    '--asset-timeline-marker':'url(assets/templates/imperial-scroll/timeline-line.png)',
+    '--asset-ability-bar-bg':'url(assets/templates/imperial-scroll/ability-bar-bg.png)',
+    '--asset-ability-bar-fill':'url(assets/templates/imperial-scroll/ability-bar-fill.png)',
+    '--asset-envelope-closed':'url(assets/templates/imperial-scroll/pouch-closed.png)',
+    '--asset-envelope-open':'url(assets/templates/imperial-scroll/pouch-open.png)',
+    '--asset-stamp':'url(assets/templates/imperial-scroll/memorial-seal.png)'
   },
   'mint-journal': {
     '--bg':'#F0FAF6','--surface':'#FFFFFF','--surface-warm':'#E0F5EC','--surface-cool':'#D0EDE4',
@@ -496,7 +591,32 @@ const TEMPLATE_TOKENS = {
     '--accent':'#C41E3A','--accent-coral':'#CC2936','--accent-mint':'#D4AF37',
     '--hero-gradient':'linear-gradient(135deg, #FFF8DC 0%, #F5E6C8 40%, #F0D8A0 100%)',
     '--envelope-gradient':'linear-gradient(135deg, #FFFDF5, #F5E6C8, #E8D4A0)',
-    '--particle-colors':'#FFD700, #D4AF37, #CC2936, #B8860B'
+    '--particle-colors':'#FFD700, #D4AF37, #CC2936, #B8860B',
+    '--asset-hero-bg':'url(assets/templates/imperial-scroll/hero.png)',
+    '--asset-profile-frame':'url(assets/templates/imperial-scroll/jade-card-frame.png)',
+    '--asset-timeline-marker':'url(assets/templates/imperial-scroll/timeline-line.png)',
+    '--asset-ability-bar-bg':'url(assets/templates/imperial-scroll/ability-bar-bg.png)',
+    '--asset-ability-bar-fill':'url(assets/templates/imperial-scroll/ability-bar-fill.png)',
+    '--asset-envelope-closed':'url(assets/templates/imperial-scroll/pouch-closed.png)',
+    '--asset-envelope-open':'url(assets/templates/imperial-scroll/pouch-open.png)',
+    '--asset-stamp':'url(assets/templates/imperial-scroll/memorial-seal.png)'
+  },
+  'martial-legend': {
+    '--bg':'#1F1410','--surface':'#2A1F1A','--surface-warm':'#3D2B1F','--surface-cool':'#1A1A1A',
+    '--fg':'#E8DCC8','--fg-2':'#C8B89A','--muted':'#8B7355',
+    '--border':'#6B5A3F','--border-soft':'#4A3F2A',
+    '--accent':'#C84032','--accent-coral':'#E8395B','--accent-mint':'#8FA3B0',
+    '--hero-gradient':'linear-gradient(135deg, #1F1410 0%, #3D1A1A 40%, #1A1A1A 100%)',
+    '--envelope-gradient':'linear-gradient(135deg, #2A1F1A, #3D2B1F, #1F1410)',
+    '--particle-colors':'#C84032, #8B7355, #C8B89A, #6B5A3F',
+    '--asset-hero-bg':'url(assets/templates/martial-legend/hero.png)',
+    '--asset-profile-frame':'url(assets/templates/martial-legend/bamboo-frame.png)',
+    '--asset-timeline-marker':'url(assets/templates/martial-legend/sword-marker.png)',
+    '--asset-ability-bar-bg':'url(assets/templates/martial-legend/innerforce-bg.png)',
+    '--asset-ability-bar-fill':'url(assets/templates/martial-legend/innerforce-fill.png)',
+    '--asset-envelope-closed':'url(assets/templates/martial-legend/letter-sealed.png)',
+    '--asset-envelope-open':'url(assets/templates/martial-legend/letter-unrolled.png)',
+    '--asset-stamp':'url(assets/templates/martial-legend/wulin-seal.png)'
   },
   'delta-force': {
     '--bg':'#0E1116','--surface':'#181C22','--surface-warm':'#232A1A','--surface-cool':'#1A2326',
@@ -506,9 +626,21 @@ const TEMPLATE_TOKENS = {
     '--hero-bg':'url(assets/templates/delta-force/hero.png)',
     '--hero-gradient':'linear-gradient(135deg, rgba(14,17,22,0.55) 0%, rgba(24,28,34,0.35) 50%, rgba(14,17,22,0.7) 100%)',
     '--envelope-gradient':'linear-gradient(135deg, #1F2530, #2A3140, #181C22)',
-    '--particle-colors':'#8BFF3D, #00C2FF, #FF6B35, #B8B5A8'
+    '--particle-colors':'#8BFF3D, #00C2FF, #FF6B35, #B8B5A8',
+    '--asset-hero-bg':'url(assets/templates/delta-force/hero.png)',
+    '--asset-profile-frame':'url(assets/templates/delta-force/dossier-frame.png)',
+    '--asset-timeline-marker':'url(assets/templates/delta-force/marker-achieve.png)',
+    '--asset-ability-bar-bg':'url(assets/templates/delta-force/skill-bar-bg.png)',
+    '--asset-ability-bar-fill':'url(assets/templates/delta-force/skill-bar-fill.png)',
+    '--asset-envelope-closed':'url(assets/templates/delta-force/envelope-closed.png)',
+    '--asset-envelope-open':'url(assets/templates/delta-force/envelope-open.png)',
+    '--asset-stamp':'url(assets/templates/delta-force/dossier-stamp.png)'
   }
 };
+
+let galleryPhotos = [];
+let currentSlideIdx = 0;
+let autoPlayTimer = null;
 
 /* ═══════════════════════════════════════════════════════════
    APPLY TEMPLATE TOKENS
@@ -516,10 +648,12 @@ const TEMPLATE_TOKENS = {
 function applyTemplate(templateId) {
   // 优先从 templates-registry 取自定义/AI 主题
   let tokens = null;
+  let assets = null;
   try {
-    const reg = JSON.parse(localStorage.getItem('templates-registry') || '{}');
-    if (reg[templateId] && reg[templateId].tokens) {
-      tokens = reg[templateId].tokens;
+    const reg = getTemplateRegistry();
+    if (reg[templateId]) {
+      if (reg[templateId].tokens) tokens = reg[templateId].tokens;
+      if (reg[templateId].assets) assets = reg[templateId].assets;
     }
   } catch(e) {}
   if (!tokens) tokens = TEMPLATE_TOKENS[templateId] || TEMPLATE_TOKENS['starlight-admission'];
@@ -531,6 +665,44 @@ function applyTemplate(templateId) {
     if (tokens['--hero-bg']) hero.classList.add('has-hero-bg');
     else hero.classList.remove('has-hero-bg');
   }
+  /* 统一素材系统：写 --asset-* CSS 变量（hero-bg 也走 asset 槽） */
+  const ASSET_SLOTS = [
+    ['heroBg', 'hero-bg'],
+    ['profileFrame', 'profile-frame'],
+    ['timelineMarker', 'timeline-marker'],
+    ['abilityBarBg', 'ability-bar-bg'],
+    ['abilityBarFill', 'ability-bar-fill'],
+    ['envelopeClosed', 'envelope-closed'],
+    ['envelopeOpen', 'envelope-open'],
+    ['stamp', 'stamp'],
+  ];
+  for (const [camelSlot, cssSlot] of ASSET_SLOTS) {
+    const val = tokens['--asset-' + cssSlot] || assets?.[camelSlot] || null;
+    root.style.setProperty('--asset-' + cssSlot, toCssImageValue(val));
+  }
+}
+
+function toCssImageValue(value) {
+  if (!value) return 'none';
+  const raw = String(value).trim();
+  if (!raw || raw === 'none') return 'none';
+  if (/^url\(/i.test(raw)) return raw;
+  return 'url("' + resolveThemeAssetUrl(raw).replace(/"/g, '%22') + '")';
+}
+
+function resolveThemeAssetUrl(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  if (/^(blob:|data:|https?:|\/)/i.test(raw)) return raw;
+  if (raw.startsWith('themes/')) return '/api/themes/file/' + raw;
+  return raw;
+}
+
+function getPreviewImageValue(value) {
+  if (!value) return '';
+  const raw = String(value).trim();
+  const match = raw.match(/^url\((['"]?)(.*?)\1\)$/i);
+  return resolveThemeAssetUrl(match ? match[2] : raw);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -538,15 +710,62 @@ function applyTemplate(templateId) {
    ═══════════════════════════════════════════════════════════ */
 function getBuiltinTemplates() {
   return Object.keys(TEMPLATE_TOKENS).map(id => ({
-    id, name: TEMPLATE_TOKENS[id]['__name'] || id, emoji: TEMPLATE_TOKENS[id]['__emoji'] || '🎨'
+    id,
+    name: TEMPLATE_META[id]?.name || id,
+    emoji: TEMPLATE_META[id]?.emoji || '🎨'
   }));
 }
 function getAllTemplatesForSwitch() {
-  const builtin = getBuiltinTemplates().map(t => Object.assign({type:'builtin'}, t));
+  const stats = (() => { try { return JSON.parse(localStorage.getItem('template-stats') || '{}'); } catch(e) { return {}; } })();
+  const total = Object.values(stats).reduce((a, b) => a + b, 0) || 1;
+
+  const builtin = getBuiltinTemplates().map(t => {
+    const tokens = TEMPLATE_TOKENS[t.id] || {};
+    const count = stats[t.id] || 0;
+    return Object.assign({type:'builtin', heroBg: getPreviewImageValue(tokens['--asset-hero-bg'] || tokens['--hero-bg'] || ''), pct: Math.round(count * 100 / total)}, t);
+  });
   let custom = [];
-  try { custom = Object.values(JSON.parse(localStorage.getItem('templates-registry') || '{}')); }
+  try { custom = Object.values(getTemplateRegistry()).map(t => { const count = stats[t.id] || 0; return Object.assign({type:'custom', heroBg: getPreviewImageValue(t.assets?.heroBg || ''), pct: Math.round(count * 100 / total)}, t); }); }
   catch(e) {}
-  return builtin.concat(custom);
+  const seen = new Set();
+  return builtin.concat(custom).filter(t => {
+    if (!t.id || seen.has(t.id)) return false;
+    seen.add(t.id);
+    return true;
+  });
+}
+
+function getTemplateRegistry() {
+  try { return JSON.parse(localStorage.getItem('templates-registry') || '{}'); }
+  catch(e) { return {}; }
+}
+
+function saveTemplateRegistry(reg) {
+  localStorage.setItem('templates-registry', JSON.stringify(reg));
+}
+
+function getTemplateMeta(id) {
+  const builtin = TEMPLATE_META[id];
+  if (builtin) {
+    const tokens = TEMPLATE_TOKENS[id] || {};
+    return { name: builtin.name, emoji: builtin.emoji, type: builtin.type, audience: builtin.audience, heroBg: getPreviewImageValue(tokens['--asset-hero-bg'] || tokens['--hero-bg'] || '') };
+  }
+  const reg = getTemplateRegistry();
+  const t = reg[id] || {};
+  return { name: id, emoji: t.emoji || '🎨', type: t.type || 'custom', audience: t.audience || '通用', heroBg: getPreviewImageValue(t.assets?.heroBg || '') };
+}
+
+async function syncSharedTemplates() {
+  const res = await fetch('/api/templates');
+  if (!res.ok) return;
+  const json = await res.json();
+  const shared = json.templates || [];
+  if (!shared.length) return;
+  const reg = getTemplateRegistry();
+  shared.forEach(tpl => {
+    reg[tpl.id] = Object.assign({ type: tpl.type || 'custom', shared: true }, tpl);
+  });
+  saveTemplateRegistry(reg);
 }
 
 function openThemeSwitcher() {
@@ -563,10 +782,10 @@ function openThemeSwitcher() {
         <p class="ts-hint">切换主题不会丢失任何数据（照片、闪光时刻、能力值等）</p>
         <div class="ts-grid">
           ${all.map(t => `
-            <div class="ts-item ${t.id === currentId ? 'selected' : ''}" data-id="${t.id}" onclick="applySwitchTheme('${t.id}')">
+            <div class="ts-item ${t.id === currentId ? 'selected' : ''}" data-id="${t.id}" data-hero-bg="${t.heroBg||''}" onclick="openThemePreview('${t.id}')">
               <div class="ts-emoji">${t.emoji || '🎨'}</div>
               <div class="ts-name">${t.name}</div>
-              <div class="ts-type">${t.type||'custom'}</div>
+              <div class="ts-type">${t.type||'custom'}${t.pct ? ' · '+t.pct+'%' : ''}</div>
             </div>
           `).join('')}
         </div>
@@ -577,27 +796,141 @@ function openThemeSwitcher() {
       </div>
     </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
+  /* 给带 heroBg 的主题缩略图设背景图 */
+  document.querySelectorAll('.ts-item[data-hero-bg]').forEach(el => {
+    const bg = el.getAttribute('data-hero-bg');
+    if (bg) {
+      el.classList.add('has-preview-bg');
+      el.style.backgroundImage = 'url("' + bg.replace(/"/g, '%22') + '")';
+    }
+  });
 }
 function closeThemeSwitcher() {
   const el = document.querySelector('.ts-overlay');
   if (el) el.remove();
 }
-function applySwitchTheme(tplId) {
+
+/* ═══════════════════════════════════════════════════════════
+   THEME PREVIEW MODAL
+   ═══════════════════════════════════════════════════════════ */
+let _tpSelectedId = null;
+
+function openThemePreview(templateId) {
+  _tpSelectedId = templateId;
+  const builtin = TEMPLATE_TOKENS[templateId];
+  const custom = getTemplateRegistry()[templateId];
+  const meta = getTemplateMeta(templateId);
+  const tokens = builtin || (custom && custom.tokens) || {};
+  const colors = (builtin && [tokens['--bg'], tokens['--accent'], tokens['--accent-mint'], tokens['--fg']])
+                || (custom && custom.colors)
+                || ['#888', '#aaa', '#ccc', '#444'];
+  const tagline = (builtin ? tokens['--particle-colors'] : null) || (custom && custom.description) || '';
+
+  /* Hero 区：注入 token 变量预览 */
+  const hero = document.getElementById('tpHero');
+  hero.style.setProperty('--hero-gradient', tokens['--hero-gradient'] || 'linear-gradient(135deg, #444 0%, #222 100%)');
+  hero.style.setProperty('--asset-hero-bg', toCssImageValue(tokens['--asset-hero-bg'] || (custom && custom.assets && custom.assets.heroBg) || null));
+  /* 触发素材 class */
+  const hasHeroAsset = (tokens['--asset-hero-bg'] || (custom && custom.assets && custom.assets.heroBg)) ? 'has-asset-hero-bg' : '';
+  hero.className = 'tp-hero ' + hasHeroAsset;
+
+  document.getElementById('tpEmoji').textContent = meta.emoji || '🎨';
+  document.getElementById('tpName').textContent = meta.name || templateId;
+  document.getElementById('tpTagline').textContent = tagline ? '粒子色：' + (typeof tagline === 'string' ? tagline.split(',').slice(0,3).map(c=>c.trim()).join(' ') : '') : '';
+
+  /* 调色板 */
+  document.getElementById('tpSwatches').innerHTML = colors.slice(0, 4).map(c => {
+    const hex = String(c).trim();
+    return `<div class="tp-swatch" style="background:${hex}">${hex}</div>`;
+  }).join('');
+
+  /* 主题信息 */
+  const fontValue = tokens['--font-display'] || tokens['--font-body'] || '默认';
+  const radius = tokens['--radius-md'] || '16px';
+  const accent = tokens['--accent'] || '—';
+  const bg = tokens['--bg'] || '—';
+  const audience = meta.audience || (custom && custom.audience) || '通用';
+  const particleCount = (typeof tagline === 'string' ? tagline.split(',').filter(Boolean).length : 0);
+  document.getElementById('tpInfo').innerHTML = `
+    <div class="tp-info-cell">
+      <div class="k">适用人群</div>
+      <div class="v">${audience}</div>
+    </div>
+    <div class="tp-info-cell">
+      <div class="k">主调色</div>
+      <div class="v" style="display:flex;align-items:center;gap:6px;">
+        <span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:${accent};"></span>
+        ${accent}
+      </div>
+    </div>
+    <div class="tp-info-cell">
+      <div class="k">字体</div>
+      <div class="v">${fontValue}</div>
+    </div>
+    <div class="tp-info-cell">
+      <div class="k">圆角</div>
+      <div class="v">${radius}</div>
+    </div>
+    <div class="tp-info-cell" style="grid-column:span 2">
+      <div class="k">🎯 视觉强度</div>
+      <div class="v">
+        ${particleCount > 0 ? `<div class="tp-ability"><div class="tp-ability-fill" style="width:${Math.min(100, particleCount * 25)}%;background:${accent};"></div></div>` : '—'}
+        <span style="font-size:11px;opacity:0.6;margin-left:6px;">${particleCount} 种粒子色 / ${particleCount > 3 ? '强' : particleCount > 1 ? '中' : '弱'} 视觉</span>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('tpMask').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeThemePreview() {
+  document.getElementById('tpMask').classList.remove('open');
+  document.body.style.overflow = '';
+  _tpSelectedId = null;
+}
+
+function confirmThemePreview() {
+  if (_tpSelectedId) {
+    const id = _tpSelectedId;
+    closeThemePreview();
+    applySwitchTheme(id);
+  }
+}
+
+/* 导出到 window（onclick 用） */
+window.openThemePreview = openThemePreview;
+window.closeThemePreview = closeThemePreview;
+window.confirmThemePreview = confirmThemePreview;
+async function applySwitchTheme(tplId) {
   if (!window._student) return;
   window._student.template = tplId;
-  // 持久化到 localStorage
+  const tplName = getTemplateMeta(tplId).name || tplId;
+
+  // 本机优先保存，立即生效
   localStorage.setItem('student-' + window._student.id, JSON.stringify(window._student));
-  // 增加用量统计
   try {
-    const stats = JSON.parse(localStorage.getItem('template-usage-stats') || '{}');
+    const stats = JSON.parse(localStorage.getItem('template-stats') || '{}');
     stats[tplId] = (stats[tplId] || 0) + 1;
-    localStorage.setItem('template-usage-stats', JSON.stringify(stats));
+    localStorage.setItem('template-stats', JSON.stringify(stats));
   } catch(e) {}
-  // 重新渲染
+
   applyTemplate(tplId);
   render(window._student, window._data);
   closeThemeSwitcher();
-  showTsToast('✓ 主题已切换');
+
+  // 已有密码则后台同步云端
+  const pwd = window._ownerPassword;
+  if (pwd) {
+    fetch(`/api/students/${encodeURIComponent(window._student.id)}/template`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pwd, template: tplId })
+    }).then(r => r.ok && showTsToast('✓ 主题已保存：' + tplName))
+      .catch(() => showTsToast('✓ 主题已切换：' + tplName));
+  } else {
+    showTsToast('✓ 主题已切换：' + tplName);
+  }
 }
 function openUploadFromSwitcher() { closeThemeSwitcher(); setTimeout(() => parent.postMessage({type:'openUpload'}, '*'), 50); /* fallback */ window.location.href = 'onboarding.html?type=student&id=' + window._student.id; }
 function openAiFromSwitcher() { closeThemeSwitcher(); window.location.href = 'onboarding.html?type=student&id=' + window._student.id; }
@@ -611,6 +944,83 @@ function showTsToast(msg) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   API → 渲染层 适配（D1 是 snake_case，前端用 camelCase）
+   ═══════════════════════════════════════════════════════════ */
+function adaptStudentFromApi(raw) {
+  if (!raw) return null;
+  const photos = raw.photos || { avatar: null, life: [], school: [], future: [], pet: null, handwritten: null };
+  const pet = raw.pet || null;
+  if (pet && !pet.photo && photos.pet) {
+    pet.photo = photos.pet.url || photos.pet;
+  }
+  return {
+    ...raw,
+    studentNumber: raw.student_number || raw.id,
+    futureLetter: raw.future_letter || '',
+    isFounder: !!raw.is_founder,
+    isPublic: !!raw.is_public,
+    abilities: {
+      swimming: raw.abilities_swim || 0,
+      tech: raw.abilities_tech || 0,
+      responsibility: raw.abilities_resp || 0,
+    },
+    pet,
+    photos,
+    messages: [],
+  };
+}
+
+function adaptStudentFromJson(raw) {
+  if (!raw) return null;
+  return {
+    ...raw,
+    studentNumber: raw.studentNumber || raw.student_number || raw.id,
+    futureLetter: raw.futureLetter || raw.future_letter || '',
+    isFounder: !!(raw.isFounder || raw.is_founder),
+    isPublic: raw.isPublic !== false && raw.is_public !== 0,
+    abilities: raw.abilities || {
+      swimming: raw.abilities_swim || 0,
+      tech: raw.abilities_tech || 0,
+      responsibility: raw.abilities_resp || 0,
+    },
+    photos: raw.photos || { avatar: null, life: [], school: [], future: [], pet: null, handwritten: null },
+    messages: raw.messages || [],
+  };
+}
+
+function createEmptyStudent(id) {
+  return {
+    id,
+    name: '',
+    nickname: '',
+    studentNumber: id,
+    class: '六年级4班',
+    school: '松柏第二小学',
+    tags: [],
+    motto: '',
+    photos: { avatar: '', life: [], school: [], future: [] },
+    highlights: [],
+    abilities: { swimming: 0, tech: 0, responsibility: 0 },
+    pet: null,
+    futureLetter: '',
+    template: 'starlight-admission',
+    stickers: [],
+    isPublic: true,
+    password: '',
+    messages: []
+  };
+}
+
+async function loadStudentFromStaticJson(studentId) {
+  const res = await fetch('data/students.json');
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  const json = await res.json();
+  const found = (json.students || []).find(s => s.id === studentId);
+  const student = adaptStudentFromJson(found || createEmptyStudent(studentId));
+  return { student, data: json };
+}
+
+/* ═══════════════════════════════════════════════════════════
    INIT
    ═══════════════════════════════════════════════════════════ */
 (async function() {
@@ -618,28 +1028,38 @@ function showTsToast(msg) {
   const studentId = params.get('id');
   if (!studentId) { location.href = 'index.html'; return; }
 
-  /* 优先从 localStorage 读取 */
-  const lsData = localStorage.getItem('student-' + studentId);
   let student = null;
   let data = null;
 
-  if (lsData) {
+  try {
+    const res = await fetch('/api/students/' + encodeURIComponent(studentId));
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const raw = await res.json();
+    student = adaptStudentFromApi(raw);
+    data = { students: [student], templates: [] };
+  } catch(e) {
+    /* 本地预览或 API 不可用时，才回退到浏览器缓存和静态 JSON */
+  }
+
+  if (!student) {
+    const lsData = localStorage.getItem('student-' + studentId);
     try {
-      student = JSON.parse(lsData);
-      /* 构建 data 对象以兼容 render 函数 */
-      data = { students: [student], templates: [] };
+      if (lsData) {
+        student = JSON.parse(lsData);
+        data = { students: [student], templates: [] };
+      }
     } catch(e) { student = null; }
   }
 
   if (!student) {
     try {
-      const res = await fetch('data/students.json');
-      data = await res.json();
+      const loaded = await loadStudentFromStaticJson(studentId);
+      student = loaded.student;
+      data = loaded.data;
     } catch(e) {
       document.body.innerHTML = '<div style="text-align:center;padding:80px 20px;"><h2>加载失败</h2><p style="color:#999;">无法读取学生数据</p><a href="index.html" style="color:#a855f7;">返回首页</a></div>';
       return;
     }
-    student = data.students.find(s => s.id === studentId);
   }
 
   if (!student) {
@@ -647,13 +1067,15 @@ function showTsToast(msg) {
     return;
   }
 
+  await syncSharedTemplates().catch(() => {});
+
   /* Apply template */
   applyTemplate(student.template || 'starlight-admission');
   window._student = student;
   window._data = data;
 
-  /* 后台拉取云端留言并合并（异步，不阻塞渲染） */
-  fetchAndMergeMessages(student).catch(() => {});
+  /* 优先合并云端留言；纯静态预览时会安静地使用 JSON 内置留言 */
+  await fetchAndMergeMessages(student).catch(() => {});
 
   /* Check privacy */
   if (!student.isPublic && student.password) {
@@ -663,6 +1085,7 @@ function showTsToast(msg) {
   }
 
   render(student, data);
+  loadClassPhoto().catch(() => {});
 })();
 
 function checkPassword() {
@@ -719,7 +1142,7 @@ function render(s, data) {
   </header>
 
   <!-- Hero -->
-  <section class="hero-section" data-od-id="hero">
+  <section class="hero-section" data-od-id="hero" data-asset="hero-bg">
     <canvas class="hero-particles" id="particles"></canvas>
     <div class="hero-content">
       ${s.isFounder ? '<div class="founder-crown reveal">✨ 发起人</div>' : ''}
@@ -738,13 +1161,13 @@ function render(s, data) {
         <p class="eyebrow">Profile · 个人档案</p>
         <h2>认识一下${s.nickname || s.name}吧</h2>
       </div>
-      <div class="profile-card reveal">
+      <div class="profile-card reveal" id="profileCard" data-asset="profile-frame">
         <div class="profile-banner"><div class="profile-banner-pattern"></div></div>
         <div class="profile-body">
-          <div class="profile-avatar">
+          <div class="profile-avatar photo-frame is-square">
             ${s.photos?.avatar
-              ? '<img src="' + s.photos.avatar + '" alt="' + s.name + '" style="width:100%;height:100%;object-fit:cover;" />'
-              : '<div class="ph-img square" style="width:100%;height:100%;border:none;border-radius:0;aspect-ratio:auto;">我的照片</div>'}
+              ? '<img src="' + (s.photos.avatar.url || s.photos.avatar) + '" alt="' + s.name + '" />'
+              : '<div class="photo-fallback">我的照片</div>'}
           </div>
           <div class="profile-info">
             <div class="profile-name">${s.name}${s.isFounder ? ' <span class="founder-crown" style="font-size:11px;vertical-align:middle;">✨ 发起人</span>' : ''}</div>
@@ -761,7 +1184,6 @@ function render(s, data) {
 
   <hr class="divider" />
 
-  ${(s.photos?.life?.length || s.photos?.school?.length || s.photos?.future?.length) ? `
   <!-- Photo Gallery -->
   <section class="section photo-gallery-section" id="gallery" data-od-id="gallery">
     <div class="container">
@@ -780,13 +1202,20 @@ function render(s, data) {
       </div>
       <div class="carousel-wrapper reveal" id="carouselWrapper">
         <div class="carousel-track" id="carouselTrack"></div>
+        <div class="carousel-empty" id="carouselEmpty">
+          <div style="text-align:center;padding:var(--space-8);">
+            <div style="font-size:44px;margin-bottom:var(--space-3);">📷</div>
+            <div style="font-weight:700;color:var(--fg);margin-bottom:var(--space-2);">还没有上传照片</div>
+            <div style="font-size:14px;">点击上方「上传照片」添加头像、生活照、校园照或宠物照片</div>
+          </div>
+        </div>
         <button class="carousel-nav prev" onclick="moveSlide(-1)">&#8249;</button>
         <button class="carousel-nav next" onclick="moveSlide(1)">&#8250;</button>
         <div class="carousel-dots" id="carouselDots"></div>
       </div>
     </div>
   </section>
-  <hr class="divider" />` : ''}
+  <hr class="divider" />
 
   ${s.highlights && s.highlights.length ? `
   <!-- Timeline -->
@@ -801,7 +1230,7 @@ function render(s, data) {
       <div class="timeline" id="timelineList">
         ${s.highlights.map((h, i) => `
         <div class="timeline-item reveal" data-idx="${i}" onclick="toggleDetail(this)">
-          <div class="timeline-dot ${['purple','coral','mint'][i%3]}"></div>
+          <div class="timeline-dot ${['purple','coral','mint'][i%3]}" data-asset="timeline-marker"></div>
           <div class="timeline-date hl-year" data-key="year">${h.year || ''}</div>
           <div class="timeline-title hl-title" data-key="title">${h.title}</div>
           <div class="timeline-desc hl-desc" data-key="desc">${h.desc || ''}</div>
@@ -847,13 +1276,13 @@ function render(s, data) {
         <h2>我的毛茸茸好朋友</h2>
       </div>
       <div class="pet-card reveal">
-        <div class="pet-header">
-          ${s.pet.photo
-            ? '<img src="' + s.pet.photo + '" alt="' + s.pet.name + '" style="width:120px;height:120px;border-radius:50%;object-fit:cover;margin:0 auto var(--space-4);" />'
-            : '<div style="font-size:64px;margin-bottom:var(--space-2);">🐾</div>'}
-          <div class="pet-name">${s.pet.name}</div>
-          <div class="pet-subtitle">${s.pet.type || ''}</div>
-        </div>
+          <div class="pet-header">
+            ${s.pet.photo
+              ? '<div class="pet-photo photo-frame is-circle"><img src="' + s.pet.photo + '" alt="' + s.pet.name + '" /></div>'
+              : '<div class="pet-photo photo-frame is-circle"><div class="photo-fallback">🐾</div></div>'}
+            <div class="pet-name">${s.pet.name}</div>
+            <div class="pet-subtitle">${s.pet.type || ''}</div>
+          </div>
         <div class="pet-body">
           <p style="line-height:1.8;color:var(--fg-2);">${s.pet.desc || ''}</p>
         </div>
@@ -884,7 +1313,7 @@ function render(s, data) {
           <div class="message-name">${m.from}</div>
           <div class="message-date">2026年6月</div>
           <div class="message-text">${m.text || ''}</div>
-          ${m.handwritten ? '<div class="message-handwritten"><img src="' + m.handwritten + '" alt="手写留言" /></div>' : ''}
+          ${m.handwritten ? '<div class="message-handwritten photo-frame is-wide"><img src="' + m.handwritten + '" alt="手写留言" /></div>' : ''}
           <div class="message-actions" style="margin-top:12px;display:none;gap:6px;">
             <button class="msg-feat-btn" onclick="toggleFeatured('${m.id}','${m.fromId || ''}')" title="精选上墙">${m.is_featured ? '⭐ 已精选' : '☆ 精选'}</button>
             <button class="msg-del-btn" onclick="deleteMessage('${m.id}')" title="删除">🗑️</button>
@@ -921,10 +1350,10 @@ function render(s, data) {
         <p class="lead">点击信封打开看看～</p>
       </div>
       <div class="envelope-wrapper reveal">
-        <div class="envelope" id="envelope" onclick="document.getElementById('envelope').classList.toggle('open')">
+        <div class="envelope" id="envelope" data-asset="envelope-closed" onclick="document.getElementById('envelope').classList.toggle('open')">
           <div class="envelope-body">
             <div class="envelope-flap"><span style="font-size:32px;position:relative;z-index:1;margin-top:20px;">✉️</span></div>
-            <div class="envelope-seal">🎓</div>
+            <div class="envelope-seal" data-asset="stamp">🎓</div>
             <div style="text-align:center;padding-top:60px;">
               <div style="font-size:20px;font-weight:600;color:var(--fg-2);">致未来的自己</div>
               <div style="font-size:14px;color:var(--muted);margin-top:8px;">点击打开这封信 →</div>
@@ -960,6 +1389,19 @@ function render(s, data) {
   document.getElementById('mainContent').innerHTML = html;
   document.getElementById('mainContent').style.display = 'block';
 
+  /* Apply all asset classes AFTER DOM is populated */
+  const ASSET_SLOTS = ['hero-bg','profile-frame','timeline-marker','ability-bar-bg','ability-bar-fill','envelope-closed','envelope-open','stamp'];
+  for (const slot of ASSET_SLOTS) {
+    const varName = '--asset-' + slot;
+    const val = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+    if (val && val !== 'none' && val !== '') {
+      const targets = slot === 'envelope-open'
+        ? document.querySelectorAll('[data-asset="envelope-closed"]')
+        : document.querySelectorAll('[data-asset="' + slot + '"]');
+      targets.forEach(el => el.classList.add('has-asset-' + slot));
+    }
+  }
+
   /* Add edit FAB */
   var fab = document.createElement('a');
   fab.href = 'onboarding.html?type=student&id=' + s.id + '&mode=edit';
@@ -969,6 +1411,7 @@ function render(s, data) {
   document.body.appendChild(fab);
 
   window.__studentData = s;
+
   initScripts();
 }
 
@@ -988,7 +1431,7 @@ function buildAbilityBar(label, value, color) {
       <span class="ability-name">${label}</span>
       <span class="ability-value num">${value}%</span>
     </div>
-    <div class="ability-track"><div class="ability-fill ${color}" data-width="${value}"></div></div>
+    <div class="ability-track" data-asset="ability-bar-bg"><div class="ability-fill ${color}" data-width="${value}" data-asset="ability-bar-fill"></div></div>
   </div>`;
 }
 
@@ -1274,10 +1717,6 @@ async function authenticateOwner(pwd) {
 /* ═══════════════════════════════════════════════════════════
    GALLERY CAROUSEL
    ═══════════════════════════════════════════════════════════ */
-let galleryPhotos = [];
-let currentSlideIdx = 0;
-let autoPlayTimer = null;
-
 function initGallery() {
   const track = document.getElementById('carouselTrack');
   if (!track) return;
@@ -1293,7 +1732,15 @@ function initGallery() {
     all.push({ src: p.url || p.src, cat: 'pet', label: '宠物' });
   }
   galleryPhotos = all;
-  if (!all.length) return;
+  const empty = document.getElementById('carouselEmpty');
+  if (!all.length) {
+    if (empty) empty.style.display = 'grid';
+    document.querySelectorAll('.carousel-nav').forEach(b => b.style.display = 'none');
+    const dots = document.getElementById('carouselDots');
+    if (dots) dots.style.display = 'none';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
   renderSlides(all);
   currentSlideIdx = 0;
   startAutoPlay();
@@ -1308,9 +1755,9 @@ function renderSlides(items) {
   const track = document.getElementById('carouselTrack');
   const dots = document.getElementById('carouselDots');
   if (!track) return;
-  track.innerHTML = items.map((p, i) =>
-    '<div class="carousel-slide"><img src="' + p.src + '" alt="' + p.label + '" loading="lazy" /><div class="slide-label">' + p.label + '</div></div>'
-  ).join('');
+      track.innerHTML = items.map((p, i) =>
+        '<div class="carousel-slide"><img src="' + p.src + '" alt="' + p.label + '" loading="lazy" /><div class="slide-label">' + p.label + '</div></div>'
+      ).join('');
   if (dots) {
     dots.innerHTML = items.map((_, i) =>
       '<button class="carousel-dot' + (i === 0 ? ' active' : '') + '" onclick="goToSlide(' + i + ')"></button>'
@@ -1408,8 +1855,8 @@ function openPhotoUpload() {
             </label>
           </div>
           <div class="upload-field">
-            <span class="upload-label">学生密码（确认身份）</span>
-            <input type="password" id="uploadPassword" class="upload-input" placeholder="输入你的纪念册密码" autocomplete="off" />
+            <span class="upload-label">纪念册密码 <span style="color:var(--muted);font-weight:400;font-size:12px;">（无密码直接留空，首次上传自动设空密码）</span></span>
+            <input type="password" id="uploadPassword" class="upload-input" placeholder="有密码则输入，没有就直接上传" autocomplete="off" />
           </div>
           <div class="upload-status" id="uploadStatus"></div>
         </div>
@@ -1420,7 +1867,6 @@ function openPhotoUpload() {
       </div>
     </div>`;
   document.body.insertAdjacentHTML('beforeend', html);
-  setTimeout(() => document.getElementById('uploadPassword')?.focus(), 100);
 }
 function closePhotoUpload() {
   const el = document.getElementById('uploadOverlay');
@@ -1449,7 +1895,6 @@ async function submitPhotoUpload() {
   if (!s) return;
   const password = document.getElementById('uploadPassword').value;
   if (!_uploadState.file) { setUploadStatus('请选择图片', 'error'); return; }
-  if (!password) { setUploadStatus('请输入密码', 'error'); return; }
 
   const btn = document.getElementById('uploadSubmitBtn');
   btn.disabled = true;
@@ -1524,7 +1969,7 @@ async function loadAllStudents() {
   let all = (window._data && Array.isArray(window._data.students)) ? window._data.students : [];
   if (all.length <= 1) {
     try {
-      const res = await fetch('data/students.json');
+      const res = await fetch('/api/students');
       const data = await res.json();
       all = data.students || [];
     } catch (e) { /* ignore */ }
@@ -1555,7 +2000,7 @@ function openMessageSend() {
             </div>
             <div class="upload-field">
               <span class="upload-label">你的密码（确认身份）</span>
-              <input type="password" id="msgFromPassword" class="upload-input" placeholder="你的纪念册密码" autocomplete="off" />
+              <input type="password" id="msgFromPassword" class="upload-input" placeholder="有密码则输入，没有就直接发" autocomplete="off" />
             </div>
             <div class="upload-field">
               <span class="upload-label">留言给 TA</span>
@@ -1593,7 +2038,6 @@ async function submitMessage() {
   const password = document.getElementById('msgFromPassword').value;
   const text = document.getElementById('msgText').value.trim();
   if (!fromId) { setMsgStatus('请选择你的学号', 'error'); return; }
-  if (!password) { setMsgStatus('请输入密码', 'error'); return; }
   if (!text) { setMsgStatus('请输入留言内容', 'error'); return; }
   if (text.length > 500) { setMsgStatus('留言不能超过 500 字', 'error'); return; }
 
@@ -1735,6 +2179,121 @@ async function fetchAndMergeMessages(s) {
     /* 不重渲染（避免打断用户浏览） */
   } catch (e) { /* 静默失败 */ }
 }
+
+Object.assign(window, {
+  openThemeSwitcher,
+  closeThemeSwitcher,
+  applySwitchTheme,
+  openUploadFromSwitcher,
+  openAiFromSwitcher,
+  checkPassword,
+  toggleDetail,
+  filterGallery,
+  moveSlide,
+  goToSlide,
+  openPhotoUpload,
+  closePhotoUpload,
+  selectUploadCat,
+  onUploadFileChange,
+  submitPhotoUpload,
+  openMessageSend,
+  closeMessageSend,
+  submitMessage,
+  toggleMessageOwnerView,
+  toggleFeatured,
+  deleteMessage
+});
+
+/* ═══════════════════════════════════════════════════════════
+   CLASS PHOTO
+   ═══════════════════════════════════════════════════════════ */
+async function loadClassPhoto() {
+  try {
+    let classPhotoUrl = null;
+
+    /* 1) 尝试 localStorage 缓存（1 天有效期） */
+    try {
+      const cached = JSON.parse(localStorage.getItem('class-config') || '{}');
+      if (cached.class_photo_url && cached._cachedAt && (Date.now() - cached._cachedAt < 86400000)) {
+        classPhotoUrl = cached.class_photo_url;
+      }
+    } catch (e) {}
+
+    /* 2) 缓存失效时请求 API */
+    if (!classPhotoUrl) {
+      try {
+        const res = await fetch('/api/class/config');
+        if (res.ok) {
+          const data = await res.json();
+          (data.config || []).forEach(item => {
+            if (item.key === 'class_photo_url' && item.value) {
+              classPhotoUrl = item.value;
+            }
+          });
+          /* 写缓存 */
+          if (classPhotoUrl) {
+            try {
+              localStorage.setItem('class-config', JSON.stringify({ class_photo_url: classPhotoUrl, _cachedAt: Date.now() }));
+            } catch (e) {}
+          }
+        }
+      } catch (e) {}
+    }
+
+    if (!classPhotoUrl) return;
+
+    /* 3) 注入徽章到 hero */
+    const hero = document.querySelector('.hero-content');
+    if (!hero) return;
+
+    /* 避免重复 */
+    if (hero.querySelector('.class-photo-badge')) return;
+
+    const badge = document.createElement('div');
+    badge.className = 'class-photo-badge';
+    badge.innerHTML = '<img src="' + classPhotoUrl + '" alt="大合照" loading="lazy" /><span>点击查看大合照</span>';
+    badge.onclick = () => openClassPhotoModal(classPhotoUrl);
+
+    /* 插入到 hero-badge 后面 */
+    const heroBadge = hero.querySelector('.hero-badge');
+    if (heroBadge) {
+      heroBadge.after(badge);
+    } else {
+      hero.querySelector('h1').after(badge);
+    }
+
+    /* 4) 追加模态框 */
+    if (!document.getElementById('classPhotoModal')) {
+      const modal = document.createElement('div');
+      modal.id = 'classPhotoModal';
+      modal.className = 'class-photo-modal';
+      modal.innerHTML = '<button class="close-btn" onclick="closeClassPhotoModal()">×</button><img id="classPhotoModalImg" src="" alt="大合照" />';
+      modal.onclick = (e) => { if (e.target === modal) closeClassPhotoModal(); };
+      document.body.appendChild(modal);
+    }
+  } catch (e) {}
+}
+
+function openClassPhotoModal(url) {
+  const modal = document.getElementById('classPhotoModal');
+  const img = document.getElementById('classPhotoModalImg');
+  if (modal && img) {
+    img.src = url;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeClassPhotoModal() {
+  const modal = document.getElementById('classPhotoModal');
+  if (modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+/* 导出给 window */
+Object.assign(window, { openClassPhotoModal, closeClassPhotoModal });
 </script>
 </body>
 </html>

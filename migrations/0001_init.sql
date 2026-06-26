@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS students (
   stickers        TEXT,                       -- JSON 数组
   is_founder      INTEGER DEFAULT 0,
   is_public       INTEGER DEFAULT 1,
-  password_hash   TEXT,                       -- bcrypt 哈希
+  password_hash   TEXT,                       -- SHA-256 + 盐哈希（见 functions/_shared/auth.ts）
   created_at      INTEGER DEFAULT (unixepoch()),
   updated_at      INTEGER DEFAULT (unixepoch())
 );

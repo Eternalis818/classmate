@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>三角洲行动 · 主题预览 · 时光纪念册</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #0E1116;
+  --surface: #181C22;
+  --surface-warm: #232A1A;
+  --surface-cool: #1A2326;
+  --fg: #E8E6DD;
+  --fg-2: #B8B5A8;
+  --muted: #6E6B5C;
+  --border: #2A3140;
+  --border-soft: #1F2530;
+  --accent: #8BFF3D;
+  --accent-coral: #FF6B35;
+  --accent-mint: #00C2FF;
+  --accent-on: #0E1116;
+  --danger: #FF4D4D;
+  --warn: #FFB020;
+  --font-display: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --font-mono: 'Fira Code', 'JetBrains Mono', ui-monospace, Menlo, monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);line-height:1.55;overflow-x:hidden;
+  background-image:linear-gradient(rgba(139,255,61,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(139,255,61,0.03) 1px,transparent 1px);
+  background-size:32px 32px}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.section{padding:clamp(48px,8vw,96px) 0;position:relative}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.15;letter-spacing:-0.01em;font-weight:700}
+h1{font-size:clamp(36px,7vw,72px);font-weight:800;letter-spacing:-0.03em}
+h2{font-size:clamp(28px,4vw,44px);font-weight:700}
+h3{font-size:20px;font-weight:600}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:inline-block;padding:4px 10px;background:rgba(139,255,61,0.16);border:1px solid var(--accent);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.lead{font-size:17px;color:var(--fg-2);max-width:60ch;line-height:1.7}
+.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.6s cubic-bezier(0.2,0,0,1),transform 0.6s cubic-bezier(0.2,0,0,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
+
+/* ── NAV ── */
+.tactical-nav{position:sticky;top:0;z-index:100;background:rgba(14,17,22,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 16px;display:flex;align-items:center;gap:0;overflow-x:auto;font-size:13px;height:52px}
+.tactical-nav-inner{display:flex;align-items:center;gap:0}
+.tactical-nav-brand{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--accent);letter-spacing:0.12em;padding-right:16px;margin-right:8px;border-right:1px solid var(--border);white-space:nowrap;display:flex;align-items:center;gap:6px}
+.tactical-nav-brand::before{content:'';width:8px;height:8px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);animation:blink 1.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+.tactical-nav a{font-family:var(--font-mono);font-size:12px;color:var(--fg-2);letter-spacing:0.1em;padding:0 14px;height:52px;display:flex;align-items:center;white-space:nowrap;text-transform:uppercase;border-bottom:2px solid transparent;transition:all 0.2s}
+.tactical-nav a:hover{color:var(--accent);background:rgba(139,255,61,0.08);border-bottom-color:var(--accent)}
+.tactical-nav::-webkit-scrollbar{display:none}
+@media(max-width:600px){.tactical-nav{font-size:11px}.tactical-nav a{font-size:10px;padding:0 8px}}
+
+/* ── HERO ── */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#0a0c10}
+.hero-bg{position:absolute;inset:0;background:url('assets/templates/delta-force/hero.png') center/cover no-repeat;opacity:0.55;filter:contrast(1.1) saturate(1.1)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,17,22,0.4) 0%,rgba(14,17,22,0.7) 60%,rgba(14,17,22,0.95) 100%),linear-gradient(90deg,rgba(14,17,22,0.4) 0%,transparent 50%,rgba(14,17,22,0.4) 100%)}
+.hero-scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 2px,rgba(139,255,61,0.02) 2px,rgba(139,255,61,0.02) 3px);pointer-events:none}
+.hero-content{position:relative;z-index:2;text-align:center;padding:32px;max-width:780px}
+.hero-classified{display:inline-block;padding:6px 18px;background:rgba(255,77,77,0.15);border:1px solid var(--danger);color:var(--danger);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;font-weight:700;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);margin-bottom:24px;animation:classifiedPulse 2s ease-in-out infinite}
+@keyframes classifiedPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,77,77,0.4)}50%{box-shadow:0 0 16px 4px rgba(255,77,77,0.2)}}
+.hero-codename{font-family:var(--font-mono);font-size:13px;letter-spacing:0.3em;color:var(--accent);margin-bottom:8px;text-transform:uppercase}
+.hero-name{font-size:clamp(56px,12vw,128px);font-weight:900;letter-spacing:-0.04em;line-height:0.95;background:linear-gradient(135deg,#fff 0%,var(--accent) 50%,var(--accent-mint) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px;text-shadow:0 0 80px rgba(139,255,61,0.3)}
+.hero-title{font-family:var(--font-mono);font-size:clamp(14px,2vw,18px);color:var(--fg-2);letter-spacing:0.15em;margin-bottom:32px;text-transform:uppercase}
+.hero-stats{display:inline-flex;gap:0;background:rgba(24,28,34,0.85);border:1px solid var(--border);backdrop-filter:blur(8px);margin-top:24px}
+.hero-stat{padding:14px 24px;text-align:center;border-right:1px solid var(--border)}
+.hero-stat:last-child{border-right:none}
+.hero-stat-value{font-family:var(--font-mono);font-size:24px;font-weight:700;color:var(--accent);line-height:1;display:block}
+.hero-stat-label{font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;margin-top:4px;display:block}
+
+/* ── PROFILE / DOSSIER ── */
+.dossier{background:var(--surface);border:1px solid var(--border);position:relative;overflow:hidden}
+.dossier::before{content:'';position:absolute;top:0;left:0;width:120px;height:120px;background:url('assets/templates/delta-force/dossier-frame.png') no-repeat;background-size:contain;opacity:0.7;pointer-events:none}
+.dossier::after{content:'';position:absolute;bottom:0;right:0;width:120px;height:120px;background:url('assets/templates/delta-force/dossier-frame.png') no-repeat;background-size:contain;opacity:0.7;transform:rotate(180deg);pointer-events:none}
+.dossier-inner{padding:48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:start}
+.dossier-avatar{width:140px;height:140px;border:2px solid var(--accent);overflow:hidden;background:var(--surface-cool);position:relative}
+.dossier-avatar img{width:100%;height:100%;object-fit:cover}
+.dossier-info h2{font-size:32px;margin-bottom:6px}
+.dossier-codename{font-family:var(--font-mono);font-size:11px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+.dossier-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 24px;margin-top:16px;font-size:14px}
+.dossier-meta-row{display:flex;gap:8px;align-items:baseline}
+.dossier-meta-key{font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase;min-width:60px}
+.dossier-meta-val{color:var(--fg);font-weight:600}
+.dossier-motto{margin-top:24px;padding:16px 20px;background:var(--surface-cool);border-left:3px solid var(--accent-coral);font-size:14px;color:var(--fg-2);font-style:italic;line-height:1.7}
+@media(max-width:700px){.dossier-inner{grid-template-columns:1fr;padding:32px 24px}.dossier-avatar{margin:0 auto}}
+@media(max-width:920px){.dossier-meta{grid-template-columns:1fr}}
+
+/* ── TIMELINE / MISSION LOG ── */
+.timeline{position:relative;padding-left:48px;max-width:820px;margin:0 auto}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:repeating-linear-gradient(180deg,var(--accent) 0,var(--accent) 6px,transparent 6px,transparent 12px)}
+.timeline-item{position:relative;margin-bottom:32px;background:var(--surface);border:1px solid var(--border);padding:24px;transition:all 0.3s cubic-bezier(0.2,0,0,1)}
+.timeline-item:hover{border-color:var(--accent);transform:translateX(8px);box-shadow:0 0 24px rgba(139,255,61,0.2)}
+.timeline-marker{position:absolute;left:-37px;top:24px;width:30px;height:30px;background:var(--bg);border:2px solid var(--accent);display:grid;place-items:center;overflow:hidden}
+.timeline-marker img{width:100%;height:100%;object-fit:cover}
+.timeline-date{font-family:var(--font-mono);font-size:12px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;font-weight:600}
+.timeline-title{font-size:18px;font-weight:700;margin-bottom:6px;font-family:var(--font-display)}
+.timeline-desc{font-size:14px;color:var(--fg-2);line-height:1.7}
+@media(max-width:600px){.timeline{padding-left:36px}.timeline-marker{left:-30px;width:24px;height:24px}.timeline-item{padding:18px}}
+
+/* ── ABILITIES / SKILL TREE ── */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:920px;margin:0 auto}
+.skill-card{background:var(--surface);border:1px solid var(--border);padding:24px;position:relative;overflow:hidden}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-mint))}
+.skill-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+.skill-name{font-family:var(--font-mono);font-size:14px;letter-spacing:0.1em;color:var(--fg);text-transform:uppercase}
+.skill-value{font-family:var(--font-mono);font-size:24px;font-weight:700;color:var(--accent)}
+.skill-bar{height:8px;background:var(--surface-cool);border:1px solid var(--border);overflow:hidden;position:relative}
+.skill-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-mint));width:0;transition:width 1.2s cubic-bezier(0.2,0,0,1);position:relative}
+.skill-bar-fill::after{content:'';position:absolute;right:0;top:0;width:2px;height:100%;background:#fff;box-shadow:0 0 8px #fff}
+.skill-rank{font-family:var(--font-mono);font-size:10px;letter-spacing:0.2em;color:var(--accent-coral);text-transform:uppercase;margin-top:10px}
+
+/* ── COMPANION / TACTICAL PARTNER ── */
+.companion{background:var(--surface);border:1px solid var(--border);padding:48px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;max-width:820px;margin:0 auto;position:relative;overflow:hidden}
+.companion::before{content:'';position:absolute;inset:0;background:url('assets/templates/delta-force/companion-bg.png') center/cover;opacity:0.15;pointer-events:none}
+.companion-portrait{width:160px;height:160px;border:2px solid var(--accent);background:var(--bg);overflow:hidden;position:relative;z-index:1}
+.companion-portrait img{width:100%;height:100%;object-fit:cover}
+.companion-info{position:relative;z-index:1}
+.companion-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:0.25em;color:var(--accent-mint);text-transform:uppercase;margin-bottom:8px}
+.companion-name{font-size:24px;font-weight:700;margin-bottom:4px}
+.companion-type{font-size:13px;color:var(--muted);margin-bottom:12px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em}
+.companion-desc{font-size:14px;color:var(--fg-2);line-height:1.7}
+@media(max-width:600px){.companion{grid-template-columns:1fr;padding:32px 24px;text-align:center}.companion-portrait{margin:0 auto}}
+
+/* ── MESSAGES / INTEL ── */
+.intel-list{display:grid;gap:20px;max-width:820px;margin:0 auto}
+.intel-card{background:var(--surface);border:1px solid var(--border);padding:24px;position:relative;overflow:hidden}
+.intel-card::before{content:'INTEL';position:absolute;top:12px;right:16px;font-family:var(--font-mono);font-size:9px;letter-spacing:0.25em;color:var(--accent-mint);opacity:0.6}
+.intel-from{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.intel-avatar{width:40px;height:40px;border-radius:50%;border:1px solid var(--accent);overflow:hidden;background:var(--bg);flex-shrink:0}
+.intel-avatar img{width:100%;height:100%;object-fit:cover}
+.intel-name{font-weight:700;font-size:15px}
+.intel-id{font-family:var(--font-mono);font-size:10px;letter-spacing:0.15em;color:var(--muted);margin-top:2px}
+.intel-text{font-size:14px;color:var(--fg-2);line-height:1.7;font-style:italic;padding-left:14px;border-left:2px solid var(--accent-coral)}
+
+/* ── TEACHER / COMMANDER ── */
+.commander{background:linear-gradient(135deg,var(--surface) 0%,var(--surface-cool) 100%);border:1px solid var(--accent);padding:48px;max-width:820px;margin:0 auto;position:relative;overflow:hidden}
+.commander::before{content:'';position:absolute;top:0;right:0;width:140px;height:140px;background:url('assets/templates/delta-force/top-secret-stamp.png') no-repeat;background-size:contain;opacity:0.5;transform:rotate(15deg)}
+.commander-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:0.25em;color:var(--accent);text-transform:uppercase;margin-bottom:16px}
+.commander-name{font-size:24px;font-weight:700;margin-bottom:4px}
+.commander-role{font-size:13px;color:var(--muted);margin-bottom:20px;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em}
+.commander-msg{font-size:16px;line-height:1.8;color:var(--fg-2);font-style:italic}
+
+/* ── LETTER / ENVELOPE ── */
+.envelope{background:linear-gradient(135deg,#1F2530,#2A3140,#181C22);border:2px solid var(--accent);padding:0;max-width:600px;margin:0 auto;cursor:pointer;position:relative;transition:all 0.4s cubic-bezier(0.2,0,0,1);overflow:hidden}
+.envelope:hover{border-color:var(--accent-mint);box-shadow:0 0 32px rgba(139,255,61,0.3)}
+.envelope-seal{padding:48px 32px;text-align:center;position:relative}
+.envelope-seal::before{content:'CLASSIFIED';position:absolute;top:16px;left:50%;transform:translateX(-50%);font-family:var(--font-mono);font-size:10px;letter-spacing:0.4em;color:var(--danger);border:1px solid var(--danger);padding:4px 12px;background:rgba(255,77,77,0.1)}
+.envelope-to{font-family:var(--font-mono);font-size:12px;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin:24px 0 8px}
+.envelope-recipient{font-size:24px;font-weight:700;margin-bottom:24px}
+.envelope-cta{font-family:var(--font-mono);font-size:11px;letter-spacing:0.3em;color:var(--accent);text-transform:uppercase;padding-top:16px;border-top:1px dashed var(--border)}
+.envelope-letter{display:none;padding:48px 32px;background:var(--surface);color:var(--fg)}
+.envelope-letter.open{display:block}
+.envelope-letter.open + .envelope-seal{display:none}
+.envelope-letter-text{font-size:15px;line-height:1.9;color:var(--fg-2);white-space:pre-line}
+
+/* ── FINALE / MISSION COMPLETE ── */
+.finale{text-align:center;padding:clamp(80px,12vw,140px) 24px;position:relative;overflow:hidden;background:linear-gradient(180deg,var(--bg) 0%,#050709 100%)}
+.finale::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(139,255,61,0.15) 0%,transparent 60%);pointer-events:none}
+.finale-badge{width:200px;height:200px;margin:0 auto 32px;position:relative}
+.finale-badge img{width:100%;height:100%}
+.finale-title{font-size:clamp(48px,9vw,96px);font-weight:900;letter-spacing:-0.03em;line-height:1;background:linear-gradient(135deg,var(--accent) 0%,#fff 50%,var(--accent-mint) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px}
+.finale-subtitle{font-family:var(--font-mono);font-size:clamp(13px,2vw,16px);color:var(--fg-2);letter-spacing:0.15em;text-transform:uppercase;line-height:1.7}
+
+footer{padding:32px 24px;text-align:center;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<nav class="tactical-nav">
+  <a href="templates/index.html" class="tactical-nav-brand">← 11 模板</a>
+  <a href="#hero">BRIEFING</a>
+  <a href="#profile">DOSSIER</a>
+  <a href="#timeline">MISSION LOG</a>
+  <a href="#abilities">SKILL TREE</a>
+  <a href="#companion">COMPANION</a>
+  <a href="#messages">INTEL</a>
+  <a href="#commander">COMMANDER</a>
+  <a href="#letter">CLASSIFIED</a>
+  <a href="#finale">COMPLETE</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero" data-od-id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-content">
+    <div class="hero-classified">⚠ CLASSIFIED · 最高机密</div>
+    <div class="hero-codename">OPERATIVE // 张迤恩</div>
+    <h1 class="hero-name">DELTA-50</h1>
+    <div class="hero-title">RECONNAISSANCE MISSION · 松柏第二小学 2026 届</div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-value num">06</span>
+        <span class="hero-stat-label">YEARS DEPLOYED</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value num">95</span>
+        <span class="hero-stat-label">SWIM RANK</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value num">88</span>
+        <span class="hero-stat-label">TECH LV</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value num">A+</span>
+        <span class="hero-stat-label">CLEARANCE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE / DOSSIER -->
+<section class="section" id="profile" data-od-id="profile">
+  <div class="container">
+    <div class="eyebrow reveal">// 02 · DOSSIER</div>
+    <h2 class="reveal reveal-d1">作战档案</h2>
+    <p class="lead reveal reveal-d2">个人档案 · 个人代号、部署位置、特长识别码</p>
+
+    <div class="dossier reveal reveal-d3" style="margin-top:48px">
+      <div class="dossier-inner">
+        <div class="dossier-avatar">
+          <div style="width:100%;height:100%;display:grid;place-items:center;color:var(--muted);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;background:var(--surface-cool)">AVATAR</div>
+        </div>
+        <div class="dossier-info">
+          <h2>张迤恩</h2>
+          <div class="dossier-codename">CALLSIGN: 迤恩 · OPERATOR ID: 50</div>
+
+          <div class="dossier-meta">
+            <div class="dossier-meta-row"><span class="dossier-meta-key">驻地</span><span class="dossier-meta-val">松柏第二小学</span></div>
+            <div class="dossier-meta-row"><span class="dossier-meta-key">届次</span><span class="dossier-meta-val">2026 届</span></div>
+            <div class="dossier-meta-row"><span class="dossier-meta-key">班级</span><span class="dossier-meta-val">六年级 4 班</span></div>
+            <div class="dossier-meta-row"><span class="dossier-meta-key">状态</span><span class="dossier-meta-val" style="color:var(--accent)">● ACTIVE</span></div>
+            <div class="dossier-meta-row"><span class="dossier-meta-key">特长</span><span class="dossier-meta-val">游泳 · AI · 责任感</span></div>
+            <div class="dossier-meta-row"><span class="dossier-meta-key">代号</span><span class="dossier-meta-val">FOUNDER · 发起人</span></div>
+          </div>
+
+          <div class="dossier-motto">"愿你依然阳光开朗，依然热爱游泳和 AI，依然对世界充满好奇"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE / MISSION LOG -->
+<section class="section" id="timeline" data-od-id="timeline" style="background:linear-gradient(180deg,var(--bg) 0%,#0a0c10 100%)">
+  <div class="container">
+    <div class="eyebrow reveal">// 03 · MISSION LOG</div>
+    <h2 class="reveal reveal-d1">任务编年史</h2>
+    <p class="lead reveal reveal-d2">闪光时刻 · 历次作战记录</p>
+
+    <div class="timeline" style="margin-top:48px">
+      <div class="timeline-item reveal">
+        <div class="timeline-marker"><div style="width:100%;height:100%;background:var(--accent);opacity:0.4"></div></div>
+        <div class="timeline-date">2018 · 一年级</div>
+        <div class="timeline-title">🎒 入学任务启动</div>
+        <div class="timeline-desc">第一次踏进松柏第二小学，认领 50 号代号，与同届战友完成建制编组。</div>
+      </div>
+      <div class="timeline-item reveal reveal-d1">
+        <div class="timeline-marker"><div style="width:100%;height:100%;background:var(--accent-mint);opacity:0.4"></div></div>
+        <div class="timeline-date">2020 · 三年级</div>
+        <div class="timeline-title">🏊 水域作战认证</div>
+        <div class="timeline-desc">通过游泳进阶训练，斩获 SWIM 等级证书，水中作战能力跃升 S 级。</div>
+      </div>
+      <div class="timeline-item reveal reveal-d2">
+        <div class="timeline-marker"><div style="width:100%;height:100%;background:var(--accent-coral);opacity:0.4"></div></div>
+        <div class="timeline-date">2023 · 五年级</div>
+        <div class="timeline-title">🤖 AI 技术解锁</div>
+        <div class="timeline-desc">在科技节完成首个 AI 项目演示，TECH 指数突破 88，触发 COMMENDATION 嘉奖。</div>
+      </div>
+      <div class="timeline-item reveal reveal-d3">
+        <div class="timeline-marker"><div style="width:100%;height:100%;background:var(--accent);opacity:0.4"></div></div>
+        <div class="timeline-date">2026 · 六年级</div>
+        <div class="timeline-title">🎖️ 毕业作战 · 发起人</div>
+        <div class="timeline-desc">作为发起人，主持本套毕业纪念册编写，圆满完成小学阶段最终任务。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABILITIES / SKILL TREE -->
+<section class="section" id="abilities" data-od-id="abilities">
+  <div class="container">
+    <div class="eyebrow reveal">// 04 · SKILL TREE</div>
+    <h2 class="reveal reveal-d1">作战能力</h2>
+    <p class="lead reveal reveal-d2">三大核心能力评估 · 三项数据均突破 S 级门槛</p>
+
+    <div class="skills" style="margin-top:48px">
+      <div class="skill-card reveal">
+        <div class="skill-header">
+          <div class="skill-name">🏊 游泳 / SWIM</div>
+          <div class="skill-value num" data-target="95">0</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-value="95"></div></div>
+        <div class="skill-rank">RANK: LEGEND · 武林高手</div>
+      </div>
+      <div class="skill-card reveal reveal-d1">
+        <div class="skill-header">
+          <div class="skill-name">💻 科技 / TECH</div>
+          <div class="skill-value num" data-target="88">0</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-value="88"></div></div>
+        <div class="skill-rank">RANK: ELITE · 一流高手</div>
+      </div>
+      <div class="skill-card reveal reveal-d2">
+        <div class="skill-header">
+          <div class="skill-name">🛡 责任 / DUTY</div>
+          <div class="skill-value num" data-target="92">0</div>
+        </div>
+        <div class="skill-bar"><div class="skill-bar-fill" data-value="92"></div></div>
+        <div class="skill-rank">RANK: ELITE · 一流高手</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANION / TACTICAL PARTNER -->
+<section class="section" id="companion" data-od-id="pet" style="background:linear-gradient(180deg,var(--bg) 0%,#0a0c10 100%)">
+  <div class="container">
+    <div class="eyebrow reveal">// 05 · TACTICAL COMPANION</div>
+    <h2 class="reveal reveal-d1">战术伙伴</h2>
+    <p class="lead reveal reveal-d2">灵兽档案 · 一同执行任务的忠诚伙伴</p>
+
+    <div class="companion reveal reveal-d3" style="margin-top:48px">
+      <div class="companion-portrait">
+        <div style="width:100%;height:100%;display:grid;place-items:center;color:var(--muted);font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;background:var(--surface-cool)">PET</div>
+      </div>
+      <div class="companion-info">
+        <div class="companion-tag">UNIT-50 · COMPANION</div>
+        <div class="companion-name">年糕</div>
+        <div class="companion-type">橘猫 · ORANGE TABBY</div>
+        <div class="companion-desc">一只超萌的橘猫，最爱晒太阳和吃小鱼干。每次主人执行任务归来，它都守在门口迎接，是温暖的后方支援。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MESSAGES / INTEL -->
+<section class="section" id="messages" data-od-id="messages">
+  <div class="container">
+    <div class="eyebrow reveal">// 06 · INTEL BRIEFING</div>
+    <h2 class="reveal reveal-d1">战友留言</h2>
+    <p class="lead reveal reveal-d2">来自同届战友的机密情报</p>
+
+    <div class="intel-list" style="margin-top:48px">
+      <div class="intel-card reveal">
+        <div class="intel-from">
+          <div class="intel-avatar"><div style="width:100%;height:100%;background:var(--surface-cool)"></div></div>
+          <div>
+            <div class="intel-name">李小明</div>
+            <div class="intel-id">OPERATOR-12 · 个人留言</div>
+          </div>
+        </div>
+        <div class="intel-text">迤恩，六年同窗，谢谢你总是那么靠谱！</div>
+      </div>
+      <div class="intel-card reveal reveal-d1">
+        <div class="intel-from">
+          <div class="intel-avatar"><div style="width:100%;height:100%;background:var(--surface-cool)"></div></div>
+          <div>
+            <div class="intel-name">王小红</div>
+            <div class="intel-id">OPERATOR-23 · 公开情报</div>
+          </div>
+        </div>
+        <div class="intel-text">毕业快乐！愿我们的友谊像三角洲行动一样，永远不说再见～</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHER / COMMANDER -->
+<section class="section" id="commander" data-od-id="teacher" style="background:linear-gradient(180deg,var(--bg) 0%,#0a0c10 100%)">
+  <div class="container">
+    <div class="eyebrow reveal">// 07 · COMMANDER DIRECTIVE</div>
+    <h2 class="reveal reveal-d1">指挥官寄语</h2>
+    <p class="lead reveal reveal-d2">来自班主任的最高指令</p>
+
+    <div class="commander reveal reveal-d3" style="margin-top:48px">
+      <div class="commander-tag">FROM: 班主任 · 周黎</div>
+      <div class="commander-name">周黎老师</div>
+      <div class="commander-role">CLASSROOM COMMANDER · 2026 届</div>
+      <div class="commander-msg">迤恩，六年来你一直是老师最骄傲的战士。你用 50 号代号的笔触，让全班同学的回忆凝聚成这本最特别的纪念册。未来无论你走到哪里，都请记住：松柏二小永远是你的后方基地，2026 届永远是你的最强战队。</div>
+    </div>
+  </div>
+</section>
+
+<!-- LETTER / ENVELOPE -->
+<section class="section" id="letter" data-od-id="letter">
+  <div class="container">
+    <div class="eyebrow reveal" style="text-align:center;display:block">// 08 · CLASSIFIED LETTER</div>
+    <h2 class="reveal reveal-d1" style="text-align:center">密令锦囊</h2>
+    <p class="lead reveal reveal-d2" style="text-align:center;margin:0 auto">给未来的自己 · 点击解密</p>
+
+    <div class="envelope reveal reveal-d3" style="margin-top:48px" onclick="if(!this.classList.contains('open')){this.classList.add('open');this.querySelector('.envelope-letter').classList.add('open')}">
+      <div class="envelope-seal">
+        <div class="envelope-to">TO: 初中 · 张迤恩</div>
+        <div class="envelope-recipient">未来的自己</div>
+        <div class="envelope-cta">▼ TAP TO DECRYPT ▼</div>
+      </div>
+      <div class="envelope-letter">
+        <div class="envelope-to">FROM: 2026 · 张迤恩（小学毕业版）</div>
+        <div class="envelope-letter-text">亲爱的初中自己：
+
+愿你依然阳光开朗，依然热爱游泳和 AI，依然对世界充满好奇。
+
+记得：每一次任务开始前，都要先做好充分的侦察；每一次胜利庆祝时，都要记得感谢同行的战友。
+
+松柏二小 2026 届永远在你身后。</div>
+        <div class="envelope-cta" style="margin-top:24px;border-top:1px dashed var(--border);padding-top:16px">[END OF TRANSMISSION]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINALE / MISSION COMPLETE -->
+<section class="finale" id="finale" data-od-id="finale">
+  <div class="finale-badge">
+    <img src="assets/templates/delta-force/mission-complete.png" alt="MISSION COMPLETE" onerror="this.style.display='none'">
+  </div>
+  <h2 class="finale-title">MISSION<br>COMPLETE</h2>
+  <p class="finale-subtitle">松柏第二小学 2026 届 · 毕业任务圆满完成<br>DELTA-50 · 张迤恩 · 时光纪念册</p>
+</section>
+
+<footer>时光纪念册 © 2026 · DELTA FORCE 三角洲行动主题 · 第 11/11 套</footer>
+
+<script>
+/* Reveal on scroll */
+const obs = new IntersectionObserver((es) => {
+  es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* Skill bars animate on scroll */
+const sObs = new IntersectionObserver((es) => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      const bar = e.target.querySelector('.skill-bar-fill');
+      const val = e.target.querySelector('.skill-value');
+      if (bar) bar.style.width = bar.dataset.value + '%';
+      if (val) {
+        const target = +val.dataset.target;
+        const start = performance.now();
+        const dur = 1200;
+        const tick = (now) => {
+          const t = Math.min((now - start) / dur, 1);
+          val.textContent = Math.round(target * (1 - Math.pow(1 - t, 3)));
+          if (t < 1) requestAnimationFrame(tick);
+          else val.textContent = target;
+        };
+        requestAnimationFrame(tick);
+      }
+      sObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.skill-card').forEach(el => sObs.observe(el));
+</script>
+
+</body>
+</html>
