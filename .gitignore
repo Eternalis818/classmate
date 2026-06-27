@@ -30,3 +30,7 @@ Thumbs.db
 /gradbook-live.png
 /student-50-delta-live-hero.png
 /mpxx6wy3-hero.png
+
+# ─── 临时调试文件 ───
+/_*.json
+/_*.tmp
